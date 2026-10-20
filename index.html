@@ -3092,9 +3092,9 @@
                 </div>
 
                 <div class="expense-actions">
-                    <a class="expense-btn primary" href="https://forms.gle/6YFseJnhADMFEFjf6" target="_blank"> 記一筆花費</a>
+                    <a class="expense-btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSd4Ej-mIxT_yaBFaBon5P9vlesgBPnkclUE4wJJscRrooU6nw/viewform?usp=header" target="_blank"> 記一筆花費</a>
                     <a class="expense-btn"
-                        href="https://docs.google.com/spreadsheets/d/1ZZMMJcD_cqY_0GvHtPCl2p7NMSCXutJWC9evIgg2t30/edit"
+                        href="https://docs.google.com/spreadsheets/d/1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58/edit?gid=763400443#gid=763400443"
                         target="_blank"> 開啟完整帳單</a>
                 </div>
 
@@ -3926,13 +3926,14 @@
 
 
 
-        const EXPENSE_SHEET_ID = '1ZZMMJcD_cqY_0GvHtPCl2p7NMSCXutJWC9evIgg2t30';
-        const EXPENSE_SHEET_URL = `https://docs.google.com/spreadsheets/d/${EXPENSE_SHEET_ID}/gviz/tq?tqx=out:csv`;
-        const EXPENSE_CACHE_KEY = 'bali_expense_sheet_2026';
+        const EXPENSE_SHEET_ID = '1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58';
+        const EXPENSE_SHEET_GID = '763400443';
+        const EXPENSE_SHEET_URL = `https://docs.google.com/spreadsheets/d/${EXPENSE_SHEET_ID}/gviz/tq?tqx=out:csv&gid=${EXPENSE_SHEET_GID}`;
+        const EXPENSE_CACHE_KEY = `okinawa_expense_sheet_${EXPENSE_SHEET_ID}_${EXPENSE_SHEET_GID}`;
         const EXPENSE_RATES_KEY = 'bali_expense_rates_2026';
-        const EXPENSE_SPLIT_KEY = 'bali_expense_split_2026_v2';
-        // 這趟固定四個人均分；其他出現在付款人欄的名字（小寶、共用基金等）預設不分攤。
-        const EXPENSE_SHARERS = ['阿猿', '培芝', '小白', '飛機'];
+        const EXPENSE_SPLIT_KEY = `okinawa_expense_split_${EXPENSE_SHEET_ID}_${EXPENSE_SHEET_GID}_v1`;
+        // 這趟固定五個人均分；其他出現在付款人欄的名字（小寶、共用基金等）預設不分攤。
+        const EXPENSE_SHARERS = ['阿均', '國恒', '媽咪', '阿猿', '培芝'];
         // 跟「匯率換算」那頁用同一支免費 API（ExchangeRate-API 的開放端點，不需金鑰）。
         const EXPENSE_RATES_URL = 'https://open.er-api.com/v6/latest/USD';
         const EXPENSE_RATES_TTL = 6 * 60 * 60 * 1000;
