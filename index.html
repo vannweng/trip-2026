@@ -2243,23 +2243,6 @@
             color: var(--text-dim);
         }
 
-        .expense-people {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .expense-person {
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 7px 13px;
-            border-radius: 999px;
-            border: 1px solid var(--teal-primary);
-            background: var(--teal-glow);
-            color: var(--text-main);
-            cursor: default;
-        }
-
         .expense-balance {
             display: flex;
             flex-direction: column;
@@ -2363,6 +2346,16 @@
             font-weight: 700;
             color: var(--text-main);
             white-space: nowrap;
+        }
+
+        .expense-row-summary {
+            max-width: 55%;
+            min-width: 0;
+            text-align: right;
+        }
+
+        .expense-row-summary .expense-row-meta {
+            overflow-wrap: anywhere;
         }
 
         .expense-empty {
@@ -3104,8 +3097,6 @@
                         <strong> 分帳結算</strong>
                         <span class="expense-rate-note" id="expenseRateNote"></span>
                     </div>
-                    <p class="expense-note">依每筆記錄的分帳對象結算；未勾選時由全部五人均分，付款人可代墊未參與的花費。</p>
-                    <div class="expense-people" id="expensePeople"></div>
                     <div class="expense-balance" id="expenseBalance"></div>
                     <div id="expenseTransfers"></div>
                 </div>
@@ -4087,9 +4078,11 @@
                             <div class="expense-row-main">
                                 <div class="expense-row-name">${escapeExpenseText(item.name)}</div>
                                 <div class="expense-row-meta">${escapeExpenseText([item.category, item.payer].filter(Boolean).join(' · '))}</div>
+                            </div>
+                            <div class="expense-row-summary">
+                                <div class="expense-row-amount">${escapeExpenseText(formatExpenseAmount(item))}</div>
                                 <div class="expense-row-meta">分帳：${escapeExpenseText(describeExpenseParticipants(item))}</div>
                             </div>
-                            <div class="expense-row-amount">${escapeExpenseText(formatExpenseAmount(item))}</div>
                         </div>`).join('');
                     return `<div class="expense-day">
                         <div class="expense-day-head"><strong>${escapeExpenseText(date)}</strong>
@@ -4246,7 +4239,6 @@
 
         function renderExpenseSplit(items) {
             const panel = document.getElementById('expenseSplit');
-            const people = listExpensePeople(items);
             document.getElementById('expenseRateNote').textContent = describeRates();
 
             if (!items.length) {
@@ -4255,8 +4247,6 @@
             }
             panel.hidden = false;
 
-            document.getElementById('expensePeople').innerHTML = people.map(name =>
-                `<span class="expense-person">${escapeExpenseText(name)}</span>`).join('');
             const balanceBox = document.getElementById('expenseBalance');
             const transferBox = document.getElementById('expenseTransfers');
 
@@ -4270,7 +4260,7 @@
             balanceBox.innerHTML = [
                 `<div class="expense-balance-row"><span>可分攤總額</span><b>${formatTwd(total)}</b></div>`,
                 ...balances.map(entry => `<div class="expense-balance-row">
-                    <span>${escapeExpenseText(entry.name)} 已付 ${formatTwd(entry.paid)}<br>應分攤 ${formatTwd(entry.owed)}</span>
+                    <span><strong>${escapeExpenseText(entry.name)}</strong> 已付 ${formatTwd(entry.paid)}<br>應分攤 ${formatTwd(entry.owed)}</span>
                     <b>${entry.balance >= 0 ? '應收 ' : '應付 '}${formatTwd(Math.abs(entry.balance))}</b>
                 </div>`),
                 skippedCurrency ? `<div class="expense-settled">有 ${skippedCurrency} 筆的幣別無法換算，未列入結算。</div>` : '',
