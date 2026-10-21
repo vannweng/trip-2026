@@ -2166,16 +2166,24 @@
 
         .expense-bar {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+            max-width: 55%;
+        }
+
+        .expense-header {
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 0;
         }
 
         .expense-reload {
-            font-family: inherit;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 8px 13px;
+            display: grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            padding: 0;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
             background: var(--bg-subtle);
@@ -2183,15 +2191,38 @@
             cursor: pointer;
         }
 
+        .expense-reload-icon {
+            position: relative;
+            width: 18px;
+            height: 18px;
+            border: 2px solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+        }
+
+        .expense-reload-icon::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 6px;
+            height: 6px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(10deg);
+        }
+
         .expense-status {
-            font-size: 0.76rem;
+            font-size: 0.68rem;
             color: var(--text-dim);
+            text-align: right;
+            overflow-wrap: anywhere;
         }
 
         .expense-totals {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
+            gap: 6px;
             margin: 0;
         }
 
@@ -2199,20 +2230,22 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            padding: 12px 14px;
+            padding: 7px 10px;
         }
 
         .expense-totals dt {
             font-size: 0.74rem;
             color: var(--text-muted);
-            margin-bottom: 4px;
+            margin-bottom: 1px;
+            line-height: 1.35;
         }
 
         .expense-totals dd {
             margin: 0;
-            font-size: 1.1rem;
+            font-size: 0.98rem;
             font-weight: 700;
             color: var(--text-main);
+            line-height: 1.35;
         }
 
         .expense-split {
@@ -2262,20 +2295,33 @@
             color: var(--text-main);
         }
 
-        .expense-transfer {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 11px 12px;
-            border-radius: var(--radius-sm);
-            background: var(--bg-subtle);
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--text-main);
+        .expense-transfers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 6px;
         }
 
-        .expense-transfer+.expense-transfer {
-            margin-top: 8px;
+        .expense-transfers>.expense-settled {
+            grid-column: 1 / -1;
+        }
+
+        .expense-transfer {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1px;
+            padding: 7px 10px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-subtle);
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+
+        .expense-transfer-label {
+            font-size: 0.74rem;
+            font-weight: 500;
         }
 
         .expense-settled {
@@ -3069,25 +3115,23 @@
             <!-- 花費記錄 -->
             <section id="expenses" class="expense-page trip-panel" role="tabpanel" aria-labelledby="tab-expenses"
                 hidden>
-                <div class="day-header">
+                <div class="day-header expense-header">
                     <div class="day-title-wrap">
                         <div class="day-title-top">
                             <span class="day-num">花費記錄</span>
                         </div>
-                        <div class="day-sub-desc">用表單記一筆，帳單明細直接看試算表</div>
+                        <div class="day-sub-desc">記一筆你的花費</div>
+                    </div>
+                    <div class="expense-bar">
+                        <button class="expense-reload" type="button" id="expenseReload" aria-label="重新整理花費" title="重新整理">
+                            <span class="expense-reload-icon" aria-hidden="true"></span>
+                        </button>
+                        <span class="expense-status" id="expenseStatus" role="status">載入中…</span>
                     </div>
                 </div>
 
                 <div class="expense-actions">
                     <a class="expense-btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSd4Ej-mIxT_yaBFaBon5P9vlesgBPnkclUE4wJJscRrooU6nw/viewform?usp=header" target="_blank"> 記一筆花費</a>
-                    <a class="expense-btn"
-                        href="https://docs.google.com/spreadsheets/d/1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58/edit?gid=763400443#gid=763400443"
-                        target="_blank"> 開啟完整帳單</a>
-                </div>
-
-                <div class="expense-bar">
-                    <button class="expense-reload" type="button" id="expenseReload"> 重新整理</button>
-                    <span class="expense-status" id="expenseStatus">載入中…</span>
                 </div>
 
                 <dl class="expense-totals" id="expenseTotals"></dl>
@@ -3098,10 +3142,14 @@
                         <span class="expense-rate-note" id="expenseRateNote"></span>
                     </div>
                     <div class="expense-balance" id="expenseBalance"></div>
-                    <div id="expenseTransfers"></div>
+                    <div class="expense-transfers" id="expenseTransfers"></div>
                 </div>
 
                 <div id="expenseList"></div>
+
+                <a class="expense-btn"
+                    href="https://docs.google.com/spreadsheets/d/1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58/edit?gid=763400443#gid=763400443"
+                    target="_blank"> 開啟完整帳單</a>
 
                 <p class="expense-note">明細直接讀自表單的回覆試算表，讀到後會存在這支手機裡，沒網路時仍看得到上次的內容。</p>
             </section>
@@ -4270,8 +4318,8 @@
             const transfers = buildTransfers(balances);
             transferBox.innerHTML = transfers.length
                 ? transfers.map(transfer => `<div class="expense-transfer">
-                    ${escapeExpenseText(transfer.from)} → ${escapeExpenseText(transfer.to)}
-                    <span style="margin-left:auto">${formatTwd(transfer.amount)}</span>
+                    <span class="expense-transfer-label">${escapeExpenseText(transfer.from)} → ${escapeExpenseText(transfer.to)}</span>
+                    <strong>${formatTwd(transfer.amount)}</strong>
                 </div>`).join('')
                 : '<div class="expense-settled">目前已經平帳，不用互相轉帳。</div>';
         }
@@ -4293,7 +4341,7 @@
                 const items = sheetRowsToExpenses(parseCsv(await response.text()));
                 const fetchedAt = new Date().toLocaleString('zh-TW', { hour12: false });
                 renderExpenses(items);
-                setExpenseStatus(`更新於 ${fetchedAt}`);
+                setExpenseStatus(fetchedAt);
                 try {
                     localStorage.setItem(EXPENSE_CACHE_KEY, JSON.stringify({ items, fetchedAt }));
                 } catch (err) { }
