@@ -2254,16 +2254,10 @@
             font-weight: 600;
             padding: 7px 13px;
             border-radius: 999px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-main);
-            color: var(--text-dim);
-            cursor: pointer;
-        }
-
-        .expense-person[aria-pressed="true"] {
-            border-color: var(--teal-primary);
+            border: 1px solid var(--teal-primary);
             background: var(--teal-glow);
             color: var(--text-main);
+            cursor: default;
         }
 
         .expense-balance {
@@ -3110,6 +3104,7 @@
                         <strong> 分帳結算</strong>
                         <span class="expense-rate-note" id="expenseRateNote"></span>
                     </div>
+                    <p class="expense-note">依每筆記錄的分帳對象結算；未勾選時由全部五人均分，付款人可代墊未參與的花費。</p>
                     <div class="expense-people" id="expensePeople"></div>
                     <div class="expense-balance" id="expenseBalance"></div>
                     <div id="expenseTransfers"></div>
@@ -3929,17 +3924,15 @@
         const EXPENSE_SHEET_ID = '1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58';
         const EXPENSE_SHEET_GID = '763400443';
         const EXPENSE_SHEET_URL = `https://docs.google.com/spreadsheets/d/${EXPENSE_SHEET_ID}/gviz/tq?tqx=out:csv&gid=${EXPENSE_SHEET_GID}`;
-        const EXPENSE_CACHE_KEY = `okinawa_expense_sheet_${EXPENSE_SHEET_ID}_${EXPENSE_SHEET_GID}`;
+        const EXPENSE_CACHE_KEY = `okinawa_expense_sheet_${EXPENSE_SHEET_ID}_${EXPENSE_SHEET_GID}_split_v2`;
         const EXPENSE_RATES_KEY = 'bali_expense_rates_2026';
-        const EXPENSE_SPLIT_KEY = `okinawa_expense_split_${EXPENSE_SHEET_ID}_${EXPENSE_SHEET_GID}_v1`;
-        // 這趟固定五個人均分；其他出現在付款人欄的名字（小寶、共用基金等）預設不分攤。
+        // 每筆未勾選分帳對象時，預設由這五位均分；付款人獨立計算代墊。
         const EXPENSE_SHARERS = ['阿均', '國恒', '媽咪', '阿猿', '培芝'];
         // 跟「匯率換算」那頁用同一支免費 API（ExchangeRate-API 的開放端點，不需金鑰）。
         const EXPENSE_RATES_URL = 'https://open.er-api.com/v6/latest/USD';
         const EXPENSE_RATES_TTL = 6 * 60 * 60 * 1000;
         let expenseItems = [];
         let expenseRates = null;
-        let expenseExcluded = new Set();
         // 表單的幣別是自由填寫的中文，比對時先找完全相同、再找包含關係（「新台幣」也要對到 TWD）。
         const EXPENSE_CURRENCY_ALIASES = [
             ['印尼盾', 'IDR'], ['印尼幣', 'IDR'], ['IDR', 'IDR'],
@@ -4009,7 +4002,8 @@
                 amount: columnOf('金額'),
                 currency: columnOf('幣別'),
                 payer: columnOf('付款人'),
-                category: columnOf('分類')
+                category: columnOf('分類'),
+                participants: columnOf('分帳對象')
             };
             if (index.name < 0 || index.amount < 0) return [];
 
@@ -4023,7 +4017,8 @@
                     amount,
                     currency: pick(row, index.currency),
                     category: pick(row, index.category),
-                    payer: pick(row, index.payer)
+                    payer: pick(row, index.payer),
+                    participants: parseExpenseParticipants(pick(row, index.participants))
                 };
             }).filter(Boolean);
         }
@@ -4062,11 +4057,6 @@
             const totals = document.getElementById('expenseTotals');
             const list = document.getElementById('expenseList');
             expenseItems = items;
-            if (!readJson(EXPENSE_SPLIT_KEY)) {
-                listExpensePeople(items).forEach(name => {
-                    if (!EXPENSE_SHARERS.includes(name)) expenseExcluded.add(name);
-                });
-            }
             renderExpenseSplit(items);
 
             if (!items.length) {
@@ -4075,7 +4065,7 @@
                 return;
             }
 
-            const twdTotal = items.reduce((sum, item) => sum + (toTwd(item) || 0), 0);
+            const twdTotal = items.reduce((sum, item) => sum + (toTwdCents(item) || 0), 0) / 100;
             totals.innerHTML = [
                 ['筆數', `${items.length} 筆`],
                 ...(expenseRates?.rates ? [['總計 · 台幣', formatTwd(twdTotal)]] : []),
@@ -4097,6 +4087,7 @@
                             <div class="expense-row-main">
                                 <div class="expense-row-name">${escapeExpenseText(item.name)}</div>
                                 <div class="expense-row-meta">${escapeExpenseText([item.category, item.payer].filter(Boolean).join(' · '))}</div>
+                                <div class="expense-row-meta">分帳：${escapeExpenseText(describeExpenseParticipants(item))}</div>
                             </div>
                             <div class="expense-row-amount">${escapeExpenseText(formatExpenseAmount(item))}</div>
                         </div>`).join('');
@@ -4132,8 +4123,13 @@
             return code === 'TWD' ? item.amount : (item.amount / source) * target;
         }
 
+        function toTwdCents(item) {
+            const value = toTwd(item);
+            return value === null ? null : Math.round(value * 100);
+        }
+
         function formatTwd(value) {
-            return `NT$${Math.round(value).toLocaleString('en-US')}`;
+            return `NT$${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
         }
 
         async function loadExpenseRates() {
@@ -4167,17 +4163,70 @@
             return `${note} ${when}`;
         }
 
+        function parseExpenseParticipants(value) {
+            const names = Array.isArray(value) ? value : String(value || '').split(/[,，、;；\n]+/);
+            return [...new Set(names.map(name => String(name).trim()).filter(Boolean))];
+        }
+
+        function getExpenseParticipants(item) {
+            const selected = parseExpenseParticipants(item.participants);
+            return selected.length ? selected : [...EXPENSE_SHARERS];
+        }
+
+        function describeExpenseParticipants(item) {
+            const people = getExpenseParticipants(item);
+            const all = people.length === EXPENSE_SHARERS.length && EXPENSE_SHARERS.every(name => people.includes(name));
+            return all ? '全部 5 人' : people.join('、');
+        }
+
         function listExpensePeople(items) {
-            const extras = [...new Set(items.map(item => item.payer).filter(Boolean))]
+            const extras = [...new Set(items.flatMap(item => [item.payer, ...getExpenseParticipants(item)]).filter(Boolean))]
                 .filter(name => !EXPENSE_SHARERS.includes(name)).sort();
             return [...EXPENSE_SHARERS, ...extras];
         }
 
+        function calculateExpenseSplit(items) {
+            const people = listExpensePeople(items);
+            const paid = new Map(people.map(name => [name, 0]));
+            const owed = new Map(people.map(name => [name, 0]));
+            let totalCents = 0;
+            let skippedCurrency = 0;
+            let skippedPayer = 0;
+
+            items.forEach(item => {
+                if (!item.payer) { skippedPayer += 1; return; }
+                const cents = toTwdCents(item);
+                if (cents === null) { skippedCurrency += 1; return; }
+                const participants = getExpenseParticipants(item);
+                // 以台幣分為單位分配尾差，確保每筆應付合計等於代墊金額。
+                const share = Math.trunc(cents / participants.length);
+                const remainder = cents - share * participants.length;
+                totalCents += cents;
+                paid.set(item.payer, paid.get(item.payer) + cents);
+                participants.forEach((name, index) => {
+                    const adjustment = index < Math.abs(remainder) ? Math.sign(remainder) : 0;
+                    owed.set(name, owed.get(name) + share + adjustment);
+                });
+            });
+
+            return {
+                total: totalCents / 100,
+                skippedCurrency,
+                skippedPayer,
+                balances: people.map(name => ({
+                    name,
+                    paid: paid.get(name) / 100,
+                    owed: owed.get(name) / 100,
+                    balance: (paid.get(name) - owed.get(name)) / 100
+                }))
+            };
+        }
+
         function buildTransfers(balances) {
-            const debtors = balances.filter(entry => entry.balance < -0.5)
-                .map(entry => ({ ...entry })).sort((a, b) => a.balance - b.balance);
-            const creditors = balances.filter(entry => entry.balance > 0.5)
-                .map(entry => ({ ...entry })).sort((a, b) => b.balance - a.balance);
+            const debtors = balances.map(entry => ({ name: entry.name, cents: -Math.round(entry.balance * 100) }))
+                .filter(entry => entry.cents > 0).sort((a, b) => b.cents - a.cents);
+            const creditors = balances.map(entry => ({ name: entry.name, cents: Math.round(entry.balance * 100) }))
+                .filter(entry => entry.cents > 0).sort((a, b) => b.cents - a.cents);
 
             const transfers = [];
             let debtorIndex = 0;
@@ -4185,12 +4234,12 @@
             while (debtorIndex < debtors.length && creditorIndex < creditors.length) {
                 const debtor = debtors[debtorIndex];
                 const creditor = creditors[creditorIndex];
-                const amount = Math.min(-debtor.balance, creditor.balance);
-                if (amount >= 1) transfers.push({ from: debtor.name, to: creditor.name, amount });
-                debtor.balance += amount;
-                creditor.balance -= amount;
-                if (-debtor.balance < 1) debtorIndex += 1;
-                if (creditor.balance < 1) creditorIndex += 1;
+                const cents = Math.min(debtor.cents, creditor.cents);
+                transfers.push({ from: debtor.name, to: creditor.name, amount: cents / 100 });
+                debtor.cents -= cents;
+                creditor.cents -= cents;
+                if (debtor.cents === 0) debtorIndex += 1;
+                if (creditor.cents === 0) creditorIndex += 1;
             }
             return transfers;
         }
@@ -4206,13 +4255,8 @@
             }
             panel.hidden = false;
 
-            document.getElementById('expensePeople').innerHTML = people.map(name => {
-                const active = !expenseExcluded.has(name);
-                return `<button class="expense-person" type="button" data-person="${escapeExpenseText(name)}"
-                    aria-pressed="${active}">${escapeExpenseText(name)}</button>`;
-            }).join('');
-
-            const sharers = people.filter(name => !expenseExcluded.has(name));
+            document.getElementById('expensePeople').innerHTML = people.map(name =>
+                `<span class="expense-person">${escapeExpenseText(name)}</span>`).join('');
             const balanceBox = document.getElementById('expenseBalance');
             const transferBox = document.getElementById('expenseTransfers');
 
@@ -4221,35 +4265,16 @@
                 transferBox.innerHTML = '';
                 return;
             }
-            if (sharers.length < 2) {
-                balanceBox.innerHTML = '<div class="expense-settled">請至少選兩位分攤者才能結算。未選取的人所付的款項會被視為共用基金，不列入分帳。</div>';
-                transferBox.innerHTML = '';
-                return;
-            }
-
-            // 只結算由分攤者墊付的花費；其他人付的當作共用基金。
-            const shared = items.filter(item => sharers.includes(item.payer));
-            let skipped = 0;
-            const paid = new Map(sharers.map(name => [name, 0]));
-            let total = 0;
-            shared.forEach(item => {
-                const value = toTwd(item);
-                if (value === null) { skipped += 1; return; }
-                paid.set(item.payer, paid.get(item.payer) + value);
-                total += value;
-            });
-
-            const share = total / sharers.length;
-            const balances = sharers.map(name => ({ name, paid: paid.get(name), balance: paid.get(name) - share }));
+            const { total, balances, skippedCurrency, skippedPayer } = calculateExpenseSplit(items);
 
             balanceBox.innerHTML = [
                 `<div class="expense-balance-row"><span>可分攤總額</span><b>${formatTwd(total)}</b></div>`,
-                `<div class="expense-balance-row"><span>每人應分攤</span><b>${formatTwd(share)}</b></div>`,
                 ...balances.map(entry => `<div class="expense-balance-row">
-                    <span>${escapeExpenseText(entry.name)} 已付 ${formatTwd(entry.paid)}</span>
+                    <span>${escapeExpenseText(entry.name)} 已付 ${formatTwd(entry.paid)}<br>應分攤 ${formatTwd(entry.owed)}</span>
                     <b>${entry.balance >= 0 ? '應收 ' : '應付 '}${formatTwd(Math.abs(entry.balance))}</b>
                 </div>`),
-                skipped ? `<div class="expense-settled">有 ${skipped} 筆的幣別無法換算，未列入結算。</div>` : ''
+                skippedCurrency ? `<div class="expense-settled">有 ${skippedCurrency} 筆的幣別無法換算，未列入結算。</div>` : '',
+                skippedPayer ? `<div class="expense-settled">有 ${skippedPayer} 筆未填付款人，未列入結算。</div>` : ''
             ].join('');
 
             const transfers = buildTransfers(balances);
@@ -4259,19 +4284,6 @@
                     <span style="margin-left:auto">${formatTwd(transfer.amount)}</span>
                 </div>`).join('')
                 : '<div class="expense-settled">目前已經平帳，不用互相轉帳。</div>';
-        }
-
-        function initExpenseSplitControls() {
-            expenseExcluded = new Set(readJson(EXPENSE_SPLIT_KEY) || []);
-            document.getElementById('expensePeople').addEventListener('click', event => {
-                const button = event.target.closest('[data-person]');
-                if (!button) return;
-                const name = button.dataset.person;
-                if (expenseExcluded.has(name)) expenseExcluded.delete(name);
-                else expenseExcluded.add(name);
-                writeJson(EXPENSE_SPLIT_KEY, [...expenseExcluded]);
-                renderExpenseSplit(expenseItems);
-            });
         }
 
         function setExpenseStatus(message) {
@@ -4310,7 +4322,6 @@
 
         function initExpenses() {
             if (!document.getElementById('expenseList')) return;
-            initExpenseSplitControls();
             expenseRates = readJson(EXPENSE_RATES_KEY);
             const cached = readExpenseCache();
             if (cached?.items?.length) {
