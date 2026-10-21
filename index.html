@@ -1921,6 +1921,55 @@
             border-radius: 6px;
         }
 
+        .day-map {
+            margin-top: 18px;
+        }
+
+        .day-map-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+            min-height: 48px;
+            padding: 10px 14px;
+            border: 1px solid #006f86;
+            border-radius: 6px;
+            background: #006f86;
+            color: #fff8ec;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .day-map-link:hover {
+            background: #164d5c;
+        }
+
+        .day-map-meta {
+            font-size: 0.72rem;
+            font-weight: 400;
+        }
+
+        .day-map-segments {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+            margin-top: 8px;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+        }
+
+        .day-map-segments[hidden] { display: none; }
+        .day-map-segments a { color: #006f86; padding-block: 5px; }
+        .day-map-link:focus-visible, .day-map-segments a:focus-visible {
+            outline: 2px solid #399da2;
+            outline-offset: 3px;
+        }
+
+        .day-map + .day-pagination { margin-top: 12px; }
+
         .day-pagination {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3486,6 +3535,7 @@
             });
             autoScrolledCard = null;
             updateTimelineProgress();
+            updateDayMaps();
         }
 
         function initItineraryFilter() {
@@ -3704,9 +3754,102 @@
             }, 0);
         }
 
+        // Reuse each main stop's navigation destination, including confirmed place coordinates.
+        function getDayMapDestination(link) {
+            const url = new URL(link.href);
+            const coordinates = [...url.pathname.matchAll(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/g)].pop();
+            if (coordinates) return `${coordinates[1]},${coordinates[2]}`;
+            const query = url.searchParams.get('query') || link.title.trim();
+            // Drop descriptive venue copy to keep multi-stop URLs within Google's length limit.
+            return query.match(/沖[縄繩][県縣].*$/u)?.[0] || query;
+        }
+
+        function getDayMapStops(section) {
+            const links = [...section.querySelectorAll('.timeline-card:not([hidden]) .maps-btn')]
+                .filter(link => !link.closest('.backup-plan'));
+            const destinations = links.map(getDayMapDestination);
+            // Consecutive activities in the same mall need one stop; a later return stays in the route.
+            return destinations.filter((destination, index) => destination !== destinations[index - 1]);
+        }
+
+        function buildDayMapUrl(stops) {
+            if (stops.length < 2 || stops.some(stop => !stop)) return null;
+            const url = new URL('https://www.google.com/maps/dir/');
+            url.searchParams.set('api', '1');
+            url.searchParams.set('origin', stops[0]);
+            url.searchParams.set('destination', stops[stops.length - 1]);
+            url.searchParams.set('travelmode', 'driving');
+            if (stops.length > 2) url.searchParams.set('waypoints', stops.slice(1, -1).join('|'));
+            return url.href;
+        }
+
+        function splitDayMapStops(stops) {
+            const segments = [];
+            // Mobile browsers support three intermediate stops: five places per segment.
+            for (let start = 0; start < stops.length - 1; start += 4) {
+                segments.push(stops.slice(start, start + 5));
+            }
+            return segments;
+        }
+
+        function updateDayMaps() {
+            const filter = document.querySelector('.itinerary-filter-btn.active')?.dataset.filter || 'all';
+            const filterLabel = { all: '全部', family: '親子', couple: '情侶' }[filter];
+            document.querySelectorAll('.day-section').forEach((section, index) => {
+                const container = section.querySelector('.day-map');
+                if (!container) return;
+                const stops = getDayMapStops(section);
+                const url = buildDayMapUrl(stops);
+                container.hidden = !url;
+                if (!url) return;
+
+                const link = container.querySelector('.day-map-link');
+                link.href = url;
+                link.setAttribute('aria-label', `${tripDateLabels[index]} ${filterLabel}行程完整整天 Google 地圖，共 ${stops.length} 站`);
+                container.querySelector('.day-map-meta').textContent = `${filterLabel} · ${stops.length} 站`;
+
+                const segmentLinks = container.querySelector('.day-map-segments');
+                segmentLinks.replaceChildren();
+                segmentLinks.hidden = stops.length <= 5;
+                if (segmentLinks.hidden) return;
+                const label = document.createElement('span');
+                label.textContent = '手機網頁可分段開啟：';
+                segmentLinks.appendChild(label);
+                splitDayMapStops(stops).forEach((segment, segmentIndex) => {
+                    const segmentLink = document.createElement('a');
+                    segmentLink.href = buildDayMapUrl(segment);
+                    segmentLink.target = '_blank';
+                    segmentLink.rel = 'noopener noreferrer';
+                    segmentLink.textContent = `第 ${segmentIndex + 1} 段`;
+                    segmentLink.setAttribute('aria-label', `${tripDateLabels[index]} ${filterLabel}行程地圖第 ${segmentIndex + 1} 段，共 ${segment.length} 站`);
+                    segmentLinks.appendChild(segmentLink);
+                });
+            });
+        }
+
+        function createDayMap(section) {
+            const container = document.createElement('div');
+            container.className = 'day-map';
+            const link = document.createElement('a');
+            link.className = 'day-map-link';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            const label = document.createElement('span');
+            label.textContent = '完整整天 Google 地圖';
+            const meta = document.createElement('span');
+            meta.className = 'day-map-meta';
+            link.append(label, meta);
+            const segments = document.createElement('div');
+            segments.className = 'day-map-segments';
+            segments.hidden = true;
+            container.append(link, segments);
+            section.appendChild(container);
+        }
+
         function createDayPagination() {
             const daySections = Array.from(document.querySelectorAll('.day-section'));
             daySections.forEach((section, index) => {
+                createDayMap(section);
                 const pagination = document.createElement('nav');
                 pagination.className = 'day-pagination';
                 pagination.setAttribute('aria-label', '日期前後切換');
@@ -3731,6 +3874,7 @@
                 pagination.append(previousButton, nextButton);
                 section.appendChild(pagination);
             });
+            updateDayMaps();
         }
 
         function syncDayFromUrl() {
