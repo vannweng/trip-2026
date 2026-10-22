@@ -1023,8 +1023,7 @@
             box-shadow: var(--shadow-soft);
         }
 
-        header::before,
-        header::after {
+        header::before {
             content: '';
             position: absolute;
             pointer-events: none;
@@ -1035,22 +1034,121 @@
             inset: 0 0 0 42%;
             background: #399da2;
             clip-path: polygon(36% 0, 100% 0, 100% 100%, 0 100%, 19% 72%, 8% 46%);
+            animation: coast-drift 6s ease-in-out infinite;
         }
 
-        header::after {
+        .banner-shore {
+            --shore-band: 18px;
+            position: absolute;
             z-index: -1;
             width: 56%;
             height: 76%;
             right: -4%;
             bottom: -24%;
-            border: 18px solid #d2efed;
-            border-bottom: 0;
-            border-radius: 50% 50% 0 0;
-            background: #6dc8c7;
             transform: rotate(-7deg);
-            box-shadow:
-                0 -18px 0 #edf7f7,
-                0 -36px 0 #fff8ec;
+            pointer-events: none;
+        }
+
+        .banner-wave {
+            position: absolute;
+            inset: 0;
+            border-radius: 50% 50% 0 0;
+            animation: shore-flow var(--wave-duration) ease-in-out infinite;
+            animation-delay: var(--wave-delay);
+        }
+
+        .banner-wave-sand {
+            --wave-duration: 6.5s;
+            --wave-delay: -1.5s;
+            --wave-drift: 28px;
+            --wave-rise: -6px;
+            top: calc(-2 * var(--shore-band));
+            bottom: calc(2 * var(--shore-band));
+            background: #fff8ec;
+        }
+
+        .banner-wave-foam {
+            --wave-duration: 5s;
+            --wave-delay: -3s;
+            --wave-drift: -32px;
+            --wave-rise: 7px;
+            top: calc(-1 * var(--shore-band));
+            bottom: var(--shore-band);
+            background: #edf7f7;
+        }
+
+        .banner-wave-wash {
+            --wave-duration: 4s;
+            --wave-delay: -1s;
+            --wave-drift: 36px;
+            --wave-rise: -8px;
+            background: #d2efed;
+        }
+
+        .banner-wave-sea {
+            --wave-duration: 5.5s;
+            --wave-delay: -3.5s;
+            --wave-drift: -30px;
+            --wave-rise: 6px;
+            inset: var(--shore-band) var(--shore-band) 0;
+            background: #6dc8c7;
+        }
+
+        @keyframes coast-drift {
+            0%, 100% { translate: 0 0; }
+            50% { translate: 18px 0; }
+        }
+
+        @keyframes shore-flow {
+            0%, 100% { translate: 0 0; }
+            50% { translate: var(--wave-drift) var(--wave-rise); }
+        }
+
+        header.motion-paused::before,
+        header.motion-paused .banner-wave {
+            animation-play-state: paused;
+        }
+
+        .banner-motion-toggle {
+            position: absolute;
+            z-index: 2;
+            right: 10px;
+            bottom: 8px;
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            border: 1px solid rgba(255, 248, 236, 0.7);
+            border-radius: 50%;
+            background: rgba(0, 111, 134, 0.8);
+            color: #fff8ec;
+            cursor: pointer;
+        }
+
+        .banner-motion-toggle svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        .banner-motion-toggle .motion-play,
+        .banner-motion-toggle[aria-pressed="true"] .motion-pause {
+            display: none;
+        }
+
+        .banner-motion-toggle[aria-pressed="true"] .motion-play {
+            display: block;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            header::before,
+            .banner-wave {
+                animation: none;
+            }
+
+            .banner-motion-toggle {
+                display: none;
+            }
         }
 
         h1 {
@@ -2216,17 +2314,13 @@
                 inset: 0 0 0 84%;
             }
 
-            header::after {
+            .banner-shore {
+                --shore-band: 13px;
                 width: 38%;
                 height: 64%;
                 right: -20%;
                 bottom: -26%;
-                border-width: 13px;
-                border-bottom: 0;
                 transform: none;
-                box-shadow:
-                    0 -13px 0 #edf7f7,
-                    0 -26px 0 #fff8ec;
             }
 
             h1 {
@@ -2627,6 +2721,12 @@
     <div class="container">
         <!-- Header -->
         <header>
+            <div class="banner-shore" aria-hidden="true">
+                <span class="banner-wave banner-wave-sand"></span>
+                <span class="banner-wave banner-wave-foam"></span>
+                <span class="banner-wave banner-wave-wash"></span>
+                <span class="banner-wave banner-wave-sea"></span>
+            </div>
             <h1>沖繩五天四夜雙軌行</h1>
             <p class="date-subtitle">2026/11/26 — 2026/11/30</p>
             <div class="header-btn-wrap">
@@ -2642,6 +2742,11 @@
                     <span class="dim-btn-label" id="pastDimToggleLabel">結束轉灰：開</span>
                 </button>
             </div>
+            <button class="banner-motion-toggle" type="button" aria-label="暫停封面動畫"
+                aria-pressed="false" title="暫停封面動畫" onclick="toggleBannerMotion(this)">
+                <svg class="motion-pause" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg>
+                <svg class="motion-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1l8 5-8 5z"/></svg>
+            </button>
         </header>
 
         <!-- Sticky Day Navigation -->
@@ -3716,6 +3821,14 @@
 
     <!-- Interactive JavaScript -->
     <script>
+        function toggleBannerMotion(button) {
+            const paused = button.getAttribute('aria-pressed') !== 'true';
+            button.closest('header').classList.toggle('motion-paused', paused);
+            button.setAttribute('aria-pressed', String(paused));
+            button.setAttribute('aria-label', paused ? '播放封面動畫' : '暫停封面動畫');
+            button.title = paused ? '播放封面動畫' : '暫停封面動畫';
+        }
+
         // Tab 按住左右滑動 (Drag to scroll)
         function enableDragScroll(slider) {
             if (!slider) return;
