@@ -1836,7 +1836,7 @@
 
         .reservation-card-actions {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: minmax(0, 1fr) auto;
             gap: 10px;
             margin-top: auto;
         }
@@ -1919,6 +1919,142 @@
         .tip-item {
             border: 1px solid var(--border-color);
             border-radius: 6px;
+        }
+
+        .souvenir-section {
+            margin-top: 22px;
+            padding: 6.4px;
+            border: 1px solid #b9dddd;
+            border-radius: 8px;
+            background: #edf7f7;
+        }
+
+        .souvenir-heading {
+            margin: 0;
+            color: #006f86;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .souvenir-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 4px;
+            margin-top: 4.8px;
+        }
+
+        .souvenir-card {
+            min-width: 0;
+            padding: 5.2px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: #fffefa;
+        }
+
+        .souvenir-brand {
+            margin: 0 0 1.6px;
+            color: #496d73;
+            font-size: 0.68rem;
+            line-height: 1.5;
+        }
+
+        .souvenir-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px;
+        }
+
+        .souvenir-titles {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .souvenir-card h3 {
+            min-width: 0;
+            margin: 0;
+            color: var(--text-main);
+            font-size: 0.87rem;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .souvenir-actions {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .maps-btn,
+        .reservation-map-link,
+        .expense-reload,
+        .souvenir-action {
+            width: 32px;
+            min-width: 32px;
+            height: 32px;
+            min-height: 32px;
+            padding: 0;
+            flex: 0 0 32px;
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+
+        .maps-btn,
+        .reservation-map-link,
+        .expense-reload,
+        .souvenir-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 6px;
+            background: transparent;
+            color: #006f86;
+            text-decoration: none;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .maps-btn:hover,
+        .reservation-map-link:hover,
+        .expense-reload:hover,
+        .souvenir-action:hover {
+            background: #dceff0;
+            color: #006f86;
+        }
+
+        .maps-btn:focus-visible,
+        .reservation-map-link:focus-visible,
+        .expense-reload:focus-visible,
+        .souvenir-action:focus-visible {
+            outline: 2px solid #399da2;
+            outline-offset: 1px;
+        }
+
+        .souvenir-icon,
+        .navigation-icon,
+        .expense-reload-icon {
+            display: block;
+            width: 20px;
+            height: 20px;
+            flex: 0 0 20px;
+            fill: currentColor;
+            pointer-events: none;
+        }
+
+        .souvenir-description {
+            margin: 2.8px 0 3.2px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            line-height: 1.65;
+        }
+
+        @media (max-width: 600px) {
+            .souvenir-section { padding: 5.6px; }
+            .souvenir-grid { grid-template-columns: minmax(0, 1fr); }
         }
 
         .day-map {
@@ -2160,7 +2296,6 @@
                 align-items: flex-start;
             }
 
-            .maps-btn,
             .reservation-info-btn {
                 min-height: 34px;
                 font-size: 0.7rem;
@@ -2225,40 +2360,6 @@
             align-items: flex-start;
             gap: 12px;
             margin-bottom: 0;
-        }
-
-        .expense-reload {
-            display: grid;
-            place-items: center;
-            width: 36px;
-            height: 36px;
-            padding: 0;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            background: var(--bg-subtle);
-            color: var(--text-main);
-            cursor: pointer;
-        }
-
-        .expense-reload-icon {
-            position: relative;
-            width: 18px;
-            height: 18px;
-            border: 2px solid currentColor;
-            border-right-color: transparent;
-            border-radius: 50%;
-        }
-
-        .expense-reload-icon::after {
-            content: '';
-            position: absolute;
-            top: -3px;
-            right: -3px;
-            width: 6px;
-            height: 6px;
-            border-right: 2px solid currentColor;
-            border-bottom: 2px solid currentColor;
-            transform: rotate(10deg);
         }
 
         .expense-status {
@@ -2586,7 +2687,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">那霸機場國際線航廈</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naha+International+Airport&amp;query_place_id=ChIJjSyLjsRp5TQRkP5WN6rOTFA" title="沖縄県那覇市鏡水150" data-place-key="airport" data-place-id="ChIJjSyLjsRp5TQRkP5WN6rOTFA" data-route-query="Naha International Airport" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naha+International+Airport&amp;query_place_id=ChIJjSyLjsRp5TQRkP5WN6rOTFA" title="導航至Naha International Airport｜沖縄県那覇市鏡水150" data-place-key="airport" data-place-id="ChIJjSyLjsRp5TQRkP5WN6rOTFA" data-route-query="Naha International Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至Naha International Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">班機表定 12:15 抵達，辦理出關手續約 45-60 分鐘，搭乘租車接駁車前往取車處。</div>
                         <div class="flight-details" aria-label="JX870 航班資訊">
@@ -2610,7 +2711,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">ORIX 租車 那霸機場店</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=ORIX+Rent-a-car+Naha+Airport&amp;query_place_id=ChIJT_QS2gto5TQRpfOpt3jYZC8" title="沖縄県豊見城市豊崎1-1174" data-place-key="orix" data-place-id="ChIJT_QS2gto5TQRpfOpt3jYZC8" data-route-query="ORIX Rent-a-car Naha Airport" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=ORIX+Rent-a-car+Naha+Airport&amp;query_place_id=ChIJT_QS2gto5TQRpfOpt3jYZC8" title="導航至ORIX Rent-a-car Naha Airport｜沖縄県豊見城市豊崎1-1174" data-place-key="orix" data-place-id="ChIJT_QS2gto5TQRpfOpt3jYZC8" data-route-query="ORIX Rent-a-car Naha Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至ORIX Rent-a-car Naha Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">準時取車，安裝 2 歲幼童安全座椅，確認車況與導航後出發。</div>
                     </article>
@@ -2621,7 +2722,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">J-voyage包棟－森暮</div>
-                            <a class="maps-btn" href="https://maps.app.goo.gl/FyrKLhVA2pELcgvx8?g_st=il" title="沖縄県国頭郡恩納村字仲泊1229-8" data-place-key="moribo" data-place-id="ChIJRaUIrnob5TQR2PUxfbQUHFQ" data-route-query="恩納民泊 森暮MoriMori 沖繩包棟民宿" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://maps.app.goo.gl/FyrKLhVA2pELcgvx8?g_st=il" title="導航至恩納民泊 森暮MoriMori 沖繩包棟民宿｜沖縄県国頭郡恩納村字仲泊1229-8" data-place-key="moribo" data-place-id="ChIJRaUIrnob5TQR2PUxfbQUHFQ" data-route-query="恩納民泊 森暮MoriMori 沖繩包棟民宿" target="_blank" rel="noopener noreferrer" aria-label="導航至恩納民泊 森暮MoriMori 沖繩包棟民宿"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">首日入住恩納包棟，客廳廚房寬敞舒適，適合幼童奔跑適應與長輩休息放行李。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">16:00 起辦理入住</span></div>
@@ -2633,7 +2734,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">浜の家海鮮料理</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Hamanoya+Restaurant&amp;query_place_id=ChIJRfq8yKAa5TQRqpJVaPpJhR4" title="沖縄県国頭郡恩納村仲泊2097" data-place-key="hamanoya" data-place-id="ChIJRfq8yKAa5TQRqpJVaPpJhR4" data-route-query="Hamanoya Restaurant" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Hamanoya+Restaurant&amp;query_place_id=ChIJRfq8yKAa5TQRqpJVaPpJhR4" title="導航至Hamanoya Restaurant｜沖縄県国頭郡恩納村仲泊2097" data-place-key="hamanoya" data-place-id="ChIJRfq8yKAa5TQRqpJVaPpJhR4" data-route-query="Hamanoya Restaurant" target="_blank" rel="noopener noreferrer" aria-label="導航至Hamanoya Restaurant"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">恩納村老字號海鮮名店，有寬敞榻榻米座位，適合親子一起用餐，招牌奶油煎魚肉質軟嫩香濃，離包棟超近免舟車勞頓。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">11:00 - 21:30 (無公休)</span><span class="tag price-tag">約 ¥1,500 - ¥2,500 / 人</span></div>
@@ -2641,11 +2742,44 @@
                             <summary>B 備案：恩納之驛 仲泊市場海鮮美食街</summary>
                             <div class="backup-content">
                                 <p>【B方案備案】若現場等候時間較長，可就近外帶海鮮丼、琉球炸物與熟食回森暮包棟客廳輕鬆享用。</p>
-                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%8A%E3%82%93%E3%81%AA%E3%81%AE%E9%A7%85+%E3%81%AA%E3%81%8B%E3%82%86%E3%81%8F%E3%81%84%E5%B8%82%E5%A0%B4%EF%BC%88%E7%94%A3%E7%9B%B4%E5%B8%82%E5%A0%B4%EF%BC%89&amp;query_place_id=ChIJxRvW16Ya5TQRubB2b8hH3Cw" title="沖縄県国頭郡恩納村仲泊1656-9" data-place-key="onna" data-place-id="ChIJxRvW16Ya5TQRubB2b8hH3Cw" data-route-query="おんなの駅 なかゆくい市場（産直市場）" target="_blank" rel="noopener noreferrer">備案導航</a>
+                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%8A%E3%82%93%E3%81%AA%E3%81%AE%E9%A7%85+%E3%81%AA%E3%81%8B%E3%82%86%E3%81%8F%E3%81%84%E5%B8%82%E5%A0%B4%EF%BC%88%E7%94%A3%E7%9B%B4%E5%B8%82%E5%A0%B4%EF%BC%89&amp;query_place_id=ChIJxRvW16Ya5TQRubB2b8hH3Cw" title="備案導航至おんなの駅 なかゆくい市場（産直市場）｜沖縄県国頭郡恩納村仲泊1656-9" data-place-key="onna" data-place-id="ChIJxRvW16Ya5TQRubB2b8hH3Cw" data-route-query="おんなの駅 なかゆくい市場（産直市場）" target="_blank" rel="noopener noreferrer" aria-label="備案導航至おんなの駅 なかゆくい市場（産直市場）"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
                 </div>
+                <aside class="souvenir-section" aria-labelledby="souvenir-day1-title">
+                    <h2 class="souvenir-heading" id="souvenir-day1-title">伴手禮推薦</h2>
+
+                    <div class="souvenir-grid">
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">CHINPINDO 珍品堂</p>
+                                    <h3>金楚糕（ちんすこう）</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://www.chinpindo.co.jp/" target="_blank" rel="noopener noreferrer" aria-label="查看CHINPINDO 珍品堂 金楚糕（ちんすこう）官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=Senka&amp;query_place_id=ChIJcb-RRMVp5TQRqwfH8b7fkbo" target="_blank" rel="noopener noreferrer" title="建議採買點：センカ 那霸機場店" aria-label="開啟 Google 地圖，建議採買點：センカ 那霸機場店"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">先從小包裝試口味，酥鬆口感適合搭配茶或咖啡；再挑喜歡的口味送給親友。</p>
+                        </article>
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">CHINPINDO 珍品堂</p>
+                                    <h3>鹽焦糖餅乾</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://www.chinpindo.co.jp/" target="_blank" rel="noopener noreferrer" aria-label="查看CHINPINDO 珍品堂 鹽焦糖餅乾官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=Senka&amp;query_place_id=ChIJcb-RRMVp5TQRqwfH8b7fkbo" target="_blank" rel="noopener noreferrer" title="建議採買點：センカ 那霸機場店" aria-label="開啟 Google 地圖，建議採買點：センカ 那霸機場店"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">可留意「笑顔足りてる！？」系列，想換一種餅乾口味，也能和金楚糕搭配成小禮。</p>
+                        </article>
+                    </div>
+
+                </aside>
             </section>
             <section id="day2" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day2" hidden>
                 <div class="day-header">
@@ -2665,7 +2799,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">やんばる森のおもちゃ美術館 (山原森林玩具美術館)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/place/%E5%B1%B1%E5%8E%9F%E6%A3%AE%E7%8E%A9%E5%85%B7%E5%8D%9A%E7%89%A9%E9%A4%A8/@26.7139032,128.1481607,12.85z/data=!4m6!3m5!1s0x34e443a085d43e8f:0x458b1f4a36a4ff32!8m2!3d26.7333059!4d128.1902453!16s%2Fg%2F11bw2jb9vl?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="沖縄県国頭郡国頭村辺土名1094-1" data-place-key="toy" data-place-id="ChIJjz7UhaBD5DQRMv-kNkofi0U" data-route-query="The Yanbaru Forest Toy Museum" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/place/%E5%B1%B1%E5%8E%9F%E6%A3%AE%E7%8E%A9%E5%85%B7%E5%8D%9A%E7%89%A9%E9%A4%A8/@26.7139032,128.1481607,12.85z/data=!4m6!3m5!1s0x34e443a085d43e8f:0x458b1f4a36a4ff32!8m2!3d26.7333059!4d128.1902453!16s%2Fg%2F11bw2jb9vl?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至The Yanbaru Forest Toy Museum｜沖縄県国頭郡国頭村辺土名1094-1" data-place-key="toy" data-place-id="ChIJjz7UhaBD5DQRMv-kNkofi0U" data-route-query="The Yanbaru Forest Toy Museum" target="_blank" rel="noopener noreferrer" aria-label="導航至The Yanbaru Forest Toy Museum"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">藏身北部山原森林中的全木造玩具館，設有木球池與天然木質積木，觸感溫潤安全，極適合 2 歲幼兒爬行與感官探索。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:00 - 16:00 (週二、三公休)</span><span class="tag price-tag">成人 ¥800 / 兒童 ¥600</span></div>
@@ -2673,7 +2807,7 @@
                             <summary>B 備案：道之驛許田 (名護休息站)</summary>
                             <div class="backup-content">
                                 <p>【親子B方案】若想縮短連續搭車時間、安排中途休息，可中途停靠許田休息站品嚐三矢本舖開口笑甜甜圈，休息後再繼續北部行程。</p>
-                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Roadside+Station+Kyoda&amp;query_place_id=ChIJFfz3q_H_5DQRttsFg7-7wLE" title="沖縄県名護市許田17-1" data-place-key="kyoda" data-place-id="ChIJFfz3q_H_5DQRttsFg7-7wLE" data-route-query="Roadside Station Kyoda" target="_blank" rel="noopener noreferrer">備案導航</a>
+                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Roadside+Station+Kyoda&amp;query_place_id=ChIJFfz3q_H_5DQRttsFg7-7wLE" title="備案導航至Roadside Station Kyoda｜沖縄県名護市許田17-1" data-place-key="kyoda" data-place-id="ChIJFfz3q_H_5DQRttsFg7-7wLE" data-route-query="Roadside Station Kyoda" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Roadside Station Kyoda"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
@@ -2684,7 +2818,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">天之船咖啡廳 (Ten no Fune)</div>
-                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ten-no-fune">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ten+no+Fune+%28%E5%A4%A9%E3%81%AE%E8%88%B9%29+Cafe&amp;query_place_id=ChIJFST7ErT55DQR__lPMDSAoGE" title="沖縄県国頭郡本部町伊豆味3514-24" data-place-key="boat" data-place-id="ChIJFST7ErT55DQR__lPMDSAoGE" data-route-query="Ten no Fune (天の船) Cafe" target="_blank" rel="noopener noreferrer">導航</a></div>
+                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ten-no-fune">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ten+no+Fune+%28%E5%A4%A9%E3%81%AE%E8%88%B9%29+Cafe&amp;query_place_id=ChIJFST7ErT55DQR__lPMDSAoGE" title="導航至Ten no Fune (天の船) Cafe｜沖縄県国頭郡本部町伊豆味3514-24" data-place-key="boat" data-place-id="ChIJFST7ErT55DQR__lPMDSAoGE" data-route-query="Ten no Fune (天の船) Cafe" target="_blank" rel="noopener noreferrer" aria-label="導航至Ten no Fune (天の船) Cafe"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">【情侶指名必訪】隱身北部山林的洞穴藝術建築空間，遠離喧囂，主打現點現做法式蕎麥薄餅與美學空間。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:30 - 15:00 (週二至週四營業，遇彈性營業可洽)</span><span class="tag price-tag">約 ¥1,500 - ¥2,500 / 人</span></div>
@@ -2692,7 +2826,7 @@
                             <summary>B 備案：Fukurubi (古宇利島海景咖啡)</summary>
                             <div class="backup-content">
                                 <p>【情侶B方案】若天之船週五未對外開放或客滿，可改到古宇利島的 Fukurubi，在高地海景戶外露台享用法式吐司。</p>
-                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Fukurubi&amp;query_place_id=ChIJw5fl0n72bBQRSKIfn594gpA" title="沖縄県国頭郡今帰仁村古宇利2516" data-place-key="fukurubi" data-place-id="ChIJw5fl0n72bBQRSKIfn594gpA" data-route-query="Fukurubi" target="_blank" rel="noopener noreferrer">Fukurubi導航</a>
+                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Fukurubi&amp;query_place_id=ChIJw5fl0n72bBQRSKIfn594gpA" title="導航至Fukurubi｜沖縄県国頭郡今帰仁村古宇利2516" data-place-key="fukurubi" data-place-id="ChIJw5fl0n72bBQRSKIfn594gpA" data-route-query="Fukurubi" target="_blank" rel="noopener noreferrer" aria-label="導航至Fukurubi"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
@@ -2703,7 +2837,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">岸本食堂 本店 (きしもと食堂)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/place/%E5%B2%B8%E6%9C%AC%E9%A3%9F%E5%A0%82/@26.6601413,127.8955933,20.18z/data=!4m15!1m8!3m7!1s0x34e4f95f0713ad43:0x6ca2015f0e4f426f!2s5+Toguchi,+Motobu,+Kunigami+District,+Okinawa+905-0214%E6%97%A5%E6%9C%AC!3b1!8m2!3d26.6602546!4d127.8958564!16s%2Fg%2F11clmq8_t2!3m5!1s0x34e4f95eb431867d:0x1653b48af7640a31!8m2!3d26.6603253!4d127.8958949!16s%2Fg%2F1tfn0h3y?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="沖縄県国頭郡本部町渡久地５" data-place-key="kishimoto" data-place-id="ChIJfYYxtF755DQRMQpk94q0UxY" data-route-query="Kishimoto Shokudo" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/place/%E5%B2%B8%E6%9C%AC%E9%A3%9F%E5%A0%82/@26.6601413,127.8955933,20.18z/data=!4m15!1m8!3m7!1s0x34e4f95f0713ad43:0x6ca2015f0e4f426f!2s5+Toguchi,+Motobu,+Kunigami+District,+Okinawa+905-0214%E6%97%A5%E6%9C%AC!3b1!8m2!3d26.6602546!4d127.8958564!16s%2Fg%2F11clmq8_t2!3m5!1s0x34e4f95eb431867d:0x1653b48af7640a31!8m2!3d26.6603253!4d127.8958949!16s%2Fg%2F1tfn0h3y?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至Kishimoto Shokudo｜沖縄県国頭郡本部町渡久地５" data-place-key="kishimoto" data-place-id="ChIJfYYxtF755DQRMQpk94q0UxY" data-route-query="Kishimoto Shokudo" target="_blank" rel="noopener noreferrer" aria-label="導航至Kishimoto Shokudo"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">百年沖繩麵老店，天然柴魚木灰清甜高湯、三層肉軟嫩多汁、手工粗麵Q彈，2 歲幼童可安心一同分食。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">11:00 - 17:00 (週三公休)</span><span class="tag price-tag">約 ¥800 - ¥1,200 / 人</span></div>
@@ -2711,7 +2845,7 @@
                             <summary>B 備案：岸本食堂 八重岳店 (附大型專用停車場)</summary>
                             <div class="backup-content">
                                 <p>【午餐B方案】若渡久地市場老店排隊人龍過長，開車 5 分鐘至八重岳分店，停車極為便利且店面寬闊好安置推車。</p>
-                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kishimoto+Shokudo+Yaedake&amp;query_place_id=ChIJ82ejwUH55DQRmzwA5oZFzpA" title="沖縄県国頭郡本部町伊野波350-1" data-place-key="kishimotoY" data-place-id="ChIJ82ejwUH55DQRmzwA5oZFzpA" data-route-query="Kishimoto Shokudo Yaedake" target="_blank" rel="noopener noreferrer">備案導航</a>
+                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kishimoto+Shokudo+Yaedake&amp;query_place_id=ChIJ82ejwUH55DQRmzwA5oZFzpA" title="備案導航至Kishimoto Shokudo Yaedake｜沖縄県国頭郡本部町伊野波350-1" data-place-key="kishimotoY" data-place-id="ChIJ82ejwUH55DQRmzwA5oZFzpA" data-route-query="Kishimoto Shokudo Yaedake" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Kishimoto Shokudo Yaedake"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
@@ -2725,7 +2859,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">沖繩美麗海水族館</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Okinawa+Churaumi+Aquarium&amp;query_place_id=ChIJPZ5hUjH65DQR_p_dD3CmCOo" title="沖縄県国頭郡本部町石川424" data-place-key="aquarium" data-place-id="ChIJPZ5hUjH65DQR_p_dD3CmCOo" data-route-query="Okinawa Churaumi Aquarium" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Okinawa+Churaumi+Aquarium&amp;query_place_id=ChIJPZ5hUjH65DQR_p_dD3CmCOo" title="導航至Okinawa Churaumi Aquarium｜沖縄県国頭郡本部町石川424" data-place-key="aquarium" data-place-id="ChIJPZ5hUjH65DQR_p_dD3CmCOo" data-route-query="Okinawa Churaumi Aquarium" target="_blank" rel="noopener noreferrer" aria-label="導航至Okinawa Churaumi Aquarium"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">全館平整推車動線且冷氣舒適，世界級「黑潮之海」巨型水槽鯨鯊高度吸引幼童目光，戶外有海豚表演劇場。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">08:30 - 18:30 (閉館前 1 小時停止入館)</span><span class="tag price-tag">成人 ¥2,180 / 6歲以下幼兒免費</span></div>
@@ -2737,7 +2871,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">FIFI PARLOR (絕美海景鞦韆咖啡廳)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=FIFI+PARLOR&amp;query_place_id=ChIJTyYj-1JX5DQRA10bcuPJHzI" title="沖縄県名護市呉我 大真利原1335-4" data-place-key="fifi" data-place-id="ChIJTyYj-1JX5DQRA10bcuPJHzI" data-route-query="FIFI PARLOR" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=FIFI+PARLOR&amp;query_place_id=ChIJTyYj-1JX5DQRA10bcuPJHzI" title="導航至FIFI PARLOR｜沖縄県名護市呉我 大真利原1335-4" data-place-key="fifi" data-place-id="ChIJTyYj-1JX5DQRA10bcuPJHzI" data-route-query="FIFI PARLOR" target="_blank" rel="noopener noreferrer" aria-label="導航至FIFI PARLOR"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">午後享受海景與咖啡的悠閒時光。坐在延伸至海面上的木質鞦韆吹海風放空拍照，極度放鬆且具海島氛圍。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">11:00 - 17:00 (不定休)</span><span class="tag price-tag">飲品甜點約 ¥800 - ¥1,500 / 人</span></div>
@@ -2745,7 +2879,7 @@
                             <summary>B 備案：Kurumaebi Kitchen TAMAYA (屋我地島店) &amp; The Sinmay</summary>
                             <div class="backup-content">
                                 <p>【情侶B方案】若 FIFI PARLOR 戶外客滿，可改到屋我地島的 TAMAYA 享用車海老料理，再到 The Sinmay 喝現刨黑糖拿鐵。TAMAYA 電話：0980-52-8080。</p>
-                                <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kurumaebi+Kitchen+TAMAYA&amp;query_place_id=ChIJH0m8lUhX5DQRcGTXCkQxPnM" title="沖縄県名護市運天原285" data-place-key="tamaya" data-place-id="ChIJH0m8lUhX5DQRcGTXCkQxPnM" data-route-query="Kurumaebi Kitchen TAMAYA" target="_blank" rel="noopener noreferrer">TAMAYA導航</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=The+Sinmay&amp;query_place_id=ChIJZyTTIT_55DQRoQD1hO7rxy4" title="292-2 Tamashiro, Nakijin, Kunigami District, Okinawa 905-0415日本" data-place-key="sinmay" data-place-id="ChIJZyTTIT_55DQRoQD1hO7rxy4" data-route-query="The Sinmay" target="_blank" rel="noopener noreferrer">The Sinmay導航</a></div>
+                                <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kurumaebi+Kitchen+TAMAYA&amp;query_place_id=ChIJH0m8lUhX5DQRcGTXCkQxPnM" title="導航至Kurumaebi Kitchen TAMAYA｜沖縄県名護市運天原285" data-place-key="tamaya" data-place-id="ChIJH0m8lUhX5DQRcGTXCkQxPnM" data-route-query="Kurumaebi Kitchen TAMAYA" target="_blank" rel="noopener noreferrer" aria-label="導航至Kurumaebi Kitchen TAMAYA"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=The+Sinmay&amp;query_place_id=ChIJZyTTIT_55DQRoQD1hO7rxy4" title="導航至The Sinmay｜292-2 Tamashiro, Nakijin, Kunigami District, Okinawa 905-0415日本" data-place-key="sinmay" data-place-id="ChIJZyTTIT_55DQRoQD1hO7rxy4" data-route-query="The Sinmay" target="_blank" rel="noopener noreferrer" aria-label="導航至The Sinmay"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                             </div>
                         </details>
                     </article>
@@ -2756,7 +2890,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">琉球的牛 恩納本館</div>
-                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ryukyu-beef">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/place/Ryukyu+No+Ushi/@26.4513457,127.8047221,17z/data=!4m10!1m2!2m1!1z55CJ55CD55qE54mbIOaBqee0jeacrOmkqA!3m6!1s0x34e51aca5afb013f:0xc95a3ce3a65b341e!8m2!3d26.4519972!4d127.8056266!15sChnnkInnkIPnmoTniZsg5oGp57SN5pys6aSoIgOIAQFaHiIc55CJ55CDIOeahCDniZsg5oGp57SNIOacrOmkqJIBE3lha2luaWt1X3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKTjJ3MlpFZFJOblpoV0VGUkVBReABAPoBBAgAEBE!16s%2Fg%2F1vq72lxc?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="沖縄県国頭郡恩納村前兼久909-2" data-place-key="beef" data-place-id="ChIJPwH7Wsoa5TQRHjRbpuM8Wsk" data-route-query="Ryukyu No Ushi" target="_blank" rel="noopener noreferrer">導航</a></div>
+                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ryukyu-beef">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/place/Ryukyu+No+Ushi/@26.4513457,127.8047221,17z/data=!4m10!1m2!2m1!1z55CJ55CD55qE54mbIOaBqee0jeacrOmkqA!3m6!1s0x34e51aca5afb013f:0xc95a3ce3a65b341e!8m2!3d26.4519972!4d127.8056266!15sChnnkInnkIPnmoTniZsg5oGp57SN5pys6aSoIgOIAQFaHiIc55CJ55CDIOeahCDniZsg5oGp57SNIOacrOmkqJIBE3lha2luaWt1X3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKTjJ3MlpFZFJOblpoV0VGUkVBReABAPoBBAgAEBE!16s%2Fg%2F1vq72lxc?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至Ryukyu No Ushi｜沖縄県国頭郡恩納村前兼久909-2" data-place-key="beef" data-place-id="ChIJPwH7Wsoa5TQRHjRbpuM8Wsk" data-route-query="Ryukyu No Ushi" target="_blank" rel="noopener noreferrer" aria-label="導航至Ryukyu No Ushi"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">頂級沖繩和牛油花均勻如大理石，入口即化！店內設有獨立隔間或包廂，家庭照顧幼童與情侶皆能自在享受頂級盛宴。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">17:00 - 23:00 (無公休)</span><span class="tag price-tag">約 ¥5,000 - ¥10,000 / 人</span></div>
@@ -2764,11 +2898,44 @@
                             <summary>B 備案：琉球的牛 恩納別館</summary>
                             <div class="backup-content">
                                 <p>【晚餐B方案】若恩納本館預約額滿，可詢問恩納別館是否有位，建議提前線上預約。</p>
-                                <a class="reservation-info-btn" href="#reservation-ryukyu-annex">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Yakiniku+Ryukyunoushi+Onnabekkan&amp;query_place_id=ChIJy7LL-LUa5TQRS_bFmRYz7II" title="沖縄県国頭郡恩納村前兼久101-1" data-place-key="annex" data-place-id="ChIJy7LL-LUa5TQRS_bFmRYz7II" data-route-query="Yakiniku Ryukyunoushi Onnabekkan" target="_blank" rel="noopener noreferrer">備案導航</a>
+                                <a class="reservation-info-btn" href="#reservation-ryukyu-annex">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Yakiniku+Ryukyunoushi+Onnabekkan&amp;query_place_id=ChIJy7LL-LUa5TQRS_bFmRYz7II" title="備案導航至Yakiniku Ryukyunoushi Onnabekkan｜沖縄県国頭郡恩納村前兼久101-1" data-place-key="annex" data-place-id="ChIJy7LL-LUa5TQRS_bFmRYz7II" data-route-query="Yakiniku Ryukyunoushi Onnabekkan" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Yakiniku Ryukyunoushi Onnabekkan"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
                 </div>
+                <aside class="souvenir-section" aria-labelledby="souvenir-day2-title">
+                    <h2 class="souvenir-heading" id="souvenir-day2-title">伴手禮推薦</h2>
+
+                    <div class="souvenir-grid">
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">琉鳳堂</p>
+                                    <h3>香檸果凍（シークヮーサー）</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://ryuhoudo.com/product-information/fruit-jelly/" target="_blank" rel="noopener noreferrer" aria-label="查看琉鳳堂 香檸果凍（シークヮーサー）官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AA%E3%82%A6%E3%83%9C%E3%82%A6%E7%A9%BA%E6%B8%AF%E5%BA%97&amp;query_place_id=ChIJEVW09M9p5TQRR88KY1A9KWo" target="_blank" rel="noopener noreferrer" title="建議採買點：リウボウ空港店（返程補買，品項請先洽詢）" aria-label="開啟 Google 地圖，建議採買點：リウボウ空港店（返程補買，品項請先洽詢）"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">使用沖繩北部的香檸果汁；喜歡清爽柑橘口味，可以在伴手禮櫃留意小盒裝。</p>
+                        </article>
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">沖繩美麗海水族館・オキちゃんショップ</p>
+                                    <h3>美麗海黑糖與金楚糕組</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://churaumi.okinawa/area/restaurant/okichan-shop/" target="_blank" rel="noopener noreferrer" aria-label="查看沖繩美麗海水族館・オキちゃんショップ 美麗海黑糖與金楚糕組官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%AA%E3%82%AD%E3%81%A1%E3%82%83%E3%82%93%E3%82%B7%E3%83%A7%E3%83%83%E3%83%97&amp;query_place_id=ChIJ6xQePjT65DQRytkXsLd8xd8" target="_blank" rel="noopener noreferrer" title="建議採買點：オキちゃんショップ" aria-label="開啟 Google 地圖，建議採買點：オキちゃんショップ"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">逛水族館時可順看這款點心組，把黑糖與金楚糕一起帶回家，也多一份北部旅程的紀念。</p>
+                        </article>
+                    </div>
+
+                </aside>
             </section>
             <section id="day3" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day3" hidden>
                 <div class="day-header">
@@ -2788,7 +2955,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">地球之庭 (ちきゅうのにわ) @ 永旺來客夢 C棟2F</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%A1%E3%81%8D%E3%82%85%E3%81%86%E3%81%AE%E3%81%AB%E3%82%8F%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E6%B2%96%E7%B8%84%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%A0&amp;query_place_id=ChIJwUm-A9cT5TQRooCYQj9koV0" title="沖縄県中頭郡北中城村ライカム1 Rycom Village C ２階 イオンモール沖縄" data-place-key="earth" data-place-id="ChIJwUm-A9cT5TQRooCYQj9koV0" data-route-query="ちきゅうのにわイオンモール沖縄ライカム" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%A1%E3%81%8D%E3%82%85%E3%81%86%E3%81%AE%E3%81%AB%E3%82%8F%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E6%B2%96%E7%B8%84%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%A0&amp;query_place_id=ChIJwUm-A9cT5TQRooCYQj9koV0" title="導航至ちきゅうのにわイオンモール沖縄ライカム｜沖縄県中頭郡北中城村ライカム1 Rycom Village C ２階 イオンモール沖縄" data-place-key="earth" data-place-id="ChIJwUm-A9cT5TQRooCYQj9koV0" data-route-query="ちきゅうのにわイオンモール沖縄ライカム" target="_blank" rel="noopener noreferrer" aria-label="導航至ちきゅうのにわイオンモール沖縄ライカム"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">大型室內森林系親子樂園，設有 2 歲幼童專用爬行軟墊區、沙坑與安全球池，商場育嬰室與推車租借齊全舒適。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:00 - 20:00 (無公休)</span><span class="tag price-tag">幼童約 ¥800 / 30分鐘 (依方案)</span></div>
@@ -2800,7 +2967,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">ククル読谷サーキット (Go-Karting 戶外賽車場)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kukuru+Yomitan+Circuit&amp;query_place_id=ChIJl1d0-80W5TQRv-JAB7eng8w" title="沖縄県中頭郡読谷村高志保1020-1" data-place-key="kart" data-place-id="ChIJl1d0-80W5TQRv-JAB7eng8w" data-route-query="Kukuru Yomitan Circuit" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kukuru+Yomitan+Circuit&amp;query_place_id=ChIJl1d0-80W5TQRv-JAB7eng8w" title="導航至Kukuru Yomitan Circuit｜沖縄県中頭郡読谷村高志保1020-1" data-place-key="kart" data-place-id="ChIJl1d0-80W5TQRv-JAB7eng8w" data-route-query="Kukuru Yomitan Circuit" target="_blank" rel="noopener noreferrer" aria-label="導航至Kukuru Yomitan Circuit"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">【情侶指名必訪】超刺激戶外標準卡丁車賽道，享受貼地高速過彎與推背感，非觀光化行程，熱血滿分！</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">09:30 - 18:00 (無公休)</span><span class="tag price-tag">單人卡丁車約 ¥2,000 - ¥3,500 / 人</span></div>
@@ -2808,7 +2975,7 @@
                             <summary>B 備案：OKI SMASH BURGERS (真榮田岬漢堡店)</summary>
                             <div class="backup-content">
                                 <p>【情侶B方案】若賽車場遇天候微調或私人包場，轉往真榮田岬品嚐美式現壓酥脆肉汁漢堡與特調氣泡飲。</p>
-                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Oki+Smash+Burgers&amp;query_place_id=ChIJSeeLagAR5TQRIPiESC7PX50" title="沖縄県国頭郡恩納村真栄田2426-4" data-place-key="oki" data-place-id="ChIJSeeLagAR5TQRIPiESC7PX50" data-route-query="Oki Smash Burgers" target="_blank" rel="noopener noreferrer">備案導航</a>
+                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Oki+Smash+Burgers&amp;query_place_id=ChIJSeeLagAR5TQRIPiESC7PX50" title="備案導航至Oki Smash Burgers｜沖縄県国頭郡恩納村真栄田2426-4" data-place-key="oki" data-place-id="ChIJSeeLagAR5TQRIPiESC7PX50" data-route-query="Oki Smash Burgers" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Oki Smash Burgers"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
@@ -2819,7 +2986,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">永旺夢樂城來客夢 美食街與母嬰專區</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=AEON+MALL+Okinawa+Rycom&amp;query_place_id=ChIJJ_TSFGIS5TQRa_HkdjGALss" title="沖縄県中頭郡北中城村ライカム1" data-place-key="rycom" data-place-id="ChIJJ_TSFGIS5TQRa_HkdjGALss" data-route-query="AEON MALL Okinawa Rycom" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=AEON+MALL+Okinawa+Rycom&amp;query_place_id=ChIJJ_TSFGIS5TQRa_HkdjGALss" title="導航至AEON MALL Okinawa Rycom｜沖縄県中頭郡北中城村ライカム1" data-place-key="rycom" data-place-id="ChIJJ_TSFGIS5TQRa_HkdjGALss" data-route-query="AEON MALL Okinawa Rycom" target="_blank" rel="noopener noreferrer" aria-label="導航至AEON MALL Okinawa Rycom"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">商場中庭有巨大水族箱，美食街有充足兒童餐椅，吃飽後推推車逛阿卡將本舖母嬰店，讓 2 歲幼童在涼爽推車中安穩午睡。15:00 出發前往西松屋，預留移動與停車時間。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:00 - 22:00</span><span class="tag price-tag">約 ¥1,000 - ¥1,500 / 人</span></div>
@@ -2831,7 +2998,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">星野集團 BANTA CAFE (絕美海岸咖啡廳)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=BANTA+CAFE+by+Hoshino+Resorts&amp;query_place_id=ChIJWwtxRZkX5TQRd_jZvuds3BQ" title="沖縄県中頭郡読谷村儀間560" data-place-key="banta" data-place-id="ChIJWwtxRZkX5TQRd_jZvuds3BQ" data-route-query="BANTA CAFE by Hoshino Resorts" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=BANTA+CAFE+by+Hoshino+Resorts&amp;query_place_id=ChIJWwtxRZkX5TQRd_jZvuds3BQ" title="導航至BANTA CAFE by Hoshino Resorts｜沖縄県中頭郡読谷村儀間560" data-place-key="banta" data-place-id="ChIJWwtxRZkX5TQRd_jZvuds3BQ" data-route-query="BANTA CAFE by Hoshino Resorts" target="_blank" rel="noopener noreferrer" aria-label="導航至BANTA CAFE by Hoshino Resorts"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">【絕美海景咖啡】星野集團打造，依懸崖礁岩而建的木棧露台與戶外榻榻米海景座位，坐看漸層碧藍海岸放空，浪漫度破表。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:00 - 日落後 1 小時 (無公休)</span><span class="tag price-tag">飲品輕食約 ¥1,000 - ¥1,800 / 人</span></div>
@@ -2839,7 +3006,7 @@
                             <summary>B 備案：Beachy Okinawa (海洋風蛋糕餐廳)</summary>
                             <div class="backup-content">
                                 <p>【情侶B方案】若 BANTA CAFE 假日午後人潮多，轉往恩納海邊品嚐以蔚藍海洋為主題的精緻手作蛋糕與海風蘇打。</p>
-                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Beachy+Okinawa&amp;query_place_id=ChIJ2dIk05AF5TQRkd67ts02NdU" title="沖縄県国頭郡恩納村恩納6497-1 K&amp;Sビル南 201" data-place-key="beachy" data-place-id="ChIJ2dIk05AF5TQRkd67ts02NdU" data-route-query="Beachy Okinawa" target="_blank" rel="noopener noreferrer">備案導航</a>
+                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Beachy+Okinawa&amp;query_place_id=ChIJ2dIk05AF5TQRkd67ts02NdU" title="備案導航至Beachy Okinawa｜沖縄県国頭郡恩納村恩納6497-1 K&amp;Sビル南 201" data-place-key="beachy" data-place-id="ChIJ2dIk05AF5TQRkd67ts02NdU" data-route-query="Beachy Okinawa" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Beachy Okinawa"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
@@ -2850,7 +3017,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">西松屋 北谷美浜店</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Nishimatsuya+Chatan+Mihama&amp;query_place_id=ChIJDyl60RgT5TQRznCbperdy6c" title="沖縄県中頭郡北谷町北谷２丁目18-4" data-place-key="nishimatsu" data-place-id="ChIJDyl60RgT5TQRznCbperdy6c" data-route-query="Nishimatsuya Chatan Mihama" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Nishimatsuya+Chatan+Mihama&amp;query_place_id=ChIJDyl60RgT5TQRznCbperdy6c" title="導航至Nishimatsuya Chatan Mihama｜沖縄県中頭郡北谷町北谷２丁目18-4" data-place-key="nishimatsu" data-place-id="ChIJDyl60RgT5TQRznCbperdy6c" data-route-query="Nishimatsuya Chatan Mihama" target="_blank" rel="noopener noreferrer" aria-label="導航至Nishimatsuya Chatan Mihama"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">安排約一小時採買幼童衣物、尿布與育兒用品，依需要補齊旅途備品。結束後接續原訂親子晚餐，與情侶組各自用餐。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:00 - 21:00</span></div>
@@ -2862,7 +3029,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">永旺購物中心 (餐廳尚未選定)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=AEON+MALL+Okinawa+Rycom&amp;query_place_id=ChIJJ_TSFGIS5TQRa_HkdjGALss" title="沖縄県中頭郡北中城村ライカム1" data-place-key="rycom" data-place-id="ChIJJ_TSFGIS5TQRa_HkdjGALss" data-route-query="AEON MALL Okinawa Rycom" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=AEON+MALL+Okinawa+Rycom&amp;query_place_id=ChIJJ_TSFGIS5TQRa_HkdjGALss" title="導航至AEON MALL Okinawa Rycom｜沖縄県中頭郡北中城村ライカム1" data-place-key="rycom" data-place-id="ChIJJ_TSFGIS5TQRa_HkdjGALss" data-route-query="AEON MALL Okinawa Rycom" target="_blank" rel="noopener noreferrer" aria-label="導航至AEON MALL Okinawa Rycom"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">親子組在永旺夢樂城沖繩來客夢安排晚餐，餐廳尚未選定；用餐後可依家庭步調返回住宿休息。</div>
                     </article>
@@ -2873,11 +3040,44 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">美國村 (餐廳尚未選定)</div>
-                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-american-village">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer">導航</a></div>
+                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-american-village">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="導航至American Village｜沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer" aria-label="導航至American Village"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">漫步美國村日落步道欣賞夕陽，再安排晚餐；餐廳尚未選定，導航先以美國村為目的地。</div>
                     </article>
                 </div>
+                <aside class="souvenir-section" aria-labelledby="souvenir-day3-title">
+                    <h2 class="souvenir-heading" id="souvenir-day3-title">伴手禮推薦</h2>
+
+                    <div class="souvenir-grid">
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">御菓子御殿</p>
+                                    <h3>元祖紅芋塔</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://www.okashigoten.co.jp/" target="_blank" rel="noopener noreferrer" aria-label="查看御菓子御殿 元祖紅芋塔官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=Okashigoten+Yomitan+Main+Branch&amp;query_place_id=ChIJ_U0aFzQX5TQRDetWpcnv7s4" target="_blank" rel="noopener noreferrer" title="建議採買點：御菓子御殿 讀谷本店" aria-label="開啟 Google 地圖，建議採買點：御菓子御殿 讀谷本店"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">紅芋餡搭配塔皮，適合喜歡芋頭口味的人；採買時可依送禮人數挑選盒裝份量。</p>
+                        </article>
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">CHINPINDO 珍品堂</p>
+                                    <h3>黑糖奶油巧克力夾心</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://www.chinpindo.co.jp/" target="_blank" rel="noopener noreferrer" aria-label="查看CHINPINDO 珍品堂 黑糖奶油巧克力夾心官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=JA+Farmers+Market+Chanpuru+Ichiba&amp;query_place_id=ChIJ__-vUCIO5TQRZsi03K1My5o" target="_blank" rel="noopener noreferrer" title="建議採買點：ちゃんぷる～市場（品項請先洽詢）" aria-label="開啟 Google 地圖，建議採買點：ちゃんぷる～市場（品項請先洽詢）"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">可留意「沖縄香る 黒糖クリームショコラサンド」，適合偏好黑糖與巧克力風味的人。</p>
+                        </article>
+                    </div>
+
+                </aside>
             </section>
             <section id="day4" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day4" hidden>
                 <div class="day-header">
@@ -2897,7 +3097,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">恩納村森暮包棟辦理退房</div>
-                            <a class="maps-btn" href="https://maps.app.goo.gl/FyrKLhVA2pELcgvx8?g_st=il" title="沖縄県国頭郡恩納村字仲泊1229-8" data-place-key="moribo" data-place-id="ChIJRaUIrnob5TQR2PUxfbQUHFQ" data-route-query="恩納民泊 森暮MoriMori 沖繩包棟民宿" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://maps.app.goo.gl/FyrKLhVA2pELcgvx8?g_st=il" title="導航至恩納民泊 森暮MoriMori 沖繩包棟民宿｜沖縄県国頭郡恩納村字仲泊1229-8" data-place-key="moribo" data-place-id="ChIJRaUIrnob5TQR2PUxfbQUHFQ" data-route-query="恩納民泊 森暮MoriMori 沖繩包棟民宿" target="_blank" rel="noopener noreferrer" aria-label="導航至恩納民泊 森暮MoriMori 沖繩包棟民宿"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">全體退房將大件行李搬上車，沿高速公路南下前往浦添文創聚落與那霸市區。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">11:00 前辦理退房</span></div>
@@ -2909,7 +3109,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">hoppepan 麵包店 (浦添人氣名店)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=hoppepan&amp;query_place_id=ChIJb_Q15qhr5TQRNzzHUipNSwg" title="沖縄県浦添市内間２丁目１０−10" data-place-key="hoppe" data-place-id="ChIJb_Q15qhr5TQRNzzHUipNSwg" data-route-query="hoppepan" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=hoppepan&amp;query_place_id=ChIJb_Q15qhr5TQRNzzHUipNSwg" title="導航至hoppepan｜沖縄県浦添市内間２丁目１０−10" data-place-key="hoppe" data-place-id="ChIJb_Q15qhr5TQRNzzHUipNSwg" data-route-query="hoppepan" target="_blank" rel="noopener noreferrer" aria-label="導航至hoppepan"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">【情侶指名必訪】一週僅營業 4 天的排隊手作麵包店！招牌必買糖粒酥脆「巧克力麻花捲」，亦有多款無添加軟土司可給幼童同享。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">09:00 - 19:00 (週日正常營業)</span><span class="tag price-tag">單品約 ¥200 - ¥600</span></div>
@@ -2917,7 +3117,7 @@
                             <summary>B 備案：港川外人住宅街 (Minatogawa Stateside Town)</summary>
                             <div class="backup-content">
                                 <p>若 hoppepan 售完，可改至港川外人住宅街散步、吃輕食與甜點。</p>
-                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Minatogawa+Stateside+Town&amp;query_place_id=ChIJU4WYIXpr5TQRYnoNjeiRLIk" title="沖縄県浦添市港川２丁目１８−3" data-place-key="minato" data-place-id="ChIJU4WYIXpr5TQRYnoNjeiRLIk" data-route-query="Minatogawa Stateside Town" target="_blank" rel="noopener noreferrer">備案導航</a>
+                                <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Minatogawa+Stateside+Town&amp;query_place_id=ChIJU4WYIXpr5TQRYnoNjeiRLIk" title="備案導航至Minatogawa Stateside Town｜沖縄県浦添市港川２丁目１８−3" data-place-key="minato" data-place-id="ChIJU4WYIXpr5TQRYnoNjeiRLIk" data-route-query="Minatogawa Stateside Town" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Minatogawa Stateside Town"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
@@ -2928,7 +3128,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">港川外人住宅街 (Minatogawa Stateside Town)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Minatogawa+Stateside+Town&amp;query_place_id=ChIJU4WYIXpr5TQRYnoNjeiRLIk" title="沖縄県浦添市港川２丁目１８−3" data-place-key="minato" data-place-id="ChIJU4WYIXpr5TQRYnoNjeiRLIk" data-route-query="Minatogawa Stateside Town" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Minatogawa+Stateside+Town&amp;query_place_id=ChIJU4WYIXpr5TQRYnoNjeiRLIk" title="導航至Minatogawa Stateside Town｜沖縄県浦添市港川２丁目１８−3" data-place-key="minato" data-place-id="ChIJU4WYIXpr5TQRYnoNjeiRLIk" data-route-query="Minatogawa Stateside Town" target="_blank" rel="noopener noreferrer" aria-label="導航至Minatogawa Stateside Town"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">美軍舊眷舍改建的文創彩色平房聚落，步道平緩適合推嬰兒車散步，品嚐 Houki Boshi 黑糖可麗露；若 hoppepan 售完亦可在此用餐。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">11:00 - 18:00 (各店不同)</span><span class="tag price-tag">甜點輕食約 ¥600 - ¥1,500</span></div>
@@ -2940,7 +3140,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">PARCO CITY (含 5F 停車場無敵海景)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=PARCO+CITY&amp;query_place_id=ChIJxZQf9gpr5TQRwLWyT5Osigc" title="沖縄県浦添市西洲３丁目1-1" data-place-key="parco" data-place-id="ChIJxZQf9gpr5TQRwLWyT5Osigc" data-route-query="PARCO CITY" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=PARCO+CITY&amp;query_place_id=ChIJxZQf9gpr5TQRwLWyT5Osigc" title="導航至PARCO CITY｜沖縄県浦添市西洲３丁目1-1" data-place-key="parco" data-place-id="ChIJxZQf9gpr5TQRwLWyT5Osigc" data-route-query="PARCO CITY" target="_blank" rel="noopener noreferrer" aria-label="導航至PARCO CITY"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">商場 5 樓停車場擁有開闊的隱藏版濱海視野，內部冷氣舒適，可順道採買日本零食、文具生活雜貨。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:00 - 22:00</span><span class="tag price-tag">免費參觀購物</span></div>
@@ -2952,7 +3152,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">那霸若狹房源 (2-chōme-7-14 Wakasa)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=2-ch%C5%8Dme-7-14%20Wakasa%2C%20Naha%2C%20Okinawa%20900-0031" title="2-chōme-7-14 Wakasa, Naha, Okinawa 900-0031" data-place-key="wakasa" data-place-id="ChIJFaoNnIRp5TQR-NW0yVL9qao" data-route-query="2-chōme-7-14 Wakasa" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=2-ch%C5%8Dme-7-14%20Wakasa%2C%20Naha%2C%20Okinawa%20900-0031" title="導航至2-chōme-7-14 Wakasa｜2-chōme-7-14 Wakasa, Naha, Okinawa 900-0031" data-place-key="wakasa" data-place-id="ChIJFaoNnIRp5TQR-NW0yVL9qao" data-route-query="2-chōme-7-14 Wakasa" target="_blank" rel="noopener noreferrer" aria-label="導航至2-chōme-7-14 Wakasa"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">抵達那霸民宿辦理入住手續並卸下重行李，地點鄰近波上宮、國際通與泊港，交通便利。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">15:00 起辦理入住</span></div>
@@ -2964,7 +3164,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">波上宮 &amp; 波之上海灘 (步行即達)</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naminoue+Shrine&amp;query_place_id=ChIJdT8KUYVp5TQRrCRV4eFRanc" title="沖縄県那覇市若狭１丁目２５−11" data-place-key="naminoue" data-place-id="ChIJdT8KUYVp5TQRrCRV4eFRanc" data-route-query="Naminoue Shrine" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naminoue+Shrine&amp;query_place_id=ChIJdT8KUYVp5TQRrCRV4eFRanc" title="導航至Naminoue Shrine｜沖縄県那覇市若狭１丁目２５−11" data-place-key="naminoue" data-place-id="ChIJdT8KUYVp5TQRrCRV4eFRanc" data-route-query="Naminoue Shrine" target="_blank" rel="noopener noreferrer" aria-label="導航至Naminoue Shrine"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">從住宿步行即可抵達，輕鬆安排神社與海灘散步。參拜海崖上的那霸總鎮守祈福，再到白沙灘踩水踏沙。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">神社全日開放 (社務所 09:00-17:00)</span><span class="tag price-tag">免費參拜</span></div>
@@ -2976,7 +3176,7 @@
                         </div>
                         <div class="place-title-row multiple-destinations">
                             <div class="place-name">淳久堂書店 那霸店 (Junkudo) &amp; rokkan COFFEE SHURI</div>
-                            <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=JUNKUDO+Naha&amp;query_place_id=ChIJAS4kd3lp5TQRFv5A68JHwl8" title="沖縄県那覇市牧志１丁目１９−29 D-NAHA 地下 1階～3階" data-place-key="junkudo" data-place-id="ChIJAS4kd3lp5TQRFv5A68JHwl8" data-route-query="JUNKUDO Naha" target="_blank" rel="noopener noreferrer">淳久堂書店導航</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=rokkan+COFFEE+SHURI&amp;query_place_id=ChIJL--aUDtr5TQRB1R5MkX_1QI" title="沖縄県那覇市首里当蔵町２丁目14 やまごうビル 1F" data-place-key="rokkan" data-place-id="ChIJL--aUDtr5TQRB1R5MkX_1QI" data-route-query="rokkan COFFEE SHURI" target="_blank" rel="noopener noreferrer">rokkan導航</a></div>
+                            <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=JUNKUDO+Naha&amp;query_place_id=ChIJAS4kd3lp5TQRFv5A68JHwl8" title="導航至JUNKUDO Naha｜沖縄県那覇市牧志１丁目１９−29 D-NAHA 地下 1階～3階" data-place-key="junkudo" data-place-id="ChIJAS4kd3lp5TQRFv5A68JHwl8" data-route-query="JUNKUDO Naha" target="_blank" rel="noopener noreferrer" aria-label="導航至JUNKUDO Naha"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=rokkan+COFFEE+SHURI&amp;query_place_id=ChIJL--aUDtr5TQRB1R5MkX_1QI" title="導航至rokkan COFFEE SHURI｜沖縄県那覇市首里当蔵町２丁目14 やまごうビル 1F" data-place-key="rokkan" data-place-id="ChIJL--aUDtr5TQRB1R5MkX_1QI" data-route-query="rokkan COFFEE SHURI" target="_blank" rel="noopener noreferrer" aria-label="導航至rokkan COFFEE SHURI"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">【情侶指名必訪】沖繩最大旗艦書店淳久堂翻閱沖繩歷史工藝書籍；隨後前往首里城旁紅瓦老宅享用自家烘焙極簡咖啡。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">淳久堂 10:00-21:00 / rokkan 06:00-18:00</span><span class="tag price-tag">咖啡約 ¥600 / 書籍依標價</span></div>
@@ -2984,7 +3184,7 @@
                             <summary>B 備案：.uki (宜野灣咖啡店) 或 國際通散策</summary>
                             <div class="backup-content">
                                 <p>【情侶B方案】可選擇前往宜野灣的 .uki 喝咖啡，或留在那霸國際通主街散步購物，依當天交通與時間擇一安排。</p>
-                                <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=.uki&amp;query_place_id=ChIJ59qbnddt5TQR28EIpd0WPzE" title="沖縄県宜野湾市大山２丁目１３−12" data-place-key="uki" data-place-id="ChIJ59qbnddt5TQR28EIpd0WPzE" data-route-query=".uki" target="_blank" rel="noopener noreferrer">.uki導航</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kokusai-dori&amp;query_place_id=ChIJMS9BUXdp5TQRAl6RXvY5aY0" title="沖縄県那覇市" data-place-key="kokusai" data-place-id="ChIJMS9BUXdp5TQRAl6RXvY5aY0" data-route-query="Kokusai-dori" target="_blank" rel="noopener noreferrer">國際通導航</a></div>
+                                <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=.uki&amp;query_place_id=ChIJ59qbnddt5TQR28EIpd0WPzE" title="導航至.uki｜沖縄県宜野湾市大山２丁目１３−12" data-place-key="uki" data-place-id="ChIJ59qbnddt5TQR28EIpd0WPzE" data-route-query=".uki" target="_blank" rel="noopener noreferrer" aria-label="導航至.uki"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kokusai-dori&amp;query_place_id=ChIJMS9BUXdp5TQRAl6RXvY5aY0" title="導航至Kokusai-dori｜沖縄県那覇市" data-place-key="kokusai" data-place-id="ChIJMS9BUXdp5TQRAl6RXvY5aY0" data-route-query="Kokusai-dori" target="_blank" rel="noopener noreferrer" aria-label="導航至Kokusai-dori"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                             </div>
                         </details>
                     </article>
@@ -2995,7 +3195,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">炭火燒肉 ぶち 久茂地店</div>
-                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-buchi">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Buchi+Kumojiten&amp;query_place_id=ChIJzcnA2ndp5TQRRkXi5c02uKk" title="沖縄県那覇市久茂地３丁目１２−1" data-place-key="buchi" data-place-id="ChIJzcnA2ndp5TQRRkXi5c02uKk" data-route-query="Buchi Kumojiten" target="_blank" rel="noopener noreferrer">導航</a></div>
+                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-buchi">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Buchi+Kumojiten&amp;query_place_id=ChIJzcnA2ndp5TQRRkXi5c02uKk" title="導航至Buchi Kumojiten｜沖縄県那覇市久茂地３丁目１２−1" data-place-key="buchi" data-place-id="ChIJzcnA2ndp5TQRRkXi5c02uKk" data-route-query="Buchi Kumojiten" target="_blank" rel="noopener noreferrer" aria-label="導航至Buchi Kumojiten"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">在炭火燒肉 ぶち 久茂地店享用晚餐，品嚐厚切牛舌與黑毛和牛，建議提前預約。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">17:00 - 22:00</span><span class="tag price-tag">約 ¥1,000 - ¥6,000 / 人</span></div>
@@ -3003,11 +3203,44 @@
                             <summary>B 備案：Kushiyaki Can (クシヤキ Can 泉崎店)</summary>
                             <div class="backup-content">
                                 <p>【晚餐B方案】隱蔽感極佳的二樓低調質感串燒居酒屋，現烤串物火候講究，適合成人在安靜氛圍中小酌暢聊。</p>
-                                <a class="reservation-info-btn" href="#reservation-kushiyaki">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kushiyaki+Can&amp;query_place_id=ChIJ89Mr0wxp5TQRei2_05rdFdE" title="沖縄県那覇市泉崎１丁目９−23 レジデンシア泉崎 2階" data-place-key="kushi" data-place-id="ChIJ89Mr0wxp5TQRei2_05rdFdE" data-route-query="Kushiyaki Can" target="_blank" rel="noopener noreferrer">備案導航</a>
+                                <a class="reservation-info-btn" href="#reservation-kushiyaki">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kushiyaki+Can&amp;query_place_id=ChIJ89Mr0wxp5TQRei2_05rdFdE" title="備案導航至Kushiyaki Can｜沖縄県那覇市泉崎１丁目９−23 レジデンシア泉崎 2階" data-place-key="kushi" data-place-id="ChIJ89Mr0wxp5TQRei2_05rdFdE" data-route-query="Kushiyaki Can" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Kushiyaki Can"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
                 </div>
+                <aside class="souvenir-section" aria-labelledby="souvenir-day4-title">
+                    <h2 class="souvenir-heading" id="souvenir-day4-title">伴手禮推薦</h2>
+
+                    <div class="souvenir-grid">
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">oHacorté オハコルテ</p>
+                                    <h3>旅するタルトサンド</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://ohacorte.com/baked/" target="_blank" rel="noopener noreferrer" aria-label="查看oHacorté オハコルテ 旅するタルトサンド官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=oHacort%C3%A9&amp;query_place_id=ChIJ86fzLnpr5TQRWHmVhtY_i1k" target="_blank" rel="noopener noreferrer" title="建議採買點：oHacorté 港川本店" aria-label="開啟 Google 地圖，建議採買點：oHacorté 港川本店"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">酥鬆塔皮夾入奶油與果乾，延續水果塔的風味；可在港川店比較喜歡的口味與盒裝。</p>
+                        </article>
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">oHacorté オハコルテ</p>
+                                    <h3>青鳥奶油沙布列</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://ohacorte.com/baked/" target="_blank" rel="noopener noreferrer" aria-label="查看oHacorté オハコルテ 青鳥奶油沙布列官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=oHacort%C3%A9&amp;query_place_id=ChIJ86fzLnpr5TQRWHmVhtY_i1k" target="_blank" rel="noopener noreferrer" title="建議採買點：oHacorté 港川本店" aria-label="開啟 Google 地圖，建議採買點：oHacorté 港川本店"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">「しあわせはこぶとりサブレ」以青鳥造型搭配奶油香，適合喜歡簡單餅乾與可愛造型的人。</p>
+                        </article>
+                    </div>
+
+                </aside>
             </section>
             <section id="day5" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day5" hidden>
                 <div class="day-header">
@@ -3027,7 +3260,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">那霸若狹房源退房出發</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=2-ch%C5%8Dme-7-14%20Wakasa%2C%20Naha%2C%20Okinawa%20900-0031" title="2-chōme-7-14 Wakasa, Naha, Okinawa 900-0031" data-place-key="wakasa" data-place-id="ChIJFaoNnIRp5TQR-NW0yVL9qao" data-route-query="2-chōme-7-14 Wakasa" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=2-ch%C5%8Dme-7-14%20Wakasa%2C%20Naha%2C%20Okinawa%20900-0031" title="導航至2-chōme-7-14 Wakasa｜2-chōme-7-14 Wakasa, Naha, Okinawa 900-0031" data-place-key="wakasa" data-place-id="ChIJFaoNnIRp5TQR-NW0yVL9qao" data-route-query="2-chōme-7-14 Wakasa" target="_blank" rel="noopener noreferrer" aria-label="導航至2-chōme-7-14 Wakasa"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">準時退房，大件行李妥善放入後車廂，展開最後半天的海鮮市場採買巡禮。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:00 前辦理退房</span></div>
@@ -3039,7 +3272,7 @@
                         </div>
                         <div class="place-title-row multiple-destinations">
                             <div class="place-name">泊港魚市場 (泊いゆまち) &amp; さぬき屋 烏龍麵</div>
-                            <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Tomari+Iyumachi+Fish+Market&amp;query_place_id=ChIJVVUV2ipq5TQRokk51vsSwDc" title="沖縄県那覇市港町１丁目１−18" data-place-key="tomari" data-place-id="ChIJVVUV2ipq5TQRokk51vsSwDc" data-route-query="Tomari Iyumachi Fish Market" target="_blank" rel="noopener noreferrer">泊港魚市場導航</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Sanukiya&amp;query_place_id=ChIJ8w971Xtp5TQR-zm9OH7Za00" title="沖縄県那覇市牧志１丁目４−36" data-place-key="sanuki" data-place-id="ChIJ8w971Xtp5TQR-zm9OH7Za00" data-route-query="Sanukiya" target="_blank" rel="noopener noreferrer">さぬき屋導航</a></div>
+                            <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Tomari+Iyumachi+Fish+Market&amp;query_place_id=ChIJVVUV2ipq5TQRokk51vsSwDc" title="導航至Tomari Iyumachi Fish Market｜沖縄県那覇市港町１丁目１−18" data-place-key="tomari" data-place-id="ChIJVVUV2ipq5TQRokk51vsSwDc" data-route-query="Tomari Iyumachi Fish Market" target="_blank" rel="noopener noreferrer" aria-label="導航至Tomari Iyumachi Fish Market"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Sanukiya&amp;query_place_id=ChIJ8w971Xtp5TQR-zm9OH7Za00" title="導航至Sanukiya｜沖縄県那覇市牧志１丁目４−36" data-place-key="sanuki" data-place-id="ChIJ8w971Xtp5TQR-zm9OH7Za00" data-route-query="Sanukiya" target="_blank" rel="noopener noreferrer" aria-label="導航至Sanukiya"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">沖繩鮪魚批發重鎮，市場平整乾淨，平價生魚片、海膽即買即食；幼童可搭配軟溫清淡的現煮烏龍麵，順道採買天使之羽餅乾與在地冰品。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">泊港 06:00-18:00</span><span class="tag price-tag">約 ¥500 - ¥2,000 / 人</span></div>
@@ -3047,7 +3280,7 @@
                             <summary>B 備案：漁師食堂 大ばんぶる舞 さかな大統漁 (那覇店) / 87 DRIVE-IN</summary>
                             <div class="backup-content">
                                 <p>【早午餐B方案】漁師食堂澎湃炸魚定食份量十足大滿足；若喜歡傳統熱壓吐司西式早餐則可選 87 DRIVE-IN。</p>
-                                <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ryoshi+Shokudo+Obanburumai+Sakana+Daitoryo&amp;query_place_id=ChIJyWVLfARr5TQReiziDijRcD4" title="沖縄県那覇市港町３丁目１−17" data-place-key="fish" data-place-id="ChIJyWVLfARr5TQReiziDijRcD4" data-route-query="Ryoshi Shokudo Obanburumai Sakana Daitoryo" target="_blank" rel="noopener noreferrer">漁師食堂導航</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B2%96%E7%B9%A9%E8%A1%97%E9%A0%AD%E6%97%A9%E9%A4%90%26%E5%92%96%E5%95%A1+87+DRIVE-IN&amp;query_place_id=ChIJRZDkHwlp5TQRuXD0CEh_LgE" title="沖縄県那覇市松尾２丁目８−1 ホテルランタナ那覇 国際通り前" data-place-key="drive87" data-place-id="ChIJRZDkHwlp5TQRuXD0CEh_LgE" data-route-query="沖繩街頭早餐&amp;咖啡 87 DRIVE-IN" target="_blank" rel="noopener noreferrer">87 DRIVE-IN導航</a></div>
+                                <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ryoshi+Shokudo+Obanburumai+Sakana+Daitoryo&amp;query_place_id=ChIJyWVLfARr5TQReiziDijRcD4" title="導航至Ryoshi Shokudo Obanburumai Sakana Daitoryo｜沖縄県那覇市港町３丁目１−17" data-place-key="fish" data-place-id="ChIJyWVLfARr5TQReiziDijRcD4" data-route-query="Ryoshi Shokudo Obanburumai Sakana Daitoryo" target="_blank" rel="noopener noreferrer" aria-label="導航至Ryoshi Shokudo Obanburumai Sakana Daitoryo"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B2%96%E7%B9%A9%E8%A1%97%E9%A0%AD%E6%97%A9%E9%A4%90%26%E5%92%96%E5%95%A1+87+DRIVE-IN&amp;query_place_id=ChIJRZDkHwlp5TQRuXD0CEh_LgE" title="導航至沖繩街頭早餐&amp;咖啡 87 DRIVE-IN｜沖縄県那覇市松尾２丁目８−1 ホテルランタナ那覇 国際通り前" data-place-key="drive87" data-place-id="ChIJRZDkHwlp5TQRuXD0CEh_LgE" data-route-query="沖繩街頭早餐&amp;咖啡 87 DRIVE-IN" target="_blank" rel="noopener noreferrer" aria-label="導航至沖繩街頭早餐&amp;咖啡 87 DRIVE-IN"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                             </div>
                         </details>
                     </article>
@@ -3058,7 +3291,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">瀨長島 Umikaji Terrace</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Umikaji+Terrace+Senagajima&amp;query_place_id=ChIJTXE7iR5o5TQRuIMt_jUINqU" title="沖縄県豊見城市瀬長174-6" data-place-key="umikaji" data-place-id="ChIJTXE7iR5o5TQRuIMt_jUINqU" data-route-query="Umikaji Terrace Senagajima" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Umikaji+Terrace+Senagajima&amp;query_place_id=ChIJTXE7iR5o5TQRuIMt_jUINqU" title="導航至Umikaji Terrace Senagajima｜沖縄県豊見城市瀬長174-6" data-place-key="umikaji" data-place-id="ChIJTXE7iR5o5TQRuIMt_jUINqU" data-route-query="Umikaji Terrace Senagajima" target="_blank" rel="noopener noreferrer" aria-label="導航至Umikaji Terrace Senagajima"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">距離機場僅 10 分鐘的純白梯田海岸商場，在階梯露台邊吃冰淇淋邊近距離看大客機呼嘯降落，為旅程畫下完美句點。 為提前還車，本段規劃於 13:45 離開。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:00 - 21:00 (各店不同)</span><span class="tag price-tag">飲品甜點約 ¥600 - ¥1,200</span></div>
@@ -3070,7 +3303,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">ORIX 租車 那霸機場店還車</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=ORIX+Rent-a-car+Naha+Airport&amp;query_place_id=ChIJT_QS2gto5TQRpfOpt3jYZC8" title="沖縄県豊見城市豊崎1-1174" data-place-key="orix" data-place-id="ChIJT_QS2gto5TQRpfOpt3jYZC8" data-route-query="ORIX Rent-a-car Naha Airport" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=ORIX+Rent-a-car+Naha+Airport&amp;query_place_id=ChIJT_QS2gto5TQRpfOpt3jYZC8" title="導航至ORIX Rent-a-car Naha Airport｜沖縄県豊見城市豊崎1-1174" data-place-key="orix" data-place-id="ChIJT_QS2gto5TQRpfOpt3jYZC8" data-route-query="ORIX Rent-a-car Naha Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至ORIX Rent-a-car Naha Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">先在機場周邊加油站加滿油，規劃 14:30 前完成還車驗收，預留 14:30–15:15 搭乘接駁與抵達航廈的時間。</div>
                     </article>
@@ -3081,7 +3314,7 @@
                         </div>
                         <div class="place-title-row">
                             <div class="place-name">那霸機場國際線航廈出境大廳</div>
-                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naha+International+Airport&amp;query_place_id=ChIJjSyLjsRp5TQRkP5WN6rOTFA" title="沖縄県那覇市鏡水150" data-place-key="airport" data-place-id="ChIJjSyLjsRp5TQRkP5WN6rOTFA" data-route-query="Naha International Airport" target="_blank" rel="noopener noreferrer">導航</a>
+                            <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naha+International+Airport&amp;query_place_id=ChIJjSyLjsRp5TQRkP5WN6rOTFA" title="導航至Naha International Airport｜沖縄県那覇市鏡水150" data-place-key="airport" data-place-id="ChIJjSyLjsRp5TQRkP5WN6rOTFA" data-route-query="Naha International Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至Naha International Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">依確認安排，15:15–17:00 辦理星宇 JX871 登機報到、行李託運與出境手續，採購伴手禮。回程起飛時間請依機票核對。</div>
                         <div class="flight-details" aria-label="JX871 航班資訊">
@@ -3099,6 +3332,39 @@
                         </div>
                     </article>
                 </div>
+                <aside class="souvenir-section" aria-labelledby="souvenir-day5-title">
+                    <h2 class="souvenir-heading" id="souvenir-day5-title">伴手禮推薦</h2>
+
+                    <div class="souvenir-grid">
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">EDELWEISS OKINAWA エーデルワイス沖縄</p>
+                                    <h3>島果のしずく・香檸費南雪</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://shop-edelweissokinawa.com/?gid=2693852&amp;mode=grp" target="_blank" rel="noopener noreferrer" aria-label="查看EDELWEISS OKINAWA エーデルワイス沖縄 島果のしずく・香檸費南雪官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%AA%E3%82%A6%E3%83%9C%E3%82%A6%E7%A9%BA%E6%B8%AF%E5%BA%97&amp;query_place_id=ChIJEVW09M9p5TQRR88KY1A9KWo" target="_blank" rel="noopener noreferrer" title="建議採買點：EDELWEISS OKINAWA・リウボウ空港店" aria-label="開啟 Google 地圖，建議採買點：EDELWEISS OKINAWA・リウボウ空港店"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">ヒラミーレモン口味的烘焙點心，有不同盒裝數量；想找清爽柑橘風味的送禮點心，可以留意。</p>
+                        </article>
+                        <article class="souvenir-card">
+                            <div class="souvenir-title-row">
+                                <div class="souvenir-titles">
+                                    <p class="souvenir-brand">oHacorté オハコルテ</p>
+                                    <h3>香檸檸檬蛋糕</h3>
+                                </div>
+                                <div class="souvenir-actions">
+                                    <a class="souvenir-action souvenir-product-link" href="https://lemoncake.ohacorte.com/" target="_blank" rel="noopener noreferrer" aria-label="查看oHacorté オハコルテ 香檸檸檬蛋糕官方商品資訊" title="商品介紹"><svg class="souvenir-icon souvenir-icon-gift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M22.249,10.442c.641-.729,.892-1.729,.671-2.675h0s-.083-.343-.083-.343c-.297-1.167-1.3-2.057-2.497-2.215-.82-.108-1.653-.2-2.495-.275,.02-.15,.03-.302,.03-.455,0-1.896-1.542-3.438-3.438-3.438-.952,0-1.814,.389-2.438,1.016-.623-.627-1.486-1.016-2.438-1.016-1.896,0-3.438,1.542-3.438,3.438,0,.154,.011,.307,.031,.458-.843,.076-1.677,.168-2.498,.277-1.197,.159-2.2,1.05-2.495,2.216l-.083,.342c-.22,.947,.031,1.947,.672,2.676,.126,.144,.263,.273,.409,.387-.607,3.072-.497,6.583,.301,9.447,.318,1.137,1.278,1.984,2.448,2.156,2.352,.346,4.721,.518,7.089,.518s4.738-.173,7.09-.518c1.169-.172,2.13-1.019,2.447-2.156,.799-2.865,.908-6.377,.302-9.452,.146-.114,.284-.244,.41-.388Zm-2.171-3.251c.394,.052,.723,.343,.82,.729l.074,.299h0c.075,.325-.007,.654-.226,.903-.214,.242-.507,.365-.842,.331-2.262-.228-4.58-.355-6.905-.383v-2.385c2.401,.036,4.791,.205,7.078,.507ZM14.438,3.042c.793,0,1.438,.645,1.438,1.438,0,.089-.001,.213-.015,.309-.942-.054-1.891-.089-2.843-.103-.008-.067-.017-.151-.017-.206,0-.792,.645-1.438,1.438-1.438Zm-4.875,0c.792,0,1.438,.645,1.438,1.438,0,.055-.009,.14-.017,.207-.951,.015-1.901,.05-2.843,.105-.014-.098-.015-.223-.015-.312,0-.792,.645-1.438,1.438-1.438ZM3.027,8.226l.074-.304c.097-.381,.426-.673,.819-.725,2.288-.303,4.678-.474,7.08-.512v2.385c-2.326,.029-4.645,.159-6.906,.388-.327,.037-.628-.089-.841-.331-.219-.249-.301-.577-.226-.901Zm1.362,11.519c-.687-2.464-.8-5.593-.311-8.284,.072-.002,.145-.006,.218-.013,2.196-.223,4.447-.348,6.705-.378v9.875c-1.938-.042-3.874-.203-5.799-.486-.388-.057-.707-.338-.812-.715Zm15.222,0c-.104,.372-.431,.659-.812,.715-1.924,.283-3.861,.444-5.799,.486V11.069c2.258,.028,4.509,.152,6.705,.373,.072,.007,.144,.011,.216,.013,.49,2.693,.378,5.824-.309,8.288Z"/></svg></a>
+                                    <a class="souvenir-action souvenir-nav-link" href="https://www.google.com/maps/search/?api=1&amp;query=oHacorte+Naha+Airport&amp;query_place_id=ChIJEVW09M9p5TQRkK_YmkvEfG0" target="_blank" rel="noopener noreferrer" title="建議採買點：oHacorté 那霸機場店" aria-label="開啟 Google 地圖，建議採買點：oHacorté 那霸機場店"><svg class="souvenir-icon souvenir-icon-marker" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
+                            </div>
+                            <p class="souvenir-description">ヒラミーレモンケーキ使用シークヮーサー（Shikuwasa）果汁，柔軟蛋糕搭配酸甜糖衣，是香檸系列的另一個選擇。</p>
+                        </article>
+                    </div>
+
+                </aside>
             </section>
             <section id="reservations" class="reservation-page trip-panel" role="tabpanel" aria-labelledby="tab-reservations" hidden>
                 <div class="day-header"><div class="day-title-wrap"><div class="day-title-top"><span class="day-num">餐廳訂位總覽</span></div><div class="day-sub-desc">6 項主要行程與備案的預約提醒</div></div><span class="charter-badge">待確認</span></div>
@@ -3113,7 +3379,7 @@
                             <div><dt>營業時間</dt><dd>10:30 - 15:00 (週二至週四營業，遇彈性營業可洽)</dd></div>
                             <div><dt>費用參考</dt><dd>約 ¥1,500 - ¥2,500 / 人</dd></div>
                         </dl>
-                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day2">查看 Day 2</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Ten+no+Fune+%28%E5%A4%A9%E3%81%AE%E8%88%B9%29+Cafe&amp;query_place_id=ChIJFST7ErT55DQR__lPMDSAoGE" title="沖縄県国頭郡本部町伊豆味3514-24" data-place-key="boat" data-place-id="ChIJFST7ErT55DQR__lPMDSAoGE" data-route-query="Ten no Fune (天の船) Cafe" target="_blank" rel="noopener noreferrer">餐廳導航</a></div>
+                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day2">查看 Day 2</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Ten+no+Fune+%28%E5%A4%A9%E3%81%AE%E8%88%B9%29+Cafe&amp;query_place_id=ChIJFST7ErT55DQR__lPMDSAoGE" title="導航至Ten no Fune (天の船) Cafe｜沖縄県国頭郡本部町伊豆味3514-24" data-place-key="boat" data-place-id="ChIJFST7ErT55DQR__lPMDSAoGE" data-route-query="Ten no Fune (天の船) Cafe" target="_blank" rel="noopener noreferrer" aria-label="導航至Ten no Fune (天の船) Cafe"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                     </article>
                     <article class="reservation-card" id="reservation-ryukyu-beef" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 2 · 2026/11/27 · 主要行程</span><span class="reservation-status">待確認預約</span></div>
@@ -3124,7 +3390,7 @@
                             <div><dt>營業時間</dt><dd>17:00 - 23:00 (無公休)</dd></div>
                             <div><dt>費用參考</dt><dd>約 ¥5,000 - ¥10,000 / 人</dd></div>
                         </dl>
-                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day2">查看 Day 2</a><a class="reservation-map-link" href="https://www.google.com/maps/place/Ryukyu+No+Ushi/@26.4513457,127.8047221,17z/data=!4m10!1m2!2m1!1z55CJ55CD55qE54mbIOaBqee0jeacrOmkqA!3m6!1s0x34e51aca5afb013f:0xc95a3ce3a65b341e!8m2!3d26.4519972!4d127.8056266!15sChnnkInnkIPnmoTniZsg5oGp57SN5pys6aSoIgOIAQFaHiIc55CJ55CDIOeahCDniZsg5oGp57SNIOacrOmkqJIBE3lha2luaWt1X3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKTjJ3MlpFZFJOblpoV0VGUkVBReABAPoBBAgAEBE!16s%2Fg%2F1vq72lxc?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="沖縄県国頭郡恩納村前兼久909-2" data-place-key="beef" data-place-id="ChIJPwH7Wsoa5TQRHjRbpuM8Wsk" data-route-query="Ryukyu No Ushi" target="_blank" rel="noopener noreferrer">餐廳導航</a></div>
+                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day2">查看 Day 2</a><a class="reservation-map-link" href="https://www.google.com/maps/place/Ryukyu+No+Ushi/@26.4513457,127.8047221,17z/data=!4m10!1m2!2m1!1z55CJ55CD55qE54mbIOaBqee0jeacrOmkqA!3m6!1s0x34e51aca5afb013f:0xc95a3ce3a65b341e!8m2!3d26.4519972!4d127.8056266!15sChnnkInnkIPnmoTniZsg5oGp57SN5pys6aSoIgOIAQFaHiIc55CJ55CDIOeahCDniZsg5oGp57SNIOacrOmkqJIBE3lha2luaWt1X3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKTjJ3MlpFZFJOblpoV0VGUkVBReABAPoBBAgAEBE!16s%2Fg%2F1vq72lxc?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至Ryukyu No Ushi｜沖縄県国頭郡恩納村前兼久909-2" data-place-key="beef" data-place-id="ChIJPwH7Wsoa5TQRHjRbpuM8Wsk" data-route-query="Ryukyu No Ushi" target="_blank" rel="noopener noreferrer" aria-label="導航至Ryukyu No Ushi"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                     </article>
                     <article class="reservation-card" id="reservation-ryukyu-annex" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 2 · 2026/11/27 · B 備案</span><span class="reservation-status">待確認預約</span></div>
@@ -3135,7 +3401,7 @@
                             <div><dt>營業時間</dt><dd>17:00 - 23:00</dd></div>
                             <div><dt>費用參考</dt><dd>約 ¥4,000 - ¥8,000 / 人</dd></div>
                         </dl>
-                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day2">查看 Day 2</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Yakiniku+Ryukyunoushi+Onnabekkan&amp;query_place_id=ChIJy7LL-LUa5TQRS_bFmRYz7II" title="沖縄県国頭郡恩納村前兼久101-1" data-place-key="annex" data-place-id="ChIJy7LL-LUa5TQRS_bFmRYz7II" data-route-query="Yakiniku Ryukyunoushi Onnabekkan" target="_blank" rel="noopener noreferrer">餐廳導航</a></div>
+                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day2">查看 Day 2</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Yakiniku+Ryukyunoushi+Onnabekkan&amp;query_place_id=ChIJy7LL-LUa5TQRS_bFmRYz7II" title="導航至Yakiniku Ryukyunoushi Onnabekkan｜沖縄県国頭郡恩納村前兼久101-1" data-place-key="annex" data-place-id="ChIJy7LL-LUa5TQRS_bFmRYz7II" data-route-query="Yakiniku Ryukyunoushi Onnabekkan" target="_blank" rel="noopener noreferrer" aria-label="導航至Yakiniku Ryukyunoushi Onnabekkan"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                     </article>
                     <article class="reservation-card" id="reservation-american-village" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 3 · 2026/11/28 · 主要行程</span><span class="reservation-status">待選定餐廳</span></div>
@@ -3144,7 +3410,7 @@
                         <dl class="reservation-details">
                             <div><dt>預計時段</dt><dd>17:30 - 20:30</dd></div>
                         </dl>
-                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day3">查看 Day 3</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer">美國村導航</a></div>
+                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day3">查看 Day 3</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="導航至American Village｜沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer" aria-label="導航至American Village"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                     </article>
                     <article class="reservation-card" id="reservation-buchi" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 4 · 2026/11/29 · 主要行程</span><span class="reservation-status">待確認預約</span></div>
@@ -3155,7 +3421,7 @@
                             <div><dt>營業時間</dt><dd>17:00 - 22:00</dd></div>
                             <div><dt>費用參考</dt><dd>約 ¥1,000 - ¥6,000 / 人</dd></div>
                         </dl>
-                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day4">查看 Day 4</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Buchi+Kumojiten&amp;query_place_id=ChIJzcnA2ndp5TQRRkXi5c02uKk" title="沖縄県那覇市久茂地３丁目１２−1" data-place-key="buchi" data-place-id="ChIJzcnA2ndp5TQRRkXi5c02uKk" data-route-query="Buchi Kumojiten" target="_blank" rel="noopener noreferrer">餐廳導航</a></div>
+                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day4">查看 Day 4</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Buchi+Kumojiten&amp;query_place_id=ChIJzcnA2ndp5TQRRkXi5c02uKk" title="導航至Buchi Kumojiten｜沖縄県那覇市久茂地３丁目１２−1" data-place-key="buchi" data-place-id="ChIJzcnA2ndp5TQRRkXi5c02uKk" data-route-query="Buchi Kumojiten" target="_blank" rel="noopener noreferrer" aria-label="導航至Buchi Kumojiten"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                     </article>
                     <article class="reservation-card" id="reservation-kushiyaki" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 4 · 2026/11/29 · B 備案</span><span class="reservation-status">待確認預約</span></div>
@@ -3166,7 +3432,7 @@
                             <div><dt>營業時間</dt><dd>17:30 - 00:00 (無公休)</dd></div>
                             <div><dt>費用參考</dt><dd>約 ¥2,500 - ¥4,000 / 人</dd></div>
                         </dl>
-                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day4">查看 Day 4</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kushiyaki+Can&amp;query_place_id=ChIJ89Mr0wxp5TQRei2_05rdFdE" title="沖縄県那覇市泉崎１丁目９−23 レジデンシア泉崎 2階" data-place-key="kushi" data-place-id="ChIJ89Mr0wxp5TQRei2_05rdFdE" data-route-query="Kushiyaki Can" target="_blank" rel="noopener noreferrer">餐廳導航</a></div>
+                        <div class="reservation-card-actions"><a class="reservation-day-link" href="#day4">查看 Day 4</a><a class="reservation-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kushiyaki+Can&amp;query_place_id=ChIJ89Mr0wxp5TQRei2_05rdFdE" title="導航至Kushiyaki Can｜沖縄県那覇市泉崎１丁目９−23 レジデンシア泉崎 2階" data-place-key="kushi" data-place-id="ChIJ89Mr0wxp5TQRei2_05rdFdE" data-route-query="Kushiyaki Can" target="_blank" rel="noopener noreferrer" aria-label="導航至Kushiyaki Can"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                     </article>
                 </div>
             </section>
@@ -3183,7 +3449,7 @@
                     </div>
                     <div class="expense-bar">
                         <button class="expense-reload" type="button" id="expenseReload" aria-label="重新整理花費" title="重新整理">
-                            <span class="expense-reload-icon" aria-hidden="true"></span>
+                            <svg class="expense-reload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path clip-rule="evenodd" d="m3.15002 11.57c0 .5523.44772 1 1 1 .53668-.0161.96488-.4531.97-.99.0409-2.31799 1.41359-4.40503 3.52584-5.36067 2.11224-.95565 4.58604-.60888 6.35414.8907h-.32c-.5523 0-1 .44771-1 1 0 .55228.4477 1 1 1h2.83c.5523 0 1-.44772 1-1v-2.83c0-.55229-.4477-1-1-1s-1 .44771-1 1v.44c-2.3348-2.10761-5.688-2.65144-8.56932-1.3898-2.88128 1.26164-4.75588 4.09459-4.79066 7.23977zm14.68998.71c0-.5523.4477-1 1-1 .5445.0054.9846.4455.99.99.0334 2.152-.8115 4.2247-2.34 5.74-3.0128 2.9977-7.8437 3.1162-10.99998.27v.44c0 .5523-.44771 1-1 1-.55228 0-1-.4477-1-1v-2.83c0-.5523.44772-1 1-1h2.86c.55229 0 1 .4477 1 1s-.44771 1-1 1h-.35c1.78863 1.4898 4.27758 1.8106 6.38548.8231 2.1079-.9876 3.4544-3.1053 3.4545-5.4331z" fill-rule="evenodd"/></svg>
                         </button>
                         <span class="expense-status" id="expenseStatus" role="status">載入中…</span>
                     </div>
