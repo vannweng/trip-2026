@@ -1,0 +1,576 @@
+{
+  "orix": {
+    "name": "ORIX Rent-a-car Naha Airport",
+    "address": "沖縄県豊見城市豊崎1-1174",
+    "placeId": "ChIJT_QS2gto5TQRpfOpt3jYZC8",
+    "featureId": "0x34e5680bda12f44f:0x2f64d878b7a9f3a5",
+    "coordinates": [
+      26.158163,
+      127.6552684
+    ],
+    "key": "orix",
+    "routePoint": "26.1581630,127.6552684",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%82%AA%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%BC%20%E9%82%A3%E8%A6%87%E7%A9%BA%E6%B8%AF%E5%BA%97%20%E8%B1%8A%E5%B4%8E/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "hamanoya": {
+    "name": "Hamanoya Restaurant",
+    "address": "沖縄県国頭郡恩納村仲泊2097",
+    "placeId": "ChIJRfq8yKAa5TQRqpJVaPpJhR4",
+    "featureId": "0x34e51aa0c8bcfa45:0x1e8549fa685592aa",
+    "coordinates": [
+      26.4357248,
+      127.79225339999999
+    ],
+    "key": "hamanoya",
+    "routePoint": "26.4357248,127.7922534",
+    "verifiedUrl": "https://www.google.com/maps/search/%E6%B5%B7%E9%AE%AE%E6%96%99%E7%90%86%20%E6%B5%9C%E3%81%AE%E5%AE%B6%20%E6%81%A9%E7%B4%8D%E6%9D%91/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "airport": {
+    "name": "Naha International Airport",
+    "address": "沖縄県那覇市鏡水150",
+    "placeId": "ChIJjSyLjsRp5TQRkP5WN6rOTFA",
+    "featureId": "0x34e569c48e8b2c8d:0x504cceaa3756fe90",
+    "coordinates": [
+      26.200129699999998,
+      127.6466452
+    ],
+    "key": "airport",
+    "routePoint": "26.2001297,127.6466452",
+    "verifiedUrl": "https://www.google.com/maps/search/%E9%82%A3%E8%A6%87%E7%A9%BA%E6%B8%AF%20%E5%9B%BD%E9%9A%9B%E7%B7%9A%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "onna": {
+    "name": "おんなの駅 なかゆくい市場（産直市場）",
+    "address": "沖縄県国頭郡恩納村仲泊1656-9",
+    "placeId": "ChIJxRvW16Ya5TQRubB2b8hH3Cw",
+    "featureId": "0x34e51aa6d7d61bc5:0x2cdc47c86f76b0b9",
+    "coordinates": [
+      26.436315399999998,
+      127.7947111
+    ],
+    "key": "onna",
+    "routePoint": "26.4363154,127.7947111",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%81%8A%E3%82%93%E3%81%AA%E3%81%AE%E9%A7%85%20%E3%81%AA%E3%81%8B%E3%82%86%E3%81%8F%E3%81%84%E5%B8%82%E5%A0%B4/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "kyoda": {
+    "name": "Roadside Station Kyoda",
+    "address": "沖縄県名護市許田17-1",
+    "placeId": "ChIJFfz3q_H_5DQRttsFg7-7wLE",
+    "featureId": "0x34e4fff1abf7fc15:0xb1c0bbbf8305dbb6",
+    "coordinates": [
+      26.5520359,
+      127.97016769999999
+    ],
+    "key": "kyoda",
+    "routePoint": "26.5520359,127.9701677",
+    "verifiedUrl": "https://www.google.com/maps/search/%E9%81%93%E3%81%AE%E9%A7%85%20%E8%A8%B1%E7%94%B0/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "toy": {
+    "name": "The Yanbaru Forest Toy Museum",
+    "address": "沖縄県国頭郡国頭村辺土名1094-1",
+    "placeId": "ChIJjz7UhaBD5DQRMv-kNkofi0U",
+    "featureId": "0x34e443a085d43e8f:0x458b1f4a36a4ff32",
+    "coordinates": [
+      26.733305899999998,
+      128.1902453
+    ],
+    "key": "toy",
+    "routePoint": "26.7333059,128.1902453",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%82%84%E3%82%93%E3%81%B0%E3%82%8B%E6%A3%AE%E3%81%AE%E3%81%8A%E3%82%82%E3%81%A1%E3%82%83%E7%BE%8E%E8%A1%93%E9%A4%A8/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "fukurubi": {
+    "name": "Fukurubi",
+    "address": "沖縄県国頭郡今帰仁村古宇利2516",
+    "placeId": "ChIJw5fl0n72bBQRSKIfn594gpA",
+    "featureId": "0x146cf67ed2e597c3:0x9082789f9f1fa248",
+    "coordinates": [
+      26.709826999999997,
+      128.0165712
+    ],
+    "key": "fukurubi",
+    "routePoint": "26.7098270,128.0165712",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%82%AB%E3%83%95%E3%82%A7%20%E3%83%95%E3%82%AF%E3%83%AB%E3%83%93%20%E5%8F%A4%E5%AE%87%E5%88%A9/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "boat": {
+    "name": "Ten no Fune (天の船) Cafe",
+    "address": "沖縄県国頭郡本部町伊豆味3514-24",
+    "placeId": "ChIJFST7ErT55DQR__lPMDSAoGE",
+    "featureId": "0x34e4f9b412fb2415:0x61a08034304ff9ff",
+    "coordinates": [
+      26.655649699999998,
+      127.9370697
+    ],
+    "key": "boat",
+    "routePoint": "26.6556497,127.9370697",
+    "verifiedUrl": "https://www.google.com/maps/search/Cafe%20%E5%A4%A9%E3%81%AE%E8%88%B9%20%E6%9C%AC%E9%83%A8%E7%94%BA/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "kishimoto": {
+    "name": "Kishimoto Shokudo",
+    "address": "沖縄県国頭郡本部町渡久地５",
+    "placeId": "ChIJfYYxtF755DQRMQpk94q0UxY",
+    "featureId": "0x34e4f95eb431867d:0x1653b48af7640a31",
+    "coordinates": [
+      26.6603253,
+      127.89589489999999
+    ],
+    "key": "kishimoto",
+    "routePoint": "26.6603253,127.8958949",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%81%8D%E3%81%97%E3%82%82%E3%81%A8%E9%A3%9F%E5%A0%82%20%E6%9C%AC%E5%BA%97%20%E6%B8%A1%E4%B9%85%E5%9C%B0/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "moribo": {
+    "name": "恩納民泊 森暮MoriMori 沖繩包棟民宿",
+    "address": "番８, 1229 仲泊 恩納村 国頭郡 沖縄県 904-0415",
+    "placeId": "ChIJRaUIrnob5TQR2PUxfbQUHFQ",
+    "featureId": "0x34e51b7aae08a545:0x541c14b47d31f5d8",
+    "coordinates": [
+      26.4375204,
+      127.8044501
+    ],
+    "key": "moribo",
+    "routePoint": "26.4375204,127.8044501",
+    "verifiedUrl": "https://www.google.com/maps?q=%E6%97%A5%E6%9C%AC%E3%80%81%E3%80%92904-0415+%E6%B2%96%E7%B8%84%E7%9C%8C%E5%9B%BD%E9%A0%AD%E9%83%A1%E6%81%A9%E7%B4%8D%E6%9D%91%E4%BB%B2%E6%B3%8A%EF%BC%91%EF%BC%92%EF%BC%92%EF%BC%99+%E7%95%AA%EF%BC%98+%E6%81%A9%E7%B4%8D%E6%B0%91%E6%B3%8A+%E6%A3%AE%E6%9A%AEMoriMori+%E6%B2%96%E7%B9%A9%E5%8C%85%E6%A3%9F%E6%B0%91%E5%AE%BF&ftid=0x34e51b7aae08a545:0x541c14b47d31f5d8&entry=gps&lucs=,94259550,94297699,94284484,94231188,94280568,47071704,94218641,94282134,94286869&g_ep=CAISEjI1LjQ5LjkuODM4ODk5MTgzMBgAIIgnKlEsOTQyNTk1NTAsOTQyOTc2OTksOTQyODQ0ODQsOTQyMzExODgsOTQyODA1NjgsNDcwNzE3MDQsOTQyMTg2NDEsOTQyODIxMzQsOTQyODY4NjlCAlRX&skid=1a643854-5bd2-4c4a-8b75-4d5bf365dba7&g_st=il",
+    "checkedOn": "2026-10-22"
+  },
+  "kishimotoY": {
+    "name": "Kishimoto Shokudo Yaedake",
+    "address": "沖縄県国頭郡本部町伊野波350-1",
+    "placeId": "ChIJ82ejwUH55DQRmzwA5oZFzpA",
+    "featureId": "0x34e4f941c1a367f3:0x90ce4586e6003c9b",
+    "coordinates": [
+      26.657177899999997,
+      127.91103419999999
+    ],
+    "key": "kishimotoY",
+    "routePoint": "26.6571779,127.9110342",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%81%8D%E3%81%97%E3%82%82%E3%81%A8%E9%A3%9F%E5%A0%82%20%E5%85%AB%E9%87%8D%E5%B2%B3%E5%BA%97/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "aquarium": {
+    "name": "Okinawa Churaumi Aquarium",
+    "address": "沖縄県国頭郡本部町石川424",
+    "placeId": "ChIJPZ5hUjH65DQR_p_dD3CmCOo",
+    "featureId": "0x34e4fa3152619e3d:0xea08a6700fdd9ffe",
+    "coordinates": [
+      26.694338,
+      127.87801309999999
+    ],
+    "key": "aquarium",
+    "routePoint": "26.6943380,127.8780131",
+    "verifiedUrl": "https://www.google.com/maps/search/%E6%B2%96%E7%B8%84%E7%BE%8E%E3%82%89%E6%B5%B7%E6%B0%B4%E6%97%8F%E9%A4%A8/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "fifi": {
+    "name": "FIFI PARLOR",
+    "address": "沖縄県名護市呉我 大真利原1335-4",
+    "placeId": "ChIJTyYj-1JX5DQRA10bcuPJHzI",
+    "featureId": "0x34e45752fb23264f:0x321fc9e3721b5d03",
+    "coordinates": [
+      26.645689899999997,
+      127.9926959
+    ],
+    "key": "fifi",
+    "routePoint": "26.6456899,127.9926959",
+    "verifiedUrl": "https://www.google.com/maps/search/FIFI%20PARLOR%20%E5%90%8D%E8%AD%B7/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "tamaya": {
+    "name": "Kurumaebi Kitchen TAMAYA",
+    "address": "沖縄県名護市運天原285",
+    "placeId": "ChIJH0m8lUhX5DQRcGTXCkQxPnM",
+    "featureId": "0x34e4574895bc491f:0x733e31440ad76470",
+    "coordinates": [
+      26.672868299999998,
+      128.0045032
+    ],
+    "key": "tamaya",
+    "routePoint": "26.6728683,128.0045032",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%81%8F%E3%82%8B%E3%81%BE%E3%81%88%E3%81%B3%E3%82%AD%E3%83%83%E3%83%81%E3%83%B3%20TAMAYA%20%E5%90%8D%E8%AD%B7/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "sinmay": {
+    "name": "The Sinmay",
+    "address": "沖縄県国頭郡今帰仁村玉城292-2",
+    "placeId": "ChIJZyTTIT_55DQRoQD1hO7rxy4",
+    "featureId": "0x34e4f93f21d32467:0x2ec7ebee84f500a1",
+    "coordinates": [
+      26.677926799999998,
+      127.9714803
+    ],
+    "key": "sinmay",
+    "routePoint": "26.6779268,127.9714803",
+    "verifiedUrl": "https://www.google.com/maps/search/THE%20Sinmay%20%E4%BB%8A%E5%B8%B0%E4%BB%81/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "beef": {
+    "name": "Ryukyu No Ushi",
+    "address": "沖縄県国頭郡恩納村前兼久909-2",
+    "placeId": "ChIJPwH7Wsoa5TQRHjRbpuM8Wsk",
+    "featureId": "0x34e51aca5afb013f:0xc95a3ce3a65b341e",
+    "coordinates": [
+      26.451997199999997,
+      127.8056266
+    ],
+    "key": "beef",
+    "routePoint": "26.4519972,127.8056266",
+    "verifiedUrl": "https://www.google.com/maps/search/%E7%84%BC%E8%82%89%20%E7%90%89%E7%90%83%E3%81%AE%E7%89%9B%20%E6%81%A9%E7%B4%8D%E6%9C%AC%E9%A4%A8/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "annex": {
+    "name": "Yakiniku Ryukyunoushi Onnabekkan",
+    "address": "沖縄県国頭郡恩納村前兼久101-1",
+    "placeId": "ChIJy7LL-LUa5TQRS_bFmRYz7II",
+    "featureId": "0x34e51ab5f8cbb2cb:0x82ec331699c5f64b",
+    "coordinates": [
+      26.4506943,
+      127.8038175
+    ],
+    "key": "annex",
+    "routePoint": "26.4506943,127.8038175",
+    "verifiedUrl": "https://www.google.com/maps/search/%E7%84%BC%E8%82%89%20%E7%90%89%E7%90%83%E3%81%AE%E7%89%9B%20%E6%81%A9%E7%B4%8D%E5%88%A5%E9%A4%A8/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "earth": {
+    "name": "ちきゅうのにわイオンモール沖縄ライカム",
+    "address": "沖縄県中頭郡北中城村ライカム1 Rycom Village C ２階 イオンモール沖縄",
+    "placeId": "ChIJwUm-A9cT5TQRooCYQj9koV0",
+    "featureId": "0x34e513d703be49c1:0x5da1643f429880a2",
+    "coordinates": [
+      26.3149378,
+      127.79790089999999
+    ],
+    "key": "earth",
+    "routePoint": "26.3149378,127.7979009",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%81%A1%E3%81%8D%E3%82%85%E3%81%86%E3%81%AE%E3%81%AB%E3%82%8F%20%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E6%B2%96%E7%B8%84%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%A0%E5%BA%97/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "oki": {
+    "name": "Oki Smash Burgers",
+    "address": "沖縄県国頭郡恩納村真栄田2426-4",
+    "placeId": "ChIJSeeLagAR5TQRIPiESC7PX50",
+    "featureId": "0x34e511006a8be749:0x9d5fcf2e4884f820",
+    "coordinates": [
+      26.4295831,
+      127.75404619999999
+    ],
+    "key": "oki",
+    "routePoint": "26.4295831,127.7540462",
+    "verifiedUrl": "https://www.google.com/maps/search/Oki%20Smash%20Burgers%20%E6%81%A9%E7%B4%8D/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "kart": {
+    "name": "Kukuru Yomitan Circuit",
+    "address": "沖縄県中頭郡読谷村高志保1020-1",
+    "placeId": "ChIJl1d0-80W5TQRv-JAB7eng8w",
+    "featureId": "0x34e516cdfb745797:0xcc83a7b70740e2bf",
+    "coordinates": [
+      26.407043599999998,
+      127.72143399999999
+    ],
+    "key": "kart",
+    "routePoint": "26.4070436,127.7214340",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%82%AF%E3%82%AF%E3%83%AB%E8%AA%AD%E8%B0%B7%E3%82%B5%E3%83%BC%E3%82%AD%E3%83%83%E3%83%88/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "rycom": {
+    "name": "AEON MALL Okinawa Rycom",
+    "address": "沖縄県中頭郡北中城村ライカム1",
+    "placeId": "ChIJJ_TSFGIS5TQRa_HkdjGALss",
+    "featureId": "0x34e5126214d2f427:0xcb2e803176e4f16b",
+    "coordinates": [
+      26.3145118,
+      127.79654819999999
+    ],
+    "key": "rycom",
+    "routePoint": "26.3145118,127.7965482",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E6%B2%96%E7%B8%84%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%A0/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "banta": {
+    "name": "BANTA CAFE by Hoshino Resorts",
+    "address": "沖縄県中頭郡読谷村儀間560",
+    "placeId": "ChIJWwtxRZkX5TQRd_jZvuds3BQ",
+    "featureId": "0x34e5179945710b5b:0x14dc6ce7bed9f877",
+    "coordinates": [
+      26.4177102,
+      127.7140044
+    ],
+    "key": "banta",
+    "routePoint": "26.4177102,127.7140044",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%83%90%E3%83%B3%E3%82%BF%E3%82%AB%E3%83%95%E3%82%A7/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "beachy": {
+    "name": "Beachy Okinawa",
+    "address": "沖縄県国頭郡恩納村恩納6497-1 K&Sビル南 201",
+    "placeId": "ChIJ2dIk05AF5TQRkd67ts02NdU",
+    "featureId": "0x34e50590d324d2d9:0xd53536cdb6bbde91",
+    "coordinates": [
+      26.4835148,
+      127.8462988
+    ],
+    "key": "beachy",
+    "routePoint": "26.4835148,127.8462988",
+    "verifiedUrl": "https://www.google.com/maps/search/Beachy%20Okinawa%20%E6%81%A9%E7%B4%8D/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "nishimatsu": {
+    "name": "Nishimatsuya Chatan Mihama",
+    "address": "沖縄県中頭郡北谷町北谷２丁目18-4",
+    "placeId": "ChIJDyl60RgT5TQRznCbperdy6c",
+    "featureId": "0x34e51318d17a290f:0xa7cbddeaa59b70ce",
+    "coordinates": [
+      26.305497199999998,
+      127.76060849999999
+    ],
+    "key": "nishimatsu",
+    "routePoint": "26.3054972,127.7606085",
+    "verifiedUrl": "https://www.google.com/maps/search/%E8%A5%BF%E6%9D%BE%E5%B1%8B%20%E5%8C%97%E8%B0%B7%E7%BE%8E%E6%B5%9C%E5%BA%97/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "hoppe": {
+    "name": "hoppepan",
+    "address": "沖縄県浦添市内間２丁目１０−10",
+    "placeId": "ChIJb_Q15qhr5TQRNzzHUipNSwg",
+    "featureId": "0x34e56ba8e635f46f:0x84b4d2a52c73c37",
+    "coordinates": [
+      26.237150099999997,
+      127.704892
+    ],
+    "key": "hoppe",
+    "routePoint": "26.2371501,127.7048920",
+    "verifiedUrl": "https://www.google.com/maps/search/hoppepan%20%E6%B5%A6%E6%B7%BB/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "american": {
+    "name": "American Village",
+    "address": "沖縄県中頭郡北谷町美浜",
+    "placeId": "ChIJzZoVCAUT5TQRzIueHYt83hs",
+    "featureId": "0x34e5130508159acd:0x1bde7c8b1d9e8bcc",
+    "coordinates": [
+      26.315876799999998,
+      127.75400669999999
+    ],
+    "key": "american",
+    "routePoint": "26.3158768,127.7540067",
+    "verifiedUrl": "https://www.google.com/maps/search/%E7%BE%8E%E6%B5%9C%E3%82%A2%E3%83%A1%E3%83%AA%E3%82%AB%E3%83%B3%E3%83%93%E3%83%AC%E3%83%83%E3%82%B8/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "parco": {
+    "name": "PARCO CITY",
+    "address": "沖縄県浦添市西洲３丁目1-1",
+    "placeId": "ChIJxZQf9gpr5TQRwLWyT5Osigc",
+    "featureId": "0x34e56b0af61f94c5:0x78aac934fb2b5c0",
+    "coordinates": [
+      26.2617542,
+      127.6981799
+    ],
+    "key": "parco",
+    "routePoint": "26.2617542,127.6981799",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%82%B5%E3%83%B3%E3%82%A8%E3%83%BC%E6%B5%A6%E6%B7%BB%E8%A5%BF%E6%B5%B7%E5%B2%B8%20PARCO%20CITY/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "minato": {
+    "name": "Minatogawa Stateside Town",
+    "address": "沖縄県浦添市港川２丁目１８−3",
+    "placeId": "ChIJU4WYIXpr5TQRYnoNjeiRLIk",
+    "featureId": "0x34e56b7a21988553:0x892c91e88d0d7a62",
+    "coordinates": [
+      26.2625264,
+      127.714602
+    ],
+    "key": "minato",
+    "routePoint": "26.2625264,127.7146020",
+    "verifiedUrl": "https://www.google.com/maps/search/%E6%B8%AF%E5%B7%9D%E5%A4%96%E4%BA%BA%E4%BD%8F%E5%AE%85/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "naminoue": {
+    "name": "Naminoue Shrine",
+    "address": "沖縄県那覇市若狭１丁目２５−11",
+    "placeId": "ChIJdT8KUYVp5TQRrCRV4eFRanc",
+    "featureId": "0x34e56985510a3f75:0x776a51e1e15524ac",
+    "coordinates": [
+      26.2207369,
+      127.6711012
+    ],
+    "key": "naminoue",
+    "routePoint": "26.2207369,127.6711012",
+    "verifiedUrl": "https://www.google.com/maps/search/%E6%B3%A2%E4%B8%8A%E5%AE%AE/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "junkudo": {
+    "name": "JUNKUDO Naha",
+    "address": "沖縄県那覇市牧志１丁目１９−29 D-NAHA 地下 1階～3階",
+    "placeId": "ChIJAS4kd3lp5TQRFv5A68JHwl8",
+    "featureId": "0x34e5697977242e01:0x5fc247c2eb40fe16",
+    "coordinates": [
+      26.2186341,
+      127.68585359999999
+    ],
+    "key": "junkudo",
+    "routePoint": "26.2186341,127.6858536",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%82%B8%E3%83%A5%E3%83%B3%E3%82%AF%E5%A0%82%E6%9B%B8%E5%BA%97%20%E9%82%A3%E8%A6%87%E5%BA%97/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "rokkan": {
+    "name": "rokkan COFFEE SHURI",
+    "address": "沖縄県那覇市首里当蔵町２丁目14 やまごうビル 1F",
+    "placeId": "ChIJL--aUDtr5TQRB1R5MkX_1QI",
+    "featureId": "0x34e56b3b509aef2f:0x2d5ff4532795407",
+    "coordinates": [
+      26.2200761,
+      127.7194859
+    ],
+    "key": "rokkan",
+    "routePoint": "26.2200761,127.7194859",
+    "verifiedUrl": "https://www.google.com/maps/search/rokkan%20COFFEE%20SHURI/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "uki": {
+    "name": ".uki",
+    "address": "沖縄県宜野湾市大山２丁目１３−12",
+    "placeId": "ChIJ59qbnddt5TQR28EIpd0WPzE",
+    "featureId": "0x34e56dd79d9bdae7:0x313f16dda508c1db",
+    "coordinates": [
+      26.2753095,
+      127.7445216
+    ],
+    "key": "uki",
+    "routePoint": "26.2753095,127.7445216",
+    "verifiedUrl": "https://www.google.com/maps/search/.uki%20%E5%AE%9C%E9%87%8E%E6%B9%BE%20%E5%A4%A7%E5%B1%B1/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "buchi": {
+    "name": "Buchi Kumojiten",
+    "address": "沖縄県那覇市久茂地３丁目１２−1",
+    "placeId": "ChIJzcnA2ndp5TQRRkXi5c02uKk",
+    "featureId": "0x34e56977dac0c9cd:0xa9b836cde5e24546",
+    "coordinates": [
+      26.215131,
+      127.68159019999999
+    ],
+    "key": "buchi",
+    "routePoint": "26.2151310,127.6815902",
+    "verifiedUrl": "https://www.google.com/maps/search/%E7%82%AD%E7%81%AB%E7%84%BC%E8%82%89%E3%81%B6%E3%81%A1%20%E4%B9%85%E8%8C%82%E5%9C%B0%E5%BA%97/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "kokusai": {
+    "name": "Kokusai-dori",
+    "address": "沖縄県那覇市",
+    "placeId": "ChIJMS9BUXdp5TQRAl6RXvY5aY0",
+    "featureId": "0x34e5697751412f31:0x8d6939f65e915e02",
+    "coordinates": [
+      26.2151469,
+      127.68474499999999
+    ],
+    "key": "kokusai",
+    "routePoint": "26.2151469,127.6847450",
+    "verifiedUrl": "https://www.google.com/maps/search/%E9%82%A3%E8%A6%87%20%E5%9B%BD%E9%9A%9B%E9%80%9A%E3%82%8A/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "kushi": {
+    "name": "Kushiyaki Can",
+    "address": "沖縄県那覇市泉崎１丁目９−23 レジデンシア泉崎 2階",
+    "placeId": "ChIJ89Mr0wxp5TQRei2_05rdFdE",
+    "featureId": "0x34e5690cd32bd3f3:0xd115dd9ad3bf2d7a",
+    "coordinates": [
+      26.2121349,
+      127.6780053
+    ],
+    "key": "kushi",
+    "routePoint": "26.2121349,127.6780053",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%82%AF%E3%82%B7%E3%83%A4%E3%82%ADCan%20%E9%82%A3%E8%A6%87%20%E6%B3%89%E5%B4%8E/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "tomari": {
+    "name": "Tomari Iyumachi Fish Market",
+    "address": "沖縄県那覇市港町１丁目１−18",
+    "placeId": "ChIJVVUV2ipq5TQRokk51vsSwDc",
+    "featureId": "0x34e56a2ada155555:0x37c012fbd63949a2",
+    "coordinates": [
+      26.230066299999997,
+      127.6802558
+    ],
+    "key": "tomari",
+    "routePoint": "26.2300663,127.6802558",
+    "verifiedUrl": "https://www.google.com/maps/search/%E6%B3%8A%E3%81%84%E3%82%86%E3%81%BE%E3%81%A1/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "sanuki": {
+    "name": "Sanukiya",
+    "address": "沖縄県那覇市牧志１丁目４−36",
+    "placeId": "ChIJ8w971Xtp5TQR-zm9OH7Za00",
+    "featureId": "0x34e5697bd57b0ff3:0x4d6bd97e38bd39fb",
+    "coordinates": [
+      26.2182317,
+      127.6865677
+    ],
+    "key": "sanuki",
+    "routePoint": "26.2182317,127.6865677",
+    "verifiedUrl": "https://www.google.com/maps/search/%E3%81%95%E3%81%AC%E3%81%8D%E5%B1%8B%20%E9%82%A3%E8%A6%87%20%E7%89%A7%E5%BF%97/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "fish": {
+    "name": "Ryoshi Shokudo Obanburumai Sakana Daitoryo",
+    "address": "沖縄県那覇市港町３丁目１−17",
+    "placeId": "ChIJyWVLfARr5TQReiziDijRcD4",
+    "featureId": "0x34e56b047c4b65c9:0x3e70d1280ee22c7a",
+    "coordinates": [
+      26.243648699999998,
+      127.6802982
+    ],
+    "key": "fish",
+    "routePoint": "26.2436487,127.6802982",
+    "verifiedUrl": "https://www.google.com/maps/search/%E6%BC%81%E5%B8%AB%E9%A3%9F%E5%A0%82%20%E3%81%95%E3%81%8B%E3%81%AA%E5%A4%A7%E7%B5%B1%E6%BC%81%20%E9%82%A3%E8%A6%87%20%E6%B8%AF%E7%94%BA/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "drive87": {
+    "name": "沖繩街頭早餐&咖啡 87 DRIVE-IN",
+    "address": "沖縄県那覇市松尾２丁目８−1 ホテルランタナ那覇 国際通り前",
+    "placeId": "ChIJRZDkHwlp5TQRuXD0CEh_LgE",
+    "featureId": "0x34e569091fe49045:0x12e7f4808f470b9",
+    "coordinates": [
+      26.215473199999998,
+      127.6860248
+    ],
+    "key": "drive87",
+    "routePoint": "26.2154732,127.6860248",
+    "verifiedUrl": "https://www.google.com/maps/search/87%20DRIVE-IN%20%E9%82%A3%E8%A6%87/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "umikaji": {
+    "name": "Umikaji Terrace Senagajima",
+    "address": "沖縄県豊見城市瀬長174-6",
+    "placeId": "ChIJTXE7iR5o5TQRuIMt_jUINqU",
+    "featureId": "0x34e5681e893b714d:0xa5360835fe2d83b8",
+    "coordinates": [
+      26.176546499999997,
+      127.64041449999999
+    ],
+    "key": "umikaji",
+    "routePoint": "26.1765465,127.6404145",
+    "verifiedUrl": "https://www.google.com/maps/search/%E7%80%AC%E9%95%B7%E5%B3%B6%20%E3%82%A6%E3%83%9F%E3%82%AB%E3%82%B8%E3%83%86%E3%83%A9%E3%82%B9/?hl=en",
+    "checkedOn": "2026-10-22"
+  },
+  "wakasa": {
+    "name": "2-chōme-7-14 Wakasa",
+    "address": "沖縄県那覇市若狭２丁目７−14",
+    "placeId": "ChIJFaoNnIRp5TQR-NW0yVL9qao",
+    "featureId": "0x34e569849c0daa15:0xaaa9fd52c9b4d5f8",
+    "coordinates": [
+      26.220574499999998,
+      127.67561189999999
+    ],
+    "key": "wakasa",
+    "routePoint": "26.2205745,127.6756119",
+    "verifiedUrl": "https://www.google.com/maps/search/2-ch%C5%8Dme-7-14%20Wakasa%2C%20Naha%2C%20Okinawa%20900-0031/?hl=en",
+    "checkedOn": "2026-10-22"
+  }
+}
