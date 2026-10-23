@@ -86,6 +86,7 @@ test('panel changes hide irrelevant filters and can focus the new heading', () =
         getElementById: id => ({ day2: day, expenses })[id],
         querySelector(selector) {
             if (selector === '.itinerary-filter') return filter;
+            if (selector === '.sticky-control-panel') return null;
             if (selector === '.day-chip[href="#day2"]') return tabs[0];
             if (selector === '.day-chip[href="#expenses"]') return tabs[1];
             throw new Error(`Unexpected selector: ${selector}`);
@@ -239,7 +240,7 @@ test('main content has skip navigation, semantic headings and explicit transitio
     assert.match(html, /class="skip-link" href="#main-content"/);
     assert.match(html, /<main id="main-content" tabindex="-1">/);
     assert.equal((html.match(/<h2 class="day-title-top" tabindex="-1">/g) || []).length, 7);
-    assert.equal((html.match(/<h3 class="place-name">/g) || []).length, 30);
+    assert.equal((html.match(/<h3 class="place-name">/g) || []).length, 32);
     assert.doesNotMatch(html, /transition:\s*all\b/);
     assert.match(html, /id="checklistStorageStatus" role="status" aria-live="polite"/);
 });
@@ -255,4 +256,52 @@ test('compact tool buttons use SVG icons with accessible names and tooltips, not
         const visibleText = content.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]*>/g, '').trim();
         assert.ok(visibleText === '' || visibleText === '0/34');
     }
+});
+
+test('paired destinations each have their own heading and navigation link', () => {
+    const rows = [...html.matchAll(/<div class="destination-row">([\s\S]*?)<\/div>/g)];
+    assert.equal(rows.length, 4);
+    for (const [, content] of rows) {
+        assert.equal((content.match(/<h3 class="place-name">/g) || []).length, 1);
+        assert.equal((content.match(/class="maps-btn"/g) || []).length, 1);
+    }
+});
+
+test('highlighted itinerary cards retain rounded corners and space around their content', () => {
+    assert.match(html, /\.timeline-card \{\s*margin-inline: -12px;\s*padding: 18px 12px;\s*border-radius: 6px;/);
+    assert.doesNotMatch(html, /\.timeline-card\.is-current,\s*\.timeline-card\.is-next \{/);
+});
+
+test('backup navigation stays beside the text, including reservation and grouped destination icons', () => {
+    assert.match(html, /\.backup-content \{ display: flex; align-items: center;/);
+    assert.match(html, /\.backup-content > p \{ flex: 1; min-width: 0; \}/);
+    assert.match(html, /\.backup-content > \.maps-btn,\s*\.backup-content > \.reservation-info-btn \{ flex: 0 0 auto; \}/);
+    assert.match(html, /\.backup-content \.map-links \{ flex: 0 0 auto; flex-wrap: nowrap; justify-content: flex-end; \}/);
+});
+
+test('reservation shortcuts use labeled SVG icons and preserve their targets', () => {
+    const links = [...html.matchAll(/<a class="reservation-info-btn"([^>]*)>([\s\S]*?)<\/a>/g)];
+    assert.equal(links.length, 6);
+    for (const [, attributes, content] of links) {
+        assert.match(attributes, /href="#reservation-[^"]+"/);
+        assert.match(attributes, /aria-label="查看訂位資訊"/);
+        assert.match(attributes, /title="訂位資訊"/);
+        assert.match(content, /<svg[^>]*aria-hidden="true"/);
+        assert.equal(content.replace(/<[^>]*>/g, '').trim(), '');
+    }
+});
+
+test('sticky scroll offset follows the navigation height as filters appear and disappear', () => {
+    const offsets = [];
+    const panel = { offsetHeight: 168 };
+    const app = createApp({
+        documentElement: { style: { setProperty: (name, value) => offsets.push([name, value]) } },
+        querySelector: () => panel
+    }, { getComputedStyle: () => ({ top: '8px' }) });
+    app.updateStickyOffset();
+    panel.offsetHeight = 116;
+    app.updateStickyOffset();
+    assert.deepEqual(offsets, [['--sticky-offset', '192px'], ['--sticky-offset', '140px']]);
+    assert.match(html, /\.reservation-card \{ scroll-margin-top: var\(--sticky-offset, 220px\); \}/);
+    assert.match(html, /new ResizeObserver\(updateStickyOffset\)\.observe/);
 });

@@ -1046,84 +1046,96 @@
 
         header::before {
             z-index: -2;
-            inset: 0 0 0 42%;
-            background: #399da2;
-            clip-path: polygon(36% 0, 100% 0, 100% 100%, 0 100%, 19% 72%, 8% 46%);
-            animation: coast-drift 6s ease-in-out infinite;
+            inset: 0;
+            background: radial-gradient(ellipse at 88% 22%, rgba(186, 232, 217, 0.25), transparent 52%);
         }
 
         .banner-shore {
-            --shore-band: 18px;
             position: absolute;
             z-index: -1;
-            width: 56%;
-            height: 76%;
+            width: 50%;
+            height: 100%;
             right: -4%;
-            bottom: -24%;
-            transform: rotate(-7deg);
+            bottom: 0;
             pointer-events: none;
         }
 
+        .banner-coast {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
         .banner-wave {
+            animation: shore-flow 6s ease-in-out infinite;
+        }
+
+        .banner-wave-ripple {
+            animation: ripple-flow 7s ease-in-out -3s infinite;
+        }
+
+        .banner-shell {
             position: absolute;
-            inset: 0;
-            border-radius: 50% 50% 0 0;
-            animation: shore-flow var(--wave-duration) ease-in-out infinite;
-            animation-delay: var(--wave-delay);
+            width: 17px;
+            height: 17px;
+            filter: drop-shadow(0 2px 1px rgba(112, 83, 49, 0.15));
         }
 
-        .banner-wave-sand {
-            --wave-duration: 6.5s;
-            --wave-delay: -1.5s;
-            --wave-drift: 28px;
-            --wave-rise: -6px;
-            top: calc(-2 * var(--shore-band));
-            bottom: calc(2 * var(--shore-band));
-            background: #fff8ec;
+        .banner-shell-one { left: 37%; bottom: 9%; rotate: -22deg; }
+        .banner-shell-two { left: 66%; bottom: 24%; width: 13px; height: 13px; rotate: 18deg; }
+        .banner-shell-three { left: 84%; bottom: 11%; rotate: 38deg; }
+
+        .banner-crab {
+            position: absolute;
+            left: 24%;
+            right: 0;
+            bottom: 2%;
+            height: 24px;
+            opacity: 0;
+            animation: crab-pass 23s linear 6s infinite;
         }
 
-        .banner-wave-foam {
-            --wave-duration: 5s;
-            --wave-delay: -3s;
-            --wave-drift: -32px;
-            --wave-rise: 7px;
-            top: calc(-1 * var(--shore-band));
-            bottom: var(--shore-band);
-            background: #edf7f7;
-        }
-
-        .banner-wave-wash {
-            --wave-duration: 4s;
-            --wave-delay: -1s;
-            --wave-drift: 36px;
-            --wave-rise: -8px;
-            background: #d2efed;
-        }
-
-        .banner-wave-sea {
-            --wave-duration: 5.5s;
-            --wave-delay: -3.5s;
-            --wave-drift: -30px;
-            --wave-rise: 6px;
-            inset: var(--shore-band) var(--shore-band) 0;
-            background: #6dc8c7;
-        }
-
-        @keyframes coast-drift {
-            0%, 100% { translate: 0 0; }
-            50% { translate: 18px 0; }
+        .banner-crab svg {
+            width: 28px;
+            height: 24px;
+            overflow: visible;
+            filter: drop-shadow(0 2px 1px rgba(112, 83, 49, 0.16));
         }
 
         @keyframes shore-flow {
-            0%, 100% { translate: 0 0; }
-            50% { translate: var(--wave-drift) var(--wave-rise); }
+            0%, 100% { transform: translate(-4px, -4px); }
+            50% { transform: translate(3px, 7px); }
+        }
+
+        @keyframes ripple-flow {
+            0%, 100% { transform: translate(0, 0); opacity: 0.25; }
+            50% { transform: translate(-8px, 4px); opacity: 0.7; }
+        }
+
+        @keyframes crab-pass {
+            0% { transform: translateX(0); opacity: 0; }
+            2%, 18% { opacity: 1; }
+            20%, 100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes crab-step {
+            0%, 20%, 100% { transform: translateY(0); }
+            1%, 3%, 5%, 7%, 9%, 11%, 13%, 15%, 17%, 19% { transform: translateY(-1px); }
+            2%, 4%, 6%, 8%, 10%, 12%, 14%, 16%, 18% { transform: translateY(1px); }
+        }
+
+        .banner-crab-legs {
+            animation: crab-step 23s linear 6s infinite;
         }
 
         @media (prefers-reduced-motion: reduce) {
-            header::before,
             .banner-wave {
                 animation: none;
             }
+
+            .banner-crab { display: none; }
+            .banner-crab-legs { animation: none; }
         }
 
         h1 {
@@ -1408,7 +1420,9 @@
         }
 
         .timeline-card {
-            padding: 18px 0;
+            margin-inline: -12px;
+            padding: 18px 12px;
+            border-radius: 6px;
             gap: 7px;
             border-bottom-color: rgba(0, 111, 134, 0.18);
         }
@@ -1420,13 +1434,6 @@
 
         body.dim-past .timeline-card.is-past:hover {
             opacity: 0.86;
-        }
-
-        .timeline-card.is-current,
-        .timeline-card.is-next {
-            margin-inline: -12px;
-            padding-inline: 12px;
-            border-radius: 6px;
         }
 
         .timeline-card.is-current {
@@ -2285,18 +2292,14 @@
                 padding: 56px 16px 10px;
             }
 
-            header::before {
-                inset: 0 0 0 84%;
+            .banner-shore {
+                width: 44%;
+                right: -4%;
             }
 
-            .banner-shore {
-                --shore-band: 13px;
-                width: 38%;
-                height: 64%;
-                right: -4%;
-                bottom: -26%;
-                transform: none;
-            }
+            .banner-shell { width: 13px; height: 13px; }
+            .banner-shell-two { width: 10px; height: 10px; }
+            .banner-crab svg { width: 23px; }
 
             h1 {
                 max-width: 260px;
@@ -2657,10 +2660,14 @@
 
         .backup-plan { border-top: 1px dashed rgba(0, 111, 134, .2); margin-top: 3px; padding-top: 7px; font-size: .73rem; color: var(--text-muted); }
         .backup-plan summary { cursor: pointer; color: #5f777b; line-height: 1.6; }
-        .backup-content { display: grid; gap: 7px; margin-top: 8px; padding: 10px; background: var(--bg-subtle); border-radius: 5px; }
-        .backup-content .maps-btn { justify-self: start; }
+        .backup-content { display: flex; align-items: center; gap: 7px; margin-top: 8px; padding: 10px; background: var(--bg-subtle); border-radius: 5px; }
+        .backup-content > p { flex: 1; min-width: 0; }
+        .backup-content > .maps-btn,
+        .backup-content > .reservation-info-btn { flex: 0 0 auto; }
         .map-links { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+        .backup-content .map-links { flex: 0 0 auto; flex-wrap: nowrap; justify-content: flex-end; }
         .place-title-row.multiple-destinations { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+        .destination-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; }
         .itinerary-source-note { color: var(--text-dim); font-size: .72rem; margin-top: 16px; }
         @media (max-width: 600px) {
 
@@ -2969,8 +2976,7 @@
         [data-theme="dark"] .banner-moon { translate: 0 0; opacity: 1; }
         [data-theme="dark"] .banner-night-sky { opacity: 1; }
         [data-theme="dark"] :is(.banner-moon, .banner-star, .banner-meteor) { animation-play-state: running; }
-        [data-theme="dark"] header::before,
-        [data-theme="dark"] .banner-wave { animation-play-state: paused; }
+        [data-theme="dark"] :is(.banner-wave, .banner-crab, .banner-crab-legs) { animation-play-state: paused; }
 
         [data-theme="dark"] :is(.sticky-control-panel, .modal-header) {
             background: rgba(20, 38, 51, 0.96);
@@ -2986,7 +2992,7 @@
         }
 
         [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
-            .modal-close-btn, .copy-code-btn, .flight-link.primary, .reservation-info-btn,
+            .modal-close-btn, .copy-code-btn, .flight-link.primary,
             .reservation-summary, .time-slot, .charter-badge, .tag, .tag.highlight,
             .souvenir-section, .timeline-card.is-current, .timeline-card.is-next,
             .persona-selector, .persona-btn.active, .outfit-card, .weather-item) {
@@ -3138,6 +3144,29 @@
 
         header .header-btn-wrap { gap: 10px; }
         .dim-btn[aria-pressed="false"] svg { opacity: 0.5; }
+        .reservation-info-btn {
+            width: 44px;
+            min-width: 44px;
+            height: 44px;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: var(--teal-primary);
+        }
+        .reservation-info-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        main,
+        .trip-panel,
+        .trip-panel h2,
+        .timeline-card,
+        .reservation-card { scroll-margin-top: var(--sticky-offset, 220px); }
         @media (max-width: 720px) {
             header .header-btn-wrap { gap: 6px; }
         }
@@ -3151,10 +3180,51 @@
         <!-- Header -->
         <header>
             <div class="banner-shore" aria-hidden="true">
-                <span class="banner-wave banner-wave-sand"></span>
-                <span class="banner-wave banner-wave-foam"></span>
-                <span class="banner-wave banner-wave-wash"></span>
-                <span class="banner-wave banner-wave-sea"></span>
+                <svg class="banner-coast" viewBox="0 0 480 200" preserveAspectRatio="none" focusable="false">
+                    <defs>
+                        <linearGradient id="banner-sand" x1="0" y1="0" x2="0.3" y2="1">
+                            <stop stop-color="#e6cc9e"/>
+                            <stop offset="1" stop-color="#fff3d9"/>
+                        </linearGradient>
+                        <linearGradient id="banner-shallows" x1="0" y1="0" x2="0" y2="1">
+                            <stop stop-color="#9bd9cc" stop-opacity="0.08"/>
+                            <stop offset="1" stop-color="#bfe6d7" stop-opacity="0.7"/>
+                        </linearGradient>
+                        <symbol id="banner-shell-shape" viewBox="0 0 24 24">
+                            <path d="M10 20C7 17 2 14 3 9 4 4 8 2 12 3c4-1 8 1 9 6 1 5-4 8-7 11Z" fill="#f8deca" stroke="#c99f86" stroke-width="0.8"/>
+                            <path d="m12 18-6-9m6 9L10 6m2 12 3-12m-3 12 7-9" fill="none" stroke="#d4af96" stroke-width="0.8" stroke-linecap="round"/>
+                            <path d="M9 20h6" stroke="#bb927b" stroke-linecap="round"/>
+                        </symbol>
+                    </defs>
+                    <path d="M-20 220C90 210 155 102 307 108S435 98 500 57V240H-20Z" fill="url(#banner-sand)"/>
+                    <g class="banner-wave banner-wave-wash">
+                        <path d="M-20 210C90 210 155 72 307 78S435 68 500 27V72C435 113 459 127 307 121S90 230-20 240Z" fill="url(#banner-shallows)"/>
+                    </g>
+                    <g class="banner-wave banner-wave-foam" fill="none" stroke-linecap="round">
+                        <path d="M-20 222C90 212 155 104 307 110S435 100 500 59" stroke="#f4faf0" stroke-width="3" opacity="0.8"/>
+                        <path d="M-20 228C90 218 155 110 307 116S435 106 500 65" stroke="#fff8e7" stroke-width="1" opacity="0.45"/>
+                    </g>
+                    <g class="banner-wave banner-wave-ripple" fill="none" stroke="#d2eee0" stroke-width="1.2" stroke-linecap="round">
+                        <path d="M102 126c35-10 53-24 83-29m121-15c42 3 74-1 99-12"/>
+                        <path d="M230 60c26-5 41-5 62-3"/>
+                    </g>
+                </svg>
+                <svg class="banner-shell banner-shell-one" viewBox="0 0 24 24" focusable="false"><use href="#banner-shell-shape"/></svg>
+                <svg class="banner-shell banner-shell-two" viewBox="0 0 24 24" focusable="false"><use href="#banner-shell-shape"/></svg>
+                <svg class="banner-shell banner-shell-three" viewBox="0 0 24 24" focusable="false"><use href="#banner-shell-shape"/></svg>
+                <span class="banner-crab">
+                    <svg viewBox="0 0 32 26" fill="none" stroke="#ba7059" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                        <g class="banner-crab-legs">
+                            <path d="m10 15-5-2-3 2m8 3-5 1-2 3m19-7 5-2 3 2m-8 3 5 1 2 3"/>
+                        </g>
+                        <path d="m10 12-4-5m16 5 4-5"/>
+                        <path d="M6 8C1 8 2 3 4 2l2 3 3-2c2 3 0 5-3 5Zm20 0c5 0 4-5 2-6l-2 3-3-2c-2 3 0 5 3 5Z" fill="#e7a083"/>
+                        <ellipse cx="16" cy="15" rx="8" ry="5" fill="#df967b"/>
+                        <path d="m13 11-1-3m7 3 1-3"/>
+                        <path d="M12 8h.01M20 8h.01" stroke="#704e42" stroke-width="2.5"/>
+                        <path d="M13 14c1-1 4-1 6 0" stroke="#f5c4a4"/>
+                    </svg>
+                </span>
             </div>
             <div class="banner-moon" aria-hidden="true"></div>
             <div class="banner-night-sky" aria-hidden="true">
@@ -3366,7 +3436,7 @@
                         </div>
                         <div class="place-title-row">
                             <h3 class="place-name">天之船咖啡廳 (Ten no Fune)</h3>
-                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ten-no-fune">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ten+no+Fune+%28%E5%A4%A9%E3%81%AE%E8%88%B9%29+Cafe&amp;query_place_id=ChIJFST7ErT55DQR__lPMDSAoGE" title="導航至Ten no Fune (天の船) Cafe｜沖縄県国頭郡本部町伊豆味3514-24" data-place-key="boat" data-place-id="ChIJFST7ErT55DQR__lPMDSAoGE" data-route-query="Ten no Fune (天の船) Cafe" target="_blank" rel="noopener noreferrer" aria-label="導航至Ten no Fune (天の船) Cafe"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
+                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ten-no-fune" aria-label="查看訂位資訊" title="訂位資訊"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5 3 3 5-5"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ten+no+Fune+%28%E5%A4%A9%E3%81%AE%E8%88%B9%29+Cafe&amp;query_place_id=ChIJFST7ErT55DQR__lPMDSAoGE" title="導航至Ten no Fune (天の船) Cafe｜沖縄県国頭郡本部町伊豆味3514-24" data-place-key="boat" data-place-id="ChIJFST7ErT55DQR__lPMDSAoGE" data-route-query="Ten no Fune (天の船) Cafe" target="_blank" rel="noopener noreferrer" aria-label="導航至Ten no Fune (天の船) Cafe"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">【情侶指名必訪】隱身北部山林的洞穴藝術建築空間，遠離喧囂，主打現點現做法式蕎麥薄餅與美學空間。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">10:30 - 15:00 (週二至週四營業，遇彈性營業可洽)</span><span class="tag price-tag">約 ¥1,500 - ¥2,500 / 人</span></div>
@@ -3438,7 +3508,7 @@
                         </div>
                         <div class="place-title-row">
                             <h3 class="place-name">琉球的牛 恩納本館</h3>
-                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ryukyu-beef">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/place/Ryukyu+No+Ushi/@26.4513457,127.8047221,17z/data=!4m10!1m2!2m1!1z55CJ55CD55qE54mbIOaBqee0jeacrOmkqA!3m6!1s0x34e51aca5afb013f:0xc95a3ce3a65b341e!8m2!3d26.4519972!4d127.8056266!15sChnnkInnkIPnmoTniZsg5oGp57SN5pys6aSoIgOIAQFaHiIc55CJ55CDIOeahCDniZsg5oGp57SNIOacrOmkqJIBE3lha2luaWt1X3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKTjJ3MlpFZFJOblpoV0VGUkVBReABAPoBBAgAEBE!16s%2Fg%2F1vq72lxc?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至Ryukyu No Ushi｜沖縄県国頭郡恩納村前兼久909-2" data-place-key="beef" data-place-id="ChIJPwH7Wsoa5TQRHjRbpuM8Wsk" data-route-query="Ryukyu No Ushi" target="_blank" rel="noopener noreferrer" aria-label="導航至Ryukyu No Ushi"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
+                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ryukyu-beef" aria-label="查看訂位資訊" title="訂位資訊"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5 3 3 5-5"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/place/Ryukyu+No+Ushi/@26.4513457,127.8047221,17z/data=!4m10!1m2!2m1!1z55CJ55CD55qE54mbIOaBqee0jeacrOmkqA!3m6!1s0x34e51aca5afb013f:0xc95a3ce3a65b341e!8m2!3d26.4519972!4d127.8056266!15sChnnkInnkIPnmoTniZsg5oGp57SN5pys6aSoIgOIAQFaHiIc55CJ55CDIOeahCDniZsg5oGp57SNIOacrOmkqJIBE3lha2luaWt1X3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKTjJ3MlpFZFJOblpoV0VGUkVBReABAPoBBAgAEBE!16s%2Fg%2F1vq72lxc?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至Ryukyu No Ushi｜沖縄県国頭郡恩納村前兼久909-2" data-place-key="beef" data-place-id="ChIJPwH7Wsoa5TQRHjRbpuM8Wsk" data-route-query="Ryukyu No Ushi" target="_blank" rel="noopener noreferrer" aria-label="導航至Ryukyu No Ushi"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">頂級沖繩和牛油花均勻如大理石，入口即化！店內設有獨立隔間或包廂，家庭照顧幼童與情侶皆能自在享受頂級盛宴。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">17:00 - 23:00 (無公休)</span><span class="tag price-tag">約 ¥5,000 - ¥10,000 / 人</span></div>
@@ -3446,7 +3516,7 @@
                             <summary>B 備案：琉球的牛 恩納別館</summary>
                             <div class="backup-content">
                                 <p>【晚餐B方案】若恩納本館預約額滿，可詢問恩納別館是否有位，建議提前線上預約。</p>
-                                <a class="reservation-info-btn" href="#reservation-ryukyu-annex">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Yakiniku+Ryukyunoushi+Onnabekkan&amp;query_place_id=ChIJy7LL-LUa5TQRS_bFmRYz7II" title="備案導航至Yakiniku Ryukyunoushi Onnabekkan｜沖縄県国頭郡恩納村前兼久101-1" data-place-key="annex" data-place-id="ChIJy7LL-LUa5TQRS_bFmRYz7II" data-route-query="Yakiniku Ryukyunoushi Onnabekkan" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Yakiniku Ryukyunoushi Onnabekkan"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                <a class="reservation-info-btn" href="#reservation-ryukyu-annex" aria-label="查看訂位資訊" title="訂位資訊"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5 3 3 5-5"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Yakiniku+Ryukyunoushi+Onnabekkan&amp;query_place_id=ChIJy7LL-LUa5TQRS_bFmRYz7II" title="備案導航至Yakiniku Ryukyunoushi Onnabekkan｜沖縄県国頭郡恩納村前兼久101-1" data-place-key="annex" data-place-id="ChIJy7LL-LUa5TQRS_bFmRYz7II" data-route-query="Yakiniku Ryukyunoushi Onnabekkan" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Yakiniku Ryukyunoushi Onnabekkan"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
@@ -3588,7 +3658,7 @@
                         </div>
                         <div class="place-title-row">
                             <h3 class="place-name">美國村 (餐廳尚未選定)</h3>
-                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-american-village">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="導航至American Village｜沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer" aria-label="導航至American Village"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
+                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-american-village" aria-label="查看訂位資訊" title="訂位資訊"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5 3 3 5-5"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="導航至American Village｜沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer" aria-label="導航至American Village"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">漫步美國村日落步道欣賞夕陽，再安排晚餐；餐廳尚未選定，導航先以美國村為目的地。</div>
                     </article>
@@ -3723,8 +3793,8 @@
                             </div>
                         </div>
                         <div class="place-title-row multiple-destinations">
-                            <h3 class="place-name">淳久堂書店 那霸店 (Junkudo) &amp; rokkan COFFEE SHURI</h3>
-                            <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=JUNKUDO+Naha&amp;query_place_id=ChIJAS4kd3lp5TQRFv5A68JHwl8" title="導航至JUNKUDO Naha｜沖縄県那覇市牧志１丁目１９−29 D-NAHA 地下 1階～3階" data-place-key="junkudo" data-place-id="ChIJAS4kd3lp5TQRFv5A68JHwl8" data-route-query="JUNKUDO Naha" target="_blank" rel="noopener noreferrer" aria-label="導航至JUNKUDO Naha"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=rokkan+COFFEE+SHURI&amp;query_place_id=ChIJL--aUDtr5TQRB1R5MkX_1QI" title="導航至rokkan COFFEE SHURI｜沖縄県那覇市首里当蔵町２丁目14 やまごうビル 1F" data-place-key="rokkan" data-place-id="ChIJL--aUDtr5TQRB1R5MkX_1QI" data-route-query="rokkan COFFEE SHURI" target="_blank" rel="noopener noreferrer" aria-label="導航至rokkan COFFEE SHURI"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
+                            <div class="destination-row"><h3 class="place-name">淳久堂書店 那霸店 (Junkudo)</h3><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=JUNKUDO+Naha&amp;query_place_id=ChIJAS4kd3lp5TQRFv5A68JHwl8" title="導航至JUNKUDO Naha｜沖縄県那覇市牧志１丁目１９−29 D-NAHA 地下 1階～3階" data-place-key="junkudo" data-place-id="ChIJAS4kd3lp5TQRFv5A68JHwl8" data-route-query="JUNKUDO Naha" target="_blank" rel="noopener noreferrer" aria-label="導航至JUNKUDO Naha"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
+                            <div class="destination-row"><h3 class="place-name">rokkan COFFEE SHURI</h3><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=rokkan+COFFEE+SHURI&amp;query_place_id=ChIJL--aUDtr5TQRB1R5MkX_1QI" title="導航至rokkan COFFEE SHURI｜沖縄県那覇市首里当蔵町２丁目14 やまごうビル 1F" data-place-key="rokkan" data-place-id="ChIJL--aUDtr5TQRB1R5MkX_1QI" data-route-query="rokkan COFFEE SHURI" target="_blank" rel="noopener noreferrer" aria-label="導航至rokkan COFFEE SHURI"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">【情侶指名必訪】沖繩最大旗艦書店淳久堂翻閱沖繩歷史工藝書籍；隨後前往首里城旁紅瓦老宅享用自家烘焙極簡咖啡。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">淳久堂 10:00-21:00 / rokkan 06:00-18:00</span><span class="tag price-tag">咖啡約 ¥600 / 書籍依標價</span></div>
@@ -3743,7 +3813,7 @@
                         </div>
                         <div class="place-title-row">
                             <h3 class="place-name">炭火燒肉 ぶち 久茂地店</h3>
-                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-buchi">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Buchi+Kumojiten&amp;query_place_id=ChIJzcnA2ndp5TQRRkXi5c02uKk" title="導航至Buchi Kumojiten｜沖縄県那覇市久茂地３丁目１２−1" data-place-key="buchi" data-place-id="ChIJzcnA2ndp5TQRRkXi5c02uKk" data-route-query="Buchi Kumojiten" target="_blank" rel="noopener noreferrer" aria-label="導航至Buchi Kumojiten"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
+                            <div class="place-actions"><a class="reservation-info-btn" href="#reservation-buchi" aria-label="查看訂位資訊" title="訂位資訊"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5 3 3 5-5"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Buchi+Kumojiten&amp;query_place_id=ChIJzcnA2ndp5TQRRkXi5c02uKk" title="導航至Buchi Kumojiten｜沖縄県那覇市久茂地３丁目１２−1" data-place-key="buchi" data-place-id="ChIJzcnA2ndp5TQRRkXi5c02uKk" data-route-query="Buchi Kumojiten" target="_blank" rel="noopener noreferrer" aria-label="導航至Buchi Kumojiten"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">在炭火燒肉 ぶち 久茂地店享用晚餐，品嚐厚切牛舌與黑毛和牛，建議提前預約。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">17:00 - 22:00</span><span class="tag price-tag">約 ¥1,000 - ¥6,000 / 人</span></div>
@@ -3751,7 +3821,7 @@
                             <summary>B 備案：Kushiyaki Can (クシヤキ Can 泉崎店)</summary>
                             <div class="backup-content">
                                 <p>【晚餐B方案】隱蔽感極佳的二樓低調質感串燒居酒屋，現烤串物火候講究，適合成人在安靜氛圍中小酌暢聊。</p>
-                                <a class="reservation-info-btn" href="#reservation-kushiyaki">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kushiyaki+Can&amp;query_place_id=ChIJ89Mr0wxp5TQRei2_05rdFdE" title="備案導航至Kushiyaki Can｜沖縄県那覇市泉崎１丁目９−23 レジデンシア泉崎 2階" data-place-key="kushi" data-place-id="ChIJ89Mr0wxp5TQRei2_05rdFdE" data-route-query="Kushiyaki Can" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Kushiyaki Can"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                <a class="reservation-info-btn" href="#reservation-kushiyaki" aria-label="查看訂位資訊" title="訂位資訊"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5 3 3 5-5"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kushiyaki+Can&amp;query_place_id=ChIJ89Mr0wxp5TQRei2_05rdFdE" title="備案導航至Kushiyaki Can｜沖縄県那覇市泉崎１丁目９−23 レジデンシア泉崎 2階" data-place-key="kushi" data-place-id="ChIJ89Mr0wxp5TQRei2_05rdFdE" data-route-query="Kushiyaki Can" target="_blank" rel="noopener noreferrer" aria-label="備案導航至Kushiyaki Can"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                             </div>
                         </details>
                     </article>
@@ -3819,8 +3889,8 @@
                             </div>
                         </div>
                         <div class="place-title-row multiple-destinations">
-                            <h3 class="place-name">泊港魚市場 (泊いゆまち) &amp; さぬき屋 烏龍麵</h3>
-                            <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Tomari+Iyumachi+Fish+Market&amp;query_place_id=ChIJVVUV2ipq5TQRokk51vsSwDc" title="導航至Tomari Iyumachi Fish Market｜沖縄県那覇市港町１丁目１−18" data-place-key="tomari" data-place-id="ChIJVVUV2ipq5TQRokk51vsSwDc" data-route-query="Tomari Iyumachi Fish Market" target="_blank" rel="noopener noreferrer" aria-label="導航至Tomari Iyumachi Fish Market"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Sanukiya&amp;query_place_id=ChIJ8w971Xtp5TQR-zm9OH7Za00" title="導航至Sanukiya｜沖縄県那覇市牧志１丁目４−36" data-place-key="sanuki" data-place-id="ChIJ8w971Xtp5TQR-zm9OH7Za00" data-route-query="Sanukiya" target="_blank" rel="noopener noreferrer" aria-label="導航至Sanukiya"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
+                            <div class="destination-row"><h3 class="place-name">泊港魚市場 (泊いゆまち)</h3><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Tomari+Iyumachi+Fish+Market&amp;query_place_id=ChIJVVUV2ipq5TQRokk51vsSwDc" title="導航至Tomari Iyumachi Fish Market｜沖縄県那覇市港町１丁目１−18" data-place-key="tomari" data-place-id="ChIJVVUV2ipq5TQRokk51vsSwDc" data-route-query="Tomari Iyumachi Fish Market" target="_blank" rel="noopener noreferrer" aria-label="導航至Tomari Iyumachi Fish Market"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
+                            <div class="destination-row"><h3 class="place-name">さぬき屋 烏龍麵</h3><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Sanukiya&amp;query_place_id=ChIJ8w971Xtp5TQR-zm9OH7Za00" title="導航至Sanukiya｜沖縄県那覇市牧志１丁目４−36" data-place-key="sanuki" data-place-id="ChIJ8w971Xtp5TQR-zm9OH7Za00" data-route-query="Sanukiya" target="_blank" rel="noopener noreferrer" aria-label="導航至Sanukiya"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">沖繩鮪魚批發重鎮，市場平整乾淨，平價生魚片、海膽即買即食；幼童可搭配軟溫清淡的現煮烏龍麵，順道採買天使之羽餅乾與在地冰品。</div>
                         <div class="meta-tags place-details-tags"><span class="tag hours-tag">泊港 06:00-18:00</span><span class="tag price-tag">約 ¥500 - ¥2,000 / 人</span></div>
@@ -4588,6 +4658,13 @@
             return getPanelIdFromHash() || getDayIdForDate(date);
         }
 
+        function updateStickyOffset() {
+            const panel = document.querySelector('.sticky-control-panel');
+            if (!panel) return;
+            const offset = panel.offsetHeight + parseFloat(getComputedStyle(panel).top) + 16;
+            document.documentElement.style.setProperty('--sticky-offset', `${offset}px`);
+        }
+
         function selectDay(dayId, { updateUrl = false, focusTab = false, focusHeading = false, scroll = false } = {}) {
             const activeSection = document.getElementById(dayId);
             const activeTab = document.querySelector(`.day-chip[href="#${dayId}"]`);
@@ -4600,6 +4677,7 @@
             });
             document.body.classList.toggle('reservation-view', dayId === 'reservations');
             document.querySelector('.itinerary-filter').hidden = !activeSection.classList.contains('day-section');
+            updateStickyOffset();
 
             document.querySelectorAll('.day-chip').forEach(tab => {
                 const isActive = tab === activeTab;
@@ -4623,7 +4701,7 @@
                 if (liveCard) autoScrolledCard = liveCard;
                 (liveCard || activeSection).scrollIntoView({
                     behavior: 'smooth',
-                    block: liveCard ? 'center' : 'start'
+                    block: 'start'
                 });
             }
         }
@@ -4832,6 +4910,7 @@
             if (!dayChips.length) return;
 
             createDayPagination();
+            new ResizeObserver(updateStickyOffset).observe(document.querySelector('.sticky-control-panel'));
 
             dayChips.forEach((chip, index) => {
                 chip.addEventListener('click', event => {
