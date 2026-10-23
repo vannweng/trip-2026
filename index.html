@@ -1125,26 +1125,14 @@
         }
 
         .banner-motion-toggle {
-            position: absolute;
-            z-index: 2;
-            right: 10px;
-            bottom: 8px;
-            display: grid;
-            place-items: center;
-            width: 28px;
-            height: 28px;
             border: 1px solid rgba(255, 248, 236, 0.7);
-            border-radius: 50%;
-            background: rgba(0, 111, 134, 0.8);
-            color: #fff8ec;
+            border-radius: 6px;
+            background: #edf7f7;
+            color: #164d5c;
             cursor: pointer;
         }
 
-        .banner-motion-toggle svg {
-            width: 12px;
-            height: 12px;
-            fill: currentColor;
-        }
+        .banner-motion-toggle:hover { background: #d2efed; }
 
         .banner-motion-toggle .motion-play,
         .banner-motion-toggle[aria-pressed="true"] .motion-pause {
@@ -2333,7 +2321,7 @@
                 --shore-band: 13px;
                 width: 38%;
                 height: 64%;
-                right: -20%;
+                right: -4%;
                 bottom: -26%;
                 transform: none;
             }
@@ -2796,7 +2784,6 @@
             header .header-btn-wrap { position: relative; inset: auto; max-width: none; margin-top: 12px; flex-wrap: wrap; justify-content: flex-start; gap: 6px; }
             header .currency-btn, header .notes-btn, header .dim-btn { padding: 6px 8px; font-size: .75rem; }
             header .badge-count { font-size: .75rem; padding-inline: 4px; }
-            .banner-motion-toggle { top: 12px; right: 12px; bottom: auto; }
             .day-nav { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; overflow: visible; margin: 0; padding: 0; }
             .day-chip { grid-column: span 2; width: auto; min-width: 0; min-height: 44px; padding: 6px 2px; }
             .day-chip:not(.reservation-chip):not(.expense-chip) .tab-label {
@@ -2902,6 +2889,8 @@
             translate: 0 240px;
             opacity: 0;
             pointer-events: none;
+            animation: moon-sway 7s ease-in-out infinite;
+            animation-play-state: paused;
         }
 
         .banner-moon::before,
@@ -2924,6 +2913,62 @@
             height: 8px;
             bottom: 12px;
             left: 24px;
+        }
+
+        .banner-night-sky {
+            position: absolute;
+            z-index: -1;
+            inset: 0 0 0 48%;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .banner-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #fff3d6;
+            box-shadow: 0 0 6px rgba(255, 243, 214, 0.6);
+            animation: star-twinkle 4s ease-in-out infinite;
+            animation-play-state: paused;
+        }
+
+        .banner-star:nth-child(1) { left: 16%; top: 24%; animation-delay: -1.2s; }
+        .banner-star:nth-child(2) { left: 42%; top: 48%; animation-delay: -2.8s; }
+        .banner-star:nth-child(3) { left: 67%; top: 18%; animation-delay: -0.4s; }
+        .banner-star:nth-child(4) { left: 88%; top: 77%; animation-delay: -2s; }
+        .banner-star:nth-child(5) { left: 30%; top: 83%; animation-delay: -3.4s; }
+        .banner-star:nth-child(6) { left: 59%; top: 70%; animation-delay: -1.8s; }
+
+        .banner-meteor {
+            position: absolute;
+            top: 16%;
+            left: 65%;
+            width: 75px;
+            height: 2px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #fff3d6, transparent);
+            opacity: 0;
+            animation: meteor-pass 19s linear 5s infinite;
+            animation-play-state: paused;
+        }
+
+        @keyframes moon-sway {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-4px) rotate(3deg); }
+        }
+
+        @keyframes star-twinkle {
+            0%, 100% { opacity: 0.25; transform: scale(0.8); }
+            50% { opacity: 0.95; transform: scale(1.15); }
+        }
+
+        @keyframes meteor-pass {
+            0%, 8%, 100% { opacity: 0; }
+            0% { transform: translate(0, 0) rotate(-28deg); }
+            1.5% { opacity: 0.85; }
+            7%, 100% { transform: translate(-160px, 85px) rotate(-28deg); }
         }
 
         [data-theme="dark"] {
@@ -2950,6 +2995,9 @@
         [data-theme="dark"] header::before { opacity: 0; }
         [data-theme="dark"] .banner-shore { translate: 0 220px; }
         [data-theme="dark"] .banner-moon { translate: 0 0; opacity: 1; }
+        [data-theme="dark"] .banner-night-sky { opacity: 1; }
+        [data-theme="dark"] :is(.banner-moon, .banner-star, .banner-meteor) { animation-play-state: running; }
+        header.motion-paused :is(.banner-moon, .banner-star, .banner-meteor) { animation-play-state: paused; }
         [data-theme="dark"] header::before,
         [data-theme="dark"] .banner-wave { animation-play-state: paused; }
 
@@ -2966,7 +3014,7 @@
             border-color: var(--border-color);
         }
 
-        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
+        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle, .banner-motion-toggle,
             .modal-close-btn, .copy-code-btn, .flight-link.primary, .reservation-info-btn,
             .reservation-summary, .time-slot, .charter-badge, .tag, .tag.highlight,
             .souvenir-section, .timeline-card.is-current, .timeline-card.is-next,
@@ -3010,7 +3058,7 @@
             color: var(--teal-primary);
         }
 
-        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
+        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle, .banner-motion-toggle,
             .modal-close-btn, .checklist-item, .flight-link, .reservation-info-btn,
             .maps-btn, .reservation-map-link, .expense-reload, .souvenir-action,
             .day-pagination button, .day-chip:not(.active), .day-map-link):hover {
@@ -3029,7 +3077,7 @@
         .theme-animated :is(body, .sticky-control-panel, .day-chip, .tab-date, .tab-label,
             .itinerary-filter-btn, .timeline, .timeline-card, .place-desc, .place-name,
             .day-num, .day-date, .day-route-note, .tag, .time-slot, .charter-badge,
-            .currency-btn, .notes-btn, .dim-btn, .theme-toggle, .badge-count,
+            .currency-btn, .notes-btn, .dim-btn, .theme-toggle, .banner-motion-toggle, .badge-count,
             .flight-code, .flight-note, .flight-terminal, .flight-path, .flight-link,
             .maps-btn, .reservation-map-link, .reservation-info-btn, .reservation-card,
             .reservation-summary, .reservation-day, .reservation-status, .reservation-card h3,
@@ -3044,7 +3092,8 @@
         }
 
         .theme-animated header::after,
-        .theme-animated header::before { transition: opacity 0.85s ease; }
+        .theme-animated header::before,
+        .theme-animated .banner-night-sky { transition: opacity 0.85s ease; }
         .theme-animated .banner-shore { transition: translate 0.85s cubic-bezier(0.4, 0, 0.2, 1); }
         .theme-animated .banner-moon {
             transition: translate 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.7s ease;
@@ -3060,9 +3109,7 @@
 
         @media (max-width: 720px) {
             header h1 { padding-right: 64px; }
-            header .header-btn-wrap { padding-right: 28px; }
             .theme-toggle { font-size: 0.75rem; padding: 6px 8px; }
-            .banner-motion-toggle { top: auto; bottom: 10px; }
             .banner-moon { width: 44px; height: 44px; top: 18px; right: 18px; }
             [data-theme="dark"] .banner-shore { translate: 0 260px; }
         }
@@ -3070,10 +3117,17 @@
         @media (prefers-reduced-motion: reduce) {
             .theme-animated header::after,
             .theme-animated header::before,
+            .theme-animated .banner-night-sky,
             .theme-animated .banner-shore,
             .theme-animated .banner-moon {
                 transition: none;
             }
+
+            .banner-moon,
+            .banner-star { animation: none !important; }
+            .banner-star { opacity: 0.65; }
+            .banner-meteor,
+            header .header-btn-wrap .banner-motion-toggle.icon-btn { display: none; }
         }
 
         header .header-btn-wrap .icon-btn,
@@ -3101,6 +3155,13 @@
             stroke-linejoin: round;
         }
 
+        .banner-motion-toggle.icon-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            stroke: none;
+        }
+
         .notes-btn .badge-count {
             position: absolute;
             top: -7px;
@@ -3114,6 +3175,9 @@
 
         header .header-btn-wrap { gap: 10px; }
         .dim-btn[aria-pressed="false"] svg { opacity: 0.5; }
+        @media (max-width: 720px) {
+            header .header-btn-wrap { gap: 6px; }
+        }
     </style>
 </head>
 
@@ -3130,6 +3194,15 @@
                 <span class="banner-wave banner-wave-sea"></span>
             </div>
             <div class="banner-moon" aria-hidden="true"></div>
+            <div class="banner-night-sky" aria-hidden="true">
+                <span class="banner-star"></span>
+                <span class="banner-star"></span>
+                <span class="banner-star"></span>
+                <span class="banner-star"></span>
+                <span class="banner-star"></span>
+                <span class="banner-star"></span>
+                <span class="banner-meteor"></span>
+            </div>
             <h1>沖繩五天四夜雙軌行</h1>
             <p class="date-subtitle">2026/11/26 — 2026/11/30</p>
             <div class="header-btn-wrap">
@@ -3152,13 +3225,13 @@
                     <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>
                     <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
                 </button>
+                <button class="banner-motion-toggle icon-btn" type="button" aria-label="暫停封面動畫"
+                    aria-pressed="false" title="暫停封面動畫" onclick="toggleBannerMotion(this)">
+                    <svg class="motion-pause" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg>
+                    <svg class="motion-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1l8 5-8 5z"/></svg>
+                </button>
             </div>
             <span class="theme-status" id="themeStatus" role="status" aria-live="polite"></span>
-            <button class="banner-motion-toggle" type="button" aria-label="暫停封面動畫"
-                aria-pressed="false" title="暫停封面動畫" onclick="toggleBannerMotion(this)">
-                <svg class="motion-pause" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg>
-                <svg class="motion-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1l8 5-8 5z"/></svg>
-            </button>
         </header>
 
         <!-- Sticky Day Navigation -->

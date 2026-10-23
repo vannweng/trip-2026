@@ -246,7 +246,7 @@ test('main content has skip navigation, semantic headings and explicit transitio
 
 test('compact tool buttons use SVG icons with accessible names and tooltips, not emoji', () => {
     const controls = [...html.matchAll(/<(button|a)\b([^>]*class="[^"]*\bicon-btn\b[^"]*"[^>]*)>([\s\S]*?)<\/\1>/g)];
-    assert.equal(controls.length, 6);
+    assert.equal(controls.length, 7);
     for (const [, , attributes, content] of controls) {
         assert.match(attributes, /aria-label="[^"]+"/);
         assert.match(attributes, /title="[^"]+"/);
