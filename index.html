@@ -4,7 +4,26 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#edf7f7" />
     <title>沖繩五天四夜雙軌行程 | Okinawa Trip 2026</title>
+    <script data-theme-init>
+        (() => {
+            const root = document.documentElement;
+            let preference = null;
+            try {
+                preference = localStorage.getItem('okinawa_theme_2026');
+            } catch (error) {
+                console.warn('Theme preference read failed:', error);
+                root.dataset.themeStorageError = 'true';
+            }
+            root.dataset.themePreference = ['light', 'dark'].includes(preference) ? preference : 'system';
+            root.dataset.theme = root.dataset.themePreference === 'system'
+                ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                : preference;
+            document.querySelector('meta[name="theme-color"]').content =
+                root.dataset.theme === 'dark' ? '#0c1823' : '#edf7f7';
+        })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -116,7 +135,7 @@
             font-size: 0.76rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 4px 12px rgba(245, 158, 11, 0.12);
         }
 
@@ -249,7 +268,7 @@
             font-weight: 700;
             color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             flex-shrink: 0;
             display: inline-flex;
             align-items: center;
@@ -292,7 +311,7 @@
             padding: 4px 10px;
             border-radius: 999px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -432,7 +451,7 @@
             border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
             border-radius: 0;
             padding: 9px 0;
-            transition: all 0.2s ease;
+            transition: opacity 0.2s ease, background-color 0.2s ease;
             display: flex;
             flex-direction: column;
             gap: 3px;
@@ -511,7 +530,7 @@
             border-radius: 4px;
             font-size: 0.7rem;
             font-weight: 600;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             white-space: nowrap;
             flex-shrink: 0;
             text-decoration: none;
@@ -523,16 +542,10 @@
             border-color: var(--teal-primary);
         }
 
-        /* 負外距讓按鈕的最小高度不撐開標題列，避免標題與說明文字間距過大 */
-        .place-title-row>.maps-btn,
-        .place-title-row>.place-actions {
-            margin-block: -5px;
-        }
-
         .place-desc {
-            font-size: 0.76rem;
+            font-size: 0.875rem;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.65;
         }
 
         /* Travel Tips */
@@ -600,6 +613,7 @@
             visibility: hidden;
             transition: opacity 0.25s ease;
             overflow-y: auto;
+            overscroll-behavior: contain;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -650,7 +664,7 @@
             gap: 16px;
         }
 
-        .modal-title-group h3 {
+        .modal-title-group h2 {
             font-size: 1.15rem;
             font-weight: 700;
             color: var(--text-main);
@@ -678,7 +692,7 @@
             align-items: center;
             gap: 6px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             white-space: nowrap;
             flex-shrink: 0;
         }
@@ -707,7 +721,7 @@
             font-weight: 600;
             padding: 10px 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: color 0.2s ease, border-color 0.2s ease;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -751,7 +765,7 @@
             padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: color 0.2s ease, border-color 0.2s ease;
         }
 
         .checklist-reset-btn:hover {
@@ -788,7 +802,7 @@
             padding: 8px 12px;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
             user-select: none;
         }
 
@@ -987,6 +1001,7 @@
             --radius-md: 6px;
             --radius-lg: 8px;
             --shadow-soft: 0 14px 36px rgba(0, 111, 134, 0.14);
+            color-scheme: light;
         }
 
         html {
@@ -997,7 +1012,7 @@
             background-color: var(--bg-main);
             background-image:
                 radial-gradient(ellipse at 0 0, rgba(109, 200, 199, 0.2), transparent 60%),
-                linear-gradient(180deg, #edf7f7, #fff8ec);
+                linear-gradient(180deg, transparent, rgba(255, 248, 236, 0.15));
             background-attachment: scroll;
             color: var(--text-main);
             padding-bottom: 48px;
@@ -1013,7 +1028,7 @@
             isolation: isolate;
             min-height: 145px;
             margin-top: 20px;
-            padding: 50px 28px 14px;
+            padding: 62px 28px 14px;
             overflow: hidden;
             text-align: left;
             border: 0;
@@ -1195,7 +1210,7 @@
             font-family: var(--font-sans);
             font-size: 0.76rem;
             font-weight: 700;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 8px 22px rgba(12, 53, 73, 0.22);
         }
 
@@ -1248,7 +1263,7 @@
             font-size: 0.76rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 8px 22px rgba(12, 53, 73, 0.22);
         }
 
@@ -1316,7 +1331,7 @@
 
         .tab-label {
             color: var(--text-dim);
-            font-size: 0.68rem;
+            font-size: 0.75rem;
             font-weight: 500;
         }
 
@@ -1381,7 +1396,7 @@
 
         .day-num,
         .section-title,
-        .modal-title-group h3 {
+        .modal-title-group h2 {
             font-family: var(--font-display);
         }
 
@@ -1690,7 +1705,7 @@
         .flight-note {
             margin-top: 9px;
             color: #526f75;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             line-height: 1.5;
         }
 
@@ -1858,7 +1873,7 @@
             font-weight: 700;
         }
 
-        .reservation-card h2 {
+        .reservation-card h3 {
             margin: -4px 0 0;
             color: var(--text-main);
             font-family: var(--font-display);
@@ -2052,7 +2067,7 @@
         .souvenir-brand {
             margin: 0 0 1.6px;
             color: #496d73;
-            font-size: 0.68rem;
+            font-size: 0.75rem;
             line-height: 1.5;
         }
 
@@ -2089,12 +2104,12 @@
         .reservation-map-link,
         .expense-reload,
         .souvenir-action {
-            width: 32px;
-            min-width: 32px;
-            height: 32px;
-            min-height: 32px;
+            width: 44px;
+            min-width: 44px;
+            height: 44px;
+            min-height: 44px;
             padding: 0;
-            flex: 0 0 32px;
+            flex: 0 0 44px;
             box-sizing: border-box;
             touch-action: manipulation;
         }
@@ -2702,21 +2717,408 @@
             .currency-btn, .notes-btn, .dim-btn { width: auto; padding: 6px 8px; font-size: .7rem; }
             .currency-btn-label, .dim-btn-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; }
         }
-        /* Compact hero: half of the previous 290px / 240px heights. */
+        .skip-link {
+            position: fixed;
+            top: 8px;
+            left: 8px;
+            z-index: 10000;
+            padding: 12px 16px;
+            background: #fffefa;
+            color: #006f86;
+            transform: translateY(-150%);
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        main,
+        .trip-panel h2 {
+            scroll-margin-top: 180px;
+        }
+
+        .tag,
+        .backup-plan {
+            font-size: 0.75rem;
+        }
+
+        .souvenir-description {
+            font-size: 0.875rem;
+            line-height: 1.65;
+        }
+
+        .backup-plan summary {
+            display: list-item;
+            min-height: 44px;
+            padding-block: 10px;
+            font-size: 0.875rem;
+        }
+
+        .itinerary-filter[hidden] {
+            display: none;
+        }
+
+        .itinerary-filter-btn,
+        .checklist-reset-btn,
+        .reservation-info-btn,
+        .reservation-day-link,
+        .copy-code-btn,
+        .flight-link {
+            min-height: 44px;
+        }
+
+        .checklist-storage-status {
+            color: var(--text-main);
+            font-size: 0.875rem;
+            margin-bottom: 16px;
+        }
+
+        .checklist-storage-status:empty {
+            display: none;
+        }
+
+        :where(a, button, input, summary) {
+            touch-action: manipulation;
+        }
+
+        :where(main, h2, summary):focus-visible {
+            outline: 3px solid #006f86;
+            outline-offset: 3px;
+        }
+
         header h1 { margin-bottom: 6px; }
         header .header-btn-wrap { top: 10px; right: 18px; }
-        header .currency-btn, header .notes-btn, header .dim-btn { min-height: 36px; padding: 5px 10px; }
+        header .currency-btn, header .notes-btn, header .dim-btn { min-height: 44px; padding: 5px 10px; }
         @media (max-width: 720px) {
-            header h1 { max-width: none; font-size: 1.4rem; margin-bottom: 4px; }
+            header { padding: 16px; }
+            header h1 { max-width: none; font-size: 1.4rem; margin-bottom: 4px; padding-right: 32px; }
             header .date-subtitle { font-size: .78rem; }
-            header .header-btn-wrap { top: 8px; left: 12px; right: 12px; max-width: none; flex-wrap: nowrap; justify-content: flex-end; gap: 4px; }
-            header .currency-btn, header .notes-btn, header .dim-btn { padding: 4px 6px; font-size: .68rem; }
-            header .badge-count { font-size: .62rem; padding-inline: 4px; }
+            header .header-btn-wrap { position: relative; inset: auto; max-width: none; margin-top: 12px; flex-wrap: wrap; justify-content: flex-start; gap: 6px; }
+            header .currency-btn, header .notes-btn, header .dim-btn { padding: 6px 8px; font-size: .75rem; }
+            header .badge-count { font-size: .75rem; padding-inline: 4px; }
+            .banner-motion-toggle { top: 12px; right: 12px; bottom: auto; }
+            .day-nav { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; overflow: visible; margin: 0; padding: 0; }
+            .day-chip { grid-column: span 2; width: auto; min-width: 0; min-height: 44px; padding: 6px 2px; }
+            .day-chip:not(.reservation-chip):not(.expense-chip) .tab-label {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip-path: inset(50%);
+                white-space: nowrap;
+            }
+            .day-chip.reservation-chip, .day-chip.expense-chip { grid-column: span 5; flex-direction: row; gap: 8px; border-color: var(--border-color); }
+            .tab-date { font-size: .875rem; }
+            .sticky-control-panel { margin-bottom: 22px; }
+            main, .trip-panel h2 { scroll-margin-top: 200px; }
         }
+
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 44px;
+            padding: 5px 10px;
+            border: 1px solid rgba(210, 239, 237, 0.82);
+            border-radius: 6px;
+            background: #edf7f7;
+            color: #164d5c;
+            font: inherit;
+            font-size: 0.76rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .theme-toggle:hover {
+            background: #d2efed;
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .theme-status {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        .theme-status[data-error="true"] {
+            position: relative;
+            display: block;
+            width: auto;
+            height: auto;
+            margin-top: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: var(--bg-card);
+            color: var(--text-main);
+            clip-path: none;
+            white-space: normal;
+            font-size: 0.875rem;
+        }
+
+        .theme-icon-sun,
+        [data-theme="dark"] .theme-icon-moon {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-icon-sun {
+            display: block;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            z-index: -2;
+            inset: 0;
+            background:
+                radial-gradient(circle at 80% 30%, rgba(128, 165, 211, 0.25), transparent 45%),
+                linear-gradient(115deg, #102332, #172d49 65%, #253b5a);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .banner-moon {
+            position: absolute;
+            z-index: -1;
+            top: 42%;
+            right: 9%;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #fff3c9;
+            box-shadow: 0 0 28px 8px rgba(255, 235, 173, 0.18), inset -10px -4px 0 #e3d4a3;
+            translate: 0 240px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .banner-moon::before,
+        .banner-moon::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(164, 145, 100, 0.16);
+        }
+
+        .banner-moon::before {
+            width: 12px;
+            height: 12px;
+            top: 12px;
+            left: 12px;
+        }
+
+        .banner-moon::after {
+            width: 8px;
+            height: 8px;
+            bottom: 12px;
+            left: 24px;
+        }
+
+        [data-theme="dark"] {
+            color-scheme: dark;
+            --bg-main: #0c1823;
+            --bg-card: #142633;
+            --bg-card-hover: #1d3543;
+            --bg-subtle: #213e4b;
+            --border-color: rgba(148, 199, 209, 0.28);
+            --border-accent: rgba(109, 200, 199, 0.5);
+            --text-main: #e4f1f3;
+            --text-muted: #b0c8cd;
+            --text-dim: #a0bac2;
+            --teal-primary: #81dcd2;
+            --teal-glow: rgba(109, 200, 199, 0.15);
+            --gold-accent: #f3d496;
+            --gold-glow: rgba(243, 212, 150, 0.12);
+            --sky-accent: #b0dff3;
+            --rose-accent: #f2b6ac;
+            --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] header::after { opacity: 1; }
+        [data-theme="dark"] header::before { opacity: 0; }
+        [data-theme="dark"] .banner-shore { translate: 0 220px; }
+        [data-theme="dark"] .banner-moon { translate: 0 0; opacity: 1; }
+        [data-theme="dark"] header::before,
+        [data-theme="dark"] .banner-wave { animation-play-state: paused; }
+
+        [data-theme="dark"] :is(.sticky-control-panel, .modal-header) {
+            background: rgba(20, 38, 51, 0.96);
+            border-color: var(--border-color);
+            box-shadow: var(--shadow-soft);
+        }
+
+        [data-theme="dark"] :is(.reservation-card, .tips-box, .tip-item, .weather-box,
+            .clothing-card, .checklist-item, .souvenir-card, .day-pagination button,
+            .photo-credits, .skip-link) {
+            background: var(--bg-card);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
+            .modal-close-btn, .copy-code-btn, .flight-link.primary, .reservation-info-btn,
+            .reservation-summary, .time-slot, .charter-badge, .tag, .tag.highlight,
+            .souvenir-section, .timeline-card.is-current, .timeline-card.is-next,
+            .persona-selector, .persona-btn.active, .outfit-card, .weather-item) {
+            background: var(--bg-subtle);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] :is(.day-num, .flight-code, .flight-path-line, .reservation-count,
+            .reservation-day, .reservation-status, .reservation-code-value code, .reservation-day-link,
+            .souvenir-heading, .day-pagination button, .day-map-segments a, .credit-list a,
+            .maps-btn, .reservation-map-link, .expense-reload, .souvenir-action,
+            .outfit-title, .modal-tab-btn.active, .checklist-cat-title, .checklist-progress-text,
+            .clothing-card-tag, .skip-link),
+        [data-theme="dark"] .reservation-chip:not(.active) .tab-date {
+            color: var(--teal-primary);
+        }
+
+        [data-theme="dark"] :is(.flight-terminal, .flight-path, .flight-note, .souvenir-brand,
+            .outfit-content, .persona-btn, .backup-plan summary) {
+            color: var(--text-muted);
+        }
+
+        [data-theme="dark"] :is(.day-chip.active, .reservation-chip.active,
+            .itinerary-filter-btn.active, .day-map-link) {
+            background: var(--teal-primary);
+            border-color: var(--teal-primary);
+            color: var(--bg-main);
+        }
+
+        [data-theme="dark"] .day-chip.active :is(.tab-date, .tab-label) { color: var(--bg-main); }
+        [data-theme="dark"] :is(.notes-btn .badge-count, .timeline-status-tag.current) {
+            background: var(--teal-primary);
+            color: var(--bg-main);
+        }
+        [data-theme="dark"] .tag.audience-tag.family { background: #443b29; color: #f3d496; }
+        [data-theme="dark"] .tag.audience-tag.couple { background: #46343c; color: #f2b6ac; }
+        [data-theme="dark"] .day-section.is-today .day-date::after {
+            background: var(--bg-subtle);
+            color: var(--teal-primary);
+        }
+
+        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
+            .modal-close-btn, .checklist-item, .flight-link, .reservation-info-btn,
+            .maps-btn, .reservation-map-link, .expense-reload, .souvenir-action,
+            .day-pagination button, .day-chip:not(.active), .day-map-link):hover {
+            background: var(--bg-card-hover);
+            color: var(--teal-primary);
+        }
+
+        [data-theme="dark"] :is(.timeline, .timeline-card, .flight-details, .flight-link,
+            .reservation-day-link, .day-header, .backup-plan, .clothing-list li) {
+            border-color: var(--border-color);
+        }
+        [data-theme="dark"] .flight-link { color: var(--teal-primary); }
+        [data-theme="dark"] :focus-visible,
+        [data-theme="dark"] .reservation-card:focus { outline-color: var(--teal-primary); }
+
+        .theme-animated :is(body, .sticky-control-panel, .day-chip, .tab-date, .tab-label,
+            .itinerary-filter-btn, .timeline, .timeline-card, .place-desc, .place-name,
+            .day-num, .day-date, .day-route-note, .tag, .time-slot, .charter-badge,
+            .currency-btn, .notes-btn, .dim-btn, .theme-toggle, .badge-count,
+            .flight-code, .flight-note, .flight-terminal, .flight-path, .flight-link,
+            .maps-btn, .reservation-map-link, .reservation-info-btn, .reservation-card,
+            .reservation-summary, .reservation-day, .reservation-status, .reservation-card h3,
+            .reservation-card-note, .reservation-details dt, .reservation-details dd,
+            .reservation-day-link, .souvenir-section, .souvenir-card, .souvenir-heading,
+            .souvenir-brand, .souvenir-description, .souvenir-action, .souvenir-card h3,
+            .day-map-link, .day-pagination button, .photo-credits, footer,
+            .expense-btn, .expense-totals > div, .expense-split, .expense-day, .expense-transfer,
+            .modal-overlay, .modal-card, .modal-header, .modal-close-btn, .checklist-item,
+            .clothing-card, .weather-box, .weather-item) {
+            transition: background-color 0.7s ease, color 0.7s ease, border-color 0.7s ease, box-shadow 0.7s ease;
+        }
+
+        .theme-animated header::after,
+        .theme-animated header::before { transition: opacity 0.85s ease; }
+        .theme-animated .banner-shore { transition: translate 0.85s cubic-bezier(0.4, 0, 0.2, 1); }
+        .theme-animated .banner-moon {
+            transition: translate 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.7s ease;
+        }
+
+        .theme-animated .modal-overlay {
+            transition: background-color 0.7s ease, opacity 0.25s ease;
+        }
+
+        .theme-animated .modal-card {
+            transition: background-color 0.7s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (max-width: 720px) {
+            header h1 { padding-right: 64px; }
+            header .header-btn-wrap { padding-right: 28px; }
+            .theme-toggle { font-size: 0.75rem; padding: 6px 8px; }
+            .banner-motion-toggle { top: auto; bottom: 10px; }
+            .banner-moon { width: 44px; height: 44px; top: 18px; right: 18px; }
+            [data-theme="dark"] .banner-shore { translate: 0 260px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .theme-animated header::after,
+            .theme-animated header::before,
+            .theme-animated .banner-shore,
+            .theme-animated .banner-moon {
+                transition: none;
+            }
+        }
+
+        header .header-btn-wrap .icon-btn,
+        .modal-close-btn.icon-btn,
+        .checklist-reset-btn.icon-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            min-width: 44px;
+            height: 44px;
+            min-height: 44px;
+            padding: 0;
+            flex: 0 0 44px;
+        }
+
+        .icon-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .notes-btn .badge-count {
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            padding: 1px 4px;
+            border: 1px solid var(--border-color);
+            font-size: 0.625rem;
+            line-height: 1.5;
+            pointer-events: none;
+        }
+
+        header .header-btn-wrap { gap: 10px; }
+        .dim-btn[aria-pressed="false"] svg { opacity: 0.5; }
     </style>
 </head>
 
 <body class="dim-past">
+    <a class="skip-link" href="#main-content">跳至主要內容</a>
 
     <div class="container">
         <!-- Header -->
@@ -2727,21 +3129,31 @@
                 <span class="banner-wave banner-wave-wash"></span>
                 <span class="banner-wave banner-wave-sea"></span>
             </div>
+            <div class="banner-moon" aria-hidden="true"></div>
             <h1>沖繩五天四夜雙軌行</h1>
             <p class="date-subtitle">2026/11/26 — 2026/11/30</p>
             <div class="header-btn-wrap">
-                <a class="currency-btn" href="https://granola858.github.io/realtime-currency-converter/"
+                <a class="currency-btn icon-btn" href="https://granola858.github.io/realtime-currency-converter/"
                     target="_blank" rel="noopener noreferrer" aria-label="開啟即時匯率換算工具" title="開啟即時匯率換算工具">
-                    <span class="currency-btn-label">匯率換算</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4"/></svg>
                 </a>
-                <button class="notes-btn" onclick="toggleNotesModal(true)">
-                    行李備註清單 <span class="badge-count" id="checklistCounter">0/34</span>
+                <button class="notes-btn icon-btn" type="button" aria-label="開啟行李清單" title="行李清單"
+                    onclick="toggleNotesModal(true)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 6V3h6v3M9 10v7m6-7v7"/></svg>
+                    <span class="badge-count" id="checklistCounter">0/34</span>
                 </button>
-                <button class="dim-btn" id="pastDimToggle" type="button" aria-pressed="true"
+                <button class="dim-btn icon-btn" id="pastDimToggle" type="button" aria-pressed="true"
+                    aria-label="已結束行程轉灰" title="已結束行程轉灰"
                     onclick="togglePastDimming()">
-                    <span class="dim-btn-label" id="pastDimToggleLabel">結束轉灰：開</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16Z" fill="currentColor" stroke="none"/></svg>
+                </button>
+                <button class="theme-toggle icon-btn" id="themeToggle" type="button" aria-label="切換至深色模式"
+                    title="切換至深色模式" aria-pressed="false" onclick="toggleTheme()">
+                    <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>
+                    <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
                 </button>
             </div>
+            <span class="theme-status" id="themeStatus" role="status" aria-live="polite"></span>
             <button class="banner-motion-toggle" type="button" aria-label="暫停封面動畫"
                 aria-pressed="false" title="暫停封面動畫" onclick="toggleBannerMotion(this)">
                 <svg class="motion-pause" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg>
@@ -2772,13 +3184,13 @@
         </div>
 
         <!-- MAIN TIMELINE SECTION -->
-        <main>
+        <main id="main-content" tabindex="-1">
 
             <section id="day1" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day1">
                 <div class="day-header">
                     <div class="day-title-wrap">
-                        <div class="day-title-top"><span class="day-num">Day 1</span><span class="day-date">11月26日（四）</span>
-                        </div>
+                        <h2 class="day-title-top" tabindex="-1"><span class="day-num">Day 1</span><span class="day-date">11月26日（四）</span>
+                        </h2>
                         <div class="day-sub-desc">抵達那霸・恩納入住</div>
                     </div>
                     <span class="charter-badge">共同行動</span>
@@ -2791,7 +3203,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">那霸機場國際線航廈</div>
+                            <h3 class="place-name">那霸機場國際線航廈</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naha+International+Airport&amp;query_place_id=ChIJjSyLjsRp5TQRkP5WN6rOTFA" title="導航至Naha International Airport｜沖縄県那覇市鏡水150" data-place-key="airport" data-place-id="ChIJjSyLjsRp5TQRkP5WN6rOTFA" data-route-query="Naha International Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至Naha International Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">班機表定 12:15 抵達，辦理出關手續約 45-60 分鐘，搭乘租車接駁車前往取車處。</div>
@@ -2815,7 +3227,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">ORIX 租車 那霸機場店</div>
+                            <h3 class="place-name">ORIX 租車 那霸機場店</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=ORIX+Rent-a-car+Naha+Airport&amp;query_place_id=ChIJT_QS2gto5TQRpfOpt3jYZC8" title="導航至ORIX Rent-a-car Naha Airport｜沖縄県豊見城市豊崎1-1174" data-place-key="orix" data-place-id="ChIJT_QS2gto5TQRpfOpt3jYZC8" data-route-query="ORIX Rent-a-car Naha Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至ORIX Rent-a-car Naha Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">準時取車，安裝 2 歲幼童安全座椅，確認車況與導航後出發。</div>
@@ -2826,7 +3238,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">J-voyage包棟－森暮</div>
+                            <h3 class="place-name">J-voyage包棟－森暮</h3>
                             <a class="maps-btn" href="https://maps.app.goo.gl/FyrKLhVA2pELcgvx8?g_st=il" title="導航至恩納民泊 森暮MoriMori 沖繩包棟民宿｜沖縄県国頭郡恩納村字仲泊1229-8" data-place-key="moribo" data-place-id="ChIJRaUIrnob5TQR2PUxfbQUHFQ" data-route-query="恩納民泊 森暮MoriMori 沖繩包棟民宿" target="_blank" rel="noopener noreferrer" aria-label="導航至恩納民泊 森暮MoriMori 沖繩包棟民宿"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">首日入住恩納包棟，客廳廚房寬敞舒適，適合幼童奔跑適應與長輩休息放行李。</div>
@@ -2838,7 +3250,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">浜の家海鮮料理</div>
+                            <h3 class="place-name">浜の家海鮮料理</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Hamanoya+Restaurant&amp;query_place_id=ChIJRfq8yKAa5TQRqpJVaPpJhR4" title="導航至Hamanoya Restaurant｜沖縄県国頭郡恩納村仲泊2097" data-place-key="hamanoya" data-place-id="ChIJRfq8yKAa5TQRqpJVaPpJhR4" data-route-query="Hamanoya Restaurant" target="_blank" rel="noopener noreferrer" aria-label="導航至Hamanoya Restaurant"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">恩納村老字號海鮮名店，有寬敞榻榻米座位，適合親子一起用餐，招牌奶油煎魚肉質軟嫩香濃，離包棟超近免舟車勞頓。</div>
@@ -2889,8 +3301,8 @@
             <section id="day2" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day2" hidden>
                 <div class="day-header">
                     <div class="day-title-wrap">
-                        <div class="day-title-top"><span class="day-num">Day 2</span><span class="day-date">11月27日（五）</span>
-                        </div>
+                        <h2 class="day-title-top" tabindex="-1"><span class="day-num">Day 2</span><span class="day-date">11月27日（五）</span>
+                        </h2>
                         <div class="day-sub-desc">北部探索・晚餐會合</div>
                     </div>
                     <span class="charter-badge">雙軌行程</span>
@@ -2903,7 +3315,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">やんばる森のおもちゃ美術館 (山原森林玩具美術館)</div>
+                            <h3 class="place-name">やんばる森のおもちゃ美術館 (山原森林玩具美術館)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/place/%E5%B1%B1%E5%8E%9F%E6%A3%AE%E7%8E%A9%E5%85%B7%E5%8D%9A%E7%89%A9%E9%A4%A8/@26.7139032,128.1481607,12.85z/data=!4m6!3m5!1s0x34e443a085d43e8f:0x458b1f4a36a4ff32!8m2!3d26.7333059!4d128.1902453!16s%2Fg%2F11bw2jb9vl?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至The Yanbaru Forest Toy Museum｜沖縄県国頭郡国頭村辺土名1094-1" data-place-key="toy" data-place-id="ChIJjz7UhaBD5DQRMv-kNkofi0U" data-route-query="The Yanbaru Forest Toy Museum" target="_blank" rel="noopener noreferrer" aria-label="導航至The Yanbaru Forest Toy Museum"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">藏身北部山原森林中的全木造玩具館，設有木球池與天然木質積木，觸感溫潤安全，極適合 2 歲幼兒爬行與感官探索。</div>
@@ -2922,7 +3334,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">天之船咖啡廳 (Ten no Fune)</div>
+                            <h3 class="place-name">天之船咖啡廳 (Ten no Fune)</h3>
                             <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ten-no-fune">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Ten+no+Fune+%28%E5%A4%A9%E3%81%AE%E8%88%B9%29+Cafe&amp;query_place_id=ChIJFST7ErT55DQR__lPMDSAoGE" title="導航至Ten no Fune (天の船) Cafe｜沖縄県国頭郡本部町伊豆味3514-24" data-place-key="boat" data-place-id="ChIJFST7ErT55DQR__lPMDSAoGE" data-route-query="Ten no Fune (天の船) Cafe" target="_blank" rel="noopener noreferrer" aria-label="導航至Ten no Fune (天の船) Cafe"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">【情侶指名必訪】隱身北部山林的洞穴藝術建築空間，遠離喧囂，主打現點現做法式蕎麥薄餅與美學空間。</div>
@@ -2941,7 +3353,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">岸本食堂 本店 (きしもと食堂)</div>
+                            <h3 class="place-name">岸本食堂 本店 (きしもと食堂)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/place/%E5%B2%B8%E6%9C%AC%E9%A3%9F%E5%A0%82/@26.6601413,127.8955933,20.18z/data=!4m15!1m8!3m7!1s0x34e4f95f0713ad43:0x6ca2015f0e4f426f!2s5+Toguchi,+Motobu,+Kunigami+District,+Okinawa+905-0214%E6%97%A5%E6%9C%AC!3b1!8m2!3d26.6602546!4d127.8958564!16s%2Fg%2F11clmq8_t2!3m5!1s0x34e4f95eb431867d:0x1653b48af7640a31!8m2!3d26.6603253!4d127.8958949!16s%2Fg%2F1tfn0h3y?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至Kishimoto Shokudo｜沖縄県国頭郡本部町渡久地５" data-place-key="kishimoto" data-place-id="ChIJfYYxtF755DQRMQpk94q0UxY" data-route-query="Kishimoto Shokudo" target="_blank" rel="noopener noreferrer" aria-label="導航至Kishimoto Shokudo"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">百年沖繩麵老店，天然柴魚木灰清甜高湯、三層肉軟嫩多汁、手工粗麵Q彈，2 歲幼童可安心一同分食。</div>
@@ -2963,7 +3375,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">沖繩美麗海水族館</div>
+                            <h3 class="place-name">沖繩美麗海水族館</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Okinawa+Churaumi+Aquarium&amp;query_place_id=ChIJPZ5hUjH65DQR_p_dD3CmCOo" title="導航至Okinawa Churaumi Aquarium｜沖縄県国頭郡本部町石川424" data-place-key="aquarium" data-place-id="ChIJPZ5hUjH65DQR_p_dD3CmCOo" data-route-query="Okinawa Churaumi Aquarium" target="_blank" rel="noopener noreferrer" aria-label="導航至Okinawa Churaumi Aquarium"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">全館平整推車動線且冷氣舒適，世界級「黑潮之海」巨型水槽鯨鯊高度吸引幼童目光，戶外有海豚表演劇場。</div>
@@ -2975,7 +3387,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">FIFI PARLOR (絕美海景鞦韆咖啡廳)</div>
+                            <h3 class="place-name">FIFI PARLOR (絕美海景鞦韆咖啡廳)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=FIFI+PARLOR&amp;query_place_id=ChIJTyYj-1JX5DQRA10bcuPJHzI" title="導航至FIFI PARLOR｜沖縄県名護市呉我 大真利原1335-4" data-place-key="fifi" data-place-id="ChIJTyYj-1JX5DQRA10bcuPJHzI" data-route-query="FIFI PARLOR" target="_blank" rel="noopener noreferrer" aria-label="導航至FIFI PARLOR"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">午後享受海景與咖啡的悠閒時光。坐在延伸至海面上的木質鞦韆吹海風放空拍照，極度放鬆且具海島氛圍。</div>
@@ -2994,7 +3406,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">琉球的牛 恩納本館</div>
+                            <h3 class="place-name">琉球的牛 恩納本館</h3>
                             <div class="place-actions"><a class="reservation-info-btn" href="#reservation-ryukyu-beef">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/place/Ryukyu+No+Ushi/@26.4513457,127.8047221,17z/data=!4m10!1m2!2m1!1z55CJ55CD55qE54mbIOaBqee0jeacrOmkqA!3m6!1s0x34e51aca5afb013f:0xc95a3ce3a65b341e!8m2!3d26.4519972!4d127.8056266!15sChnnkInnkIPnmoTniZsg5oGp57SN5pys6aSoIgOIAQFaHiIc55CJ55CDIOeahCDniZsg5oGp57SNIOacrOmkqJIBE3lha2luaWt1X3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKTjJ3MlpFZFJOblpoV0VGUkVBReABAPoBBAgAEBE!16s%2Fg%2F1vq72lxc?entry=ttu&amp;g_ep=EgoyMDI2MTAxOC4wIKXMDSoASAFQAw%3D%3D" title="導航至Ryukyu No Ushi｜沖縄県国頭郡恩納村前兼久909-2" data-place-key="beef" data-place-id="ChIJPwH7Wsoa5TQRHjRbpuM8Wsk" data-route-query="Ryukyu No Ushi" target="_blank" rel="noopener noreferrer" aria-label="導航至Ryukyu No Ushi"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">頂級沖繩和牛油花均勻如大理石，入口即化！店內設有獨立隔間或包廂，家庭照顧幼童與情侶皆能自在享受頂級盛宴。</div>
@@ -3045,8 +3457,8 @@
             <section id="day3" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day3" hidden>
                 <div class="day-header">
                     <div class="day-title-wrap">
-                        <div class="day-title-top"><span class="day-num">Day 3</span><span class="day-date">11月28日（六）</span>
-                        </div>
+                        <h2 class="day-title-top" tabindex="-1"><span class="day-num">Day 3</span><span class="day-date">11月28日（六）</span>
+                        </h2>
                         <div class="day-sub-desc">中部分流・各自晚餐</div>
                     </div>
                     <span class="charter-badge">雙軌行程</span>
@@ -3059,7 +3471,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">地球之庭 (ちきゅうのにわ) @ 永旺來客夢 C棟2F</div>
+                            <h3 class="place-name">地球之庭 (ちきゅうのにわ) @ 永旺來客夢 C棟2F</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%A1%E3%81%8D%E3%82%85%E3%81%86%E3%81%AE%E3%81%AB%E3%82%8F%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E6%B2%96%E7%B8%84%E3%83%A9%E3%82%A4%E3%82%AB%E3%83%A0&amp;query_place_id=ChIJwUm-A9cT5TQRooCYQj9koV0" title="導航至ちきゅうのにわイオンモール沖縄ライカム｜沖縄県中頭郡北中城村ライカム1 Rycom Village C ２階 イオンモール沖縄" data-place-key="earth" data-place-id="ChIJwUm-A9cT5TQRooCYQj9koV0" data-route-query="ちきゅうのにわイオンモール沖縄ライカム" target="_blank" rel="noopener noreferrer" aria-label="導航至ちきゅうのにわイオンモール沖縄ライカム"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">大型室內森林系親子樂園，設有 2 歲幼童專用爬行軟墊區、沙坑與安全球池，商場育嬰室與推車租借齊全舒適。</div>
@@ -3071,7 +3483,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">ククル読谷サーキット (Go-Karting 戶外賽車場)</div>
+                            <h3 class="place-name">ククル読谷サーキット (Go-Karting 戶外賽車場)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kukuru+Yomitan+Circuit&amp;query_place_id=ChIJl1d0-80W5TQRv-JAB7eng8w" title="導航至Kukuru Yomitan Circuit｜沖縄県中頭郡読谷村高志保1020-1" data-place-key="kart" data-place-id="ChIJl1d0-80W5TQRv-JAB7eng8w" data-route-query="Kukuru Yomitan Circuit" target="_blank" rel="noopener noreferrer" aria-label="導航至Kukuru Yomitan Circuit"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">【情侶指名必訪】超刺激戶外標準卡丁車賽道，享受貼地高速過彎與推背感，非觀光化行程，熱血滿分！</div>
@@ -3090,7 +3502,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">永旺夢樂城來客夢 美食街與母嬰專區</div>
+                            <h3 class="place-name">永旺夢樂城來客夢 美食街與母嬰專區</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=AEON+MALL+Okinawa+Rycom&amp;query_place_id=ChIJJ_TSFGIS5TQRa_HkdjGALss" title="導航至AEON MALL Okinawa Rycom｜沖縄県中頭郡北中城村ライカム1" data-place-key="rycom" data-place-id="ChIJJ_TSFGIS5TQRa_HkdjGALss" data-route-query="AEON MALL Okinawa Rycom" target="_blank" rel="noopener noreferrer" aria-label="導航至AEON MALL Okinawa Rycom"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">商場中庭有巨大水族箱，美食街有充足兒童餐椅，吃飽後推推車逛阿卡將本舖母嬰店，讓 2 歲幼童在涼爽推車中安穩午睡。15:00 出發前往西松屋，預留移動與停車時間。</div>
@@ -3102,7 +3514,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">星野集團 BANTA CAFE (絕美海岸咖啡廳)</div>
+                            <h3 class="place-name">星野集團 BANTA CAFE (絕美海岸咖啡廳)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=BANTA+CAFE+by+Hoshino+Resorts&amp;query_place_id=ChIJWwtxRZkX5TQRd_jZvuds3BQ" title="導航至BANTA CAFE by Hoshino Resorts｜沖縄県中頭郡読谷村儀間560" data-place-key="banta" data-place-id="ChIJWwtxRZkX5TQRd_jZvuds3BQ" data-route-query="BANTA CAFE by Hoshino Resorts" target="_blank" rel="noopener noreferrer" aria-label="導航至BANTA CAFE by Hoshino Resorts"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">【絕美海景咖啡】星野集團打造，依懸崖礁岩而建的木棧露台與戶外榻榻米海景座位，坐看漸層碧藍海岸放空，浪漫度破表。</div>
@@ -3121,7 +3533,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">西松屋 北谷美浜店</div>
+                            <h3 class="place-name">西松屋 北谷美浜店</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Nishimatsuya+Chatan+Mihama&amp;query_place_id=ChIJDyl60RgT5TQRznCbperdy6c" title="導航至Nishimatsuya Chatan Mihama｜沖縄県中頭郡北谷町北谷２丁目18-4" data-place-key="nishimatsu" data-place-id="ChIJDyl60RgT5TQRznCbperdy6c" data-route-query="Nishimatsuya Chatan Mihama" target="_blank" rel="noopener noreferrer" aria-label="導航至Nishimatsuya Chatan Mihama"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">安排約一小時採買幼童衣物、尿布與育兒用品，依需要補齊旅途備品。結束後接續原訂親子晚餐，與情侶組各自用餐。</div>
@@ -3133,7 +3545,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">永旺購物中心 (餐廳尚未選定)</div>
+                            <h3 class="place-name">永旺購物中心 (餐廳尚未選定)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=AEON+MALL+Okinawa+Rycom&amp;query_place_id=ChIJJ_TSFGIS5TQRa_HkdjGALss" title="導航至AEON MALL Okinawa Rycom｜沖縄県中頭郡北中城村ライカム1" data-place-key="rycom" data-place-id="ChIJJ_TSFGIS5TQRa_HkdjGALss" data-route-query="AEON MALL Okinawa Rycom" target="_blank" rel="noopener noreferrer" aria-label="導航至AEON MALL Okinawa Rycom"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">親子組在永旺夢樂城沖繩來客夢安排晚餐，餐廳尚未選定；用餐後可依家庭步調返回住宿休息。</div>
@@ -3144,7 +3556,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">美國村 (餐廳尚未選定)</div>
+                            <h3 class="place-name">美國村 (餐廳尚未選定)</h3>
                             <div class="place-actions"><a class="reservation-info-btn" href="#reservation-american-village">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="導航至American Village｜沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer" aria-label="導航至American Village"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">漫步美國村日落步道欣賞夕陽，再安排晚餐；餐廳尚未選定，導航先以美國村為目的地。</div>
@@ -3187,8 +3599,8 @@
             <section id="day4" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day4" hidden>
                 <div class="day-header">
                     <div class="day-title-wrap">
-                        <div class="day-title-top"><span class="day-num">Day 4</span><span class="day-date">11月29日（日）</span>
-                        </div>
+                        <h2 class="day-title-top" tabindex="-1"><span class="day-num">Day 4</span><span class="day-date">11月29日（日）</span>
+                        </h2>
                         <div class="day-sub-desc">浦添漫遊・那霸入住</div>
                     </div>
                     <span class="charter-badge">雙軌行程</span>
@@ -3201,7 +3613,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">恩納村森暮包棟辦理退房</div>
+                            <h3 class="place-name">恩納村森暮包棟辦理退房</h3>
                             <a class="maps-btn" href="https://maps.app.goo.gl/FyrKLhVA2pELcgvx8?g_st=il" title="導航至恩納民泊 森暮MoriMori 沖繩包棟民宿｜沖縄県国頭郡恩納村字仲泊1229-8" data-place-key="moribo" data-place-id="ChIJRaUIrnob5TQR2PUxfbQUHFQ" data-route-query="恩納民泊 森暮MoriMori 沖繩包棟民宿" target="_blank" rel="noopener noreferrer" aria-label="導航至恩納民泊 森暮MoriMori 沖繩包棟民宿"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">全體退房將大件行李搬上車，沿高速公路南下前往浦添文創聚落與那霸市區。</div>
@@ -3213,7 +3625,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">hoppepan 麵包店 (浦添人氣名店)</div>
+                            <h3 class="place-name">hoppepan 麵包店 (浦添人氣名店)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=hoppepan&amp;query_place_id=ChIJb_Q15qhr5TQRNzzHUipNSwg" title="導航至hoppepan｜沖縄県浦添市内間２丁目１０−10" data-place-key="hoppe" data-place-id="ChIJb_Q15qhr5TQRNzzHUipNSwg" data-route-query="hoppepan" target="_blank" rel="noopener noreferrer" aria-label="導航至hoppepan"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">【情侶指名必訪】一週僅營業 4 天的排隊手作麵包店！招牌必買糖粒酥脆「巧克力麻花捲」，亦有多款無添加軟土司可給幼童同享。</div>
@@ -3232,7 +3644,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">港川外人住宅街 (Minatogawa Stateside Town)</div>
+                            <h3 class="place-name">港川外人住宅街 (Minatogawa Stateside Town)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Minatogawa+Stateside+Town&amp;query_place_id=ChIJU4WYIXpr5TQRYnoNjeiRLIk" title="導航至Minatogawa Stateside Town｜沖縄県浦添市港川２丁目１８−3" data-place-key="minato" data-place-id="ChIJU4WYIXpr5TQRYnoNjeiRLIk" data-route-query="Minatogawa Stateside Town" target="_blank" rel="noopener noreferrer" aria-label="導航至Minatogawa Stateside Town"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">美軍舊眷舍改建的文創彩色平房聚落，步道平緩適合推嬰兒車散步，品嚐 Houki Boshi 黑糖可麗露；若 hoppepan 售完亦可在此用餐。</div>
@@ -3244,7 +3656,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">PARCO CITY (含 5F 停車場無敵海景)</div>
+                            <h3 class="place-name">PARCO CITY (含 5F 停車場無敵海景)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=PARCO+CITY&amp;query_place_id=ChIJxZQf9gpr5TQRwLWyT5Osigc" title="導航至PARCO CITY｜沖縄県浦添市西洲３丁目1-1" data-place-key="parco" data-place-id="ChIJxZQf9gpr5TQRwLWyT5Osigc" data-route-query="PARCO CITY" target="_blank" rel="noopener noreferrer" aria-label="導航至PARCO CITY"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">商場 5 樓停車場擁有開闊的隱藏版濱海視野，內部冷氣舒適，可順道採買日本零食、文具生活雜貨。</div>
@@ -3256,7 +3668,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">那霸若狹房源 (2-chōme-7-14 Wakasa)</div>
+                            <h3 class="place-name">那霸若狹房源 (2-chōme-7-14 Wakasa)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=2-ch%C5%8Dme-7-14%20Wakasa%2C%20Naha%2C%20Okinawa%20900-0031" title="導航至2-chōme-7-14 Wakasa｜2-chōme-7-14 Wakasa, Naha, Okinawa 900-0031" data-place-key="wakasa" data-place-id="ChIJFaoNnIRp5TQR-NW0yVL9qao" data-route-query="2-chōme-7-14 Wakasa" target="_blank" rel="noopener noreferrer" aria-label="導航至2-chōme-7-14 Wakasa"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">抵達那霸民宿辦理入住手續並卸下重行李，地點鄰近波上宮、國際通與泊港，交通便利。</div>
@@ -3268,7 +3680,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">波上宮 &amp; 波之上海灘 (步行即達)</div>
+                            <h3 class="place-name">波上宮 &amp; 波之上海灘 (步行即達)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naminoue+Shrine&amp;query_place_id=ChIJdT8KUYVp5TQRrCRV4eFRanc" title="導航至Naminoue Shrine｜沖縄県那覇市若狭１丁目２５−11" data-place-key="naminoue" data-place-id="ChIJdT8KUYVp5TQRrCRV4eFRanc" data-route-query="Naminoue Shrine" target="_blank" rel="noopener noreferrer" aria-label="導航至Naminoue Shrine"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">從住宿步行即可抵達，輕鬆安排神社與海灘散步。參拜海崖上的那霸總鎮守祈福，再到白沙灘踩水踏沙。</div>
@@ -3280,7 +3692,7 @@
                             </div>
                         </div>
                         <div class="place-title-row multiple-destinations">
-                            <div class="place-name">淳久堂書店 那霸店 (Junkudo) &amp; rokkan COFFEE SHURI</div>
+                            <h3 class="place-name">淳久堂書店 那霸店 (Junkudo) &amp; rokkan COFFEE SHURI</h3>
                             <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=JUNKUDO+Naha&amp;query_place_id=ChIJAS4kd3lp5TQRFv5A68JHwl8" title="導航至JUNKUDO Naha｜沖縄県那覇市牧志１丁目１９−29 D-NAHA 地下 1階～3階" data-place-key="junkudo" data-place-id="ChIJAS4kd3lp5TQRFv5A68JHwl8" data-route-query="JUNKUDO Naha" target="_blank" rel="noopener noreferrer" aria-label="導航至JUNKUDO Naha"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=rokkan+COFFEE+SHURI&amp;query_place_id=ChIJL--aUDtr5TQRB1R5MkX_1QI" title="導航至rokkan COFFEE SHURI｜沖縄県那覇市首里当蔵町２丁目14 やまごうビル 1F" data-place-key="rokkan" data-place-id="ChIJL--aUDtr5TQRB1R5MkX_1QI" data-route-query="rokkan COFFEE SHURI" target="_blank" rel="noopener noreferrer" aria-label="導航至rokkan COFFEE SHURI"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">【情侶指名必訪】沖繩最大旗艦書店淳久堂翻閱沖繩歷史工藝書籍；隨後前往首里城旁紅瓦老宅享用自家烘焙極簡咖啡。</div>
@@ -3299,7 +3711,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">炭火燒肉 ぶち 久茂地店</div>
+                            <h3 class="place-name">炭火燒肉 ぶち 久茂地店</h3>
                             <div class="place-actions"><a class="reservation-info-btn" href="#reservation-buchi">訂位資訊</a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Buchi+Kumojiten&amp;query_place_id=ChIJzcnA2ndp5TQRRkXi5c02uKk" title="導航至Buchi Kumojiten｜沖縄県那覇市久茂地３丁目１２−1" data-place-key="buchi" data-place-id="ChIJzcnA2ndp5TQRRkXi5c02uKk" data-route-query="Buchi Kumojiten" target="_blank" rel="noopener noreferrer" aria-label="導航至Buchi Kumojiten"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">在炭火燒肉 ぶち 久茂地店享用晚餐，品嚐厚切牛舌與黑毛和牛，建議提前預約。</div>
@@ -3350,8 +3762,8 @@
             <section id="day5" class="day-section trip-panel" role="tabpanel" aria-labelledby="tab-day5" hidden>
                 <div class="day-header">
                     <div class="day-title-wrap">
-                        <div class="day-title-top"><span class="day-num">Day 5</span><span class="day-date">11月30日（一）</span>
-                        </div>
+                        <h2 class="day-title-top" tabindex="-1"><span class="day-num">Day 5</span><span class="day-date">11月30日（一）</span>
+                        </h2>
                         <div class="day-sub-desc">泊港・瀨長島・返台</div>
                     </div>
                     <span class="charter-badge">共同行動</span>
@@ -3364,7 +3776,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">那霸若狹房源退房出發</div>
+                            <h3 class="place-name">那霸若狹房源退房出發</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=2-ch%C5%8Dme-7-14%20Wakasa%2C%20Naha%2C%20Okinawa%20900-0031" title="導航至2-chōme-7-14 Wakasa｜2-chōme-7-14 Wakasa, Naha, Okinawa 900-0031" data-place-key="wakasa" data-place-id="ChIJFaoNnIRp5TQR-NW0yVL9qao" data-route-query="2-chōme-7-14 Wakasa" target="_blank" rel="noopener noreferrer" aria-label="導航至2-chōme-7-14 Wakasa"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">準時退房，大件行李妥善放入後車廂，展開最後半天的海鮮市場採買巡禮。</div>
@@ -3376,7 +3788,7 @@
                             </div>
                         </div>
                         <div class="place-title-row multiple-destinations">
-                            <div class="place-name">泊港魚市場 (泊いゆまち) &amp; さぬき屋 烏龍麵</div>
+                            <h3 class="place-name">泊港魚市場 (泊いゆまち) &amp; さぬき屋 烏龍麵</h3>
                             <div class="map-links"><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Tomari+Iyumachi+Fish+Market&amp;query_place_id=ChIJVVUV2ipq5TQRokk51vsSwDc" title="導航至Tomari Iyumachi Fish Market｜沖縄県那覇市港町１丁目１−18" data-place-key="tomari" data-place-id="ChIJVVUV2ipq5TQRokk51vsSwDc" data-route-query="Tomari Iyumachi Fish Market" target="_blank" rel="noopener noreferrer" aria-label="導航至Tomari Iyumachi Fish Market"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Sanukiya&amp;query_place_id=ChIJ8w971Xtp5TQR-zm9OH7Za00" title="導航至Sanukiya｜沖縄県那覇市牧志１丁目４−36" data-place-key="sanuki" data-place-id="ChIJ8w971Xtp5TQR-zm9OH7Za00" data-route-query="Sanukiya" target="_blank" rel="noopener noreferrer" aria-label="導航至Sanukiya"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
                         <div class="place-desc">沖繩鮪魚批發重鎮，市場平整乾淨，平價生魚片、海膽即買即食；幼童可搭配軟溫清淡的現煮烏龍麵，順道採買天使之羽餅乾與在地冰品。</div>
@@ -3395,7 +3807,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">瀨長島 Umikaji Terrace</div>
+                            <h3 class="place-name">瀨長島 Umikaji Terrace</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Umikaji+Terrace+Senagajima&amp;query_place_id=ChIJTXE7iR5o5TQRuIMt_jUINqU" title="導航至Umikaji Terrace Senagajima｜沖縄県豊見城市瀬長174-6" data-place-key="umikaji" data-place-id="ChIJTXE7iR5o5TQRuIMt_jUINqU" data-route-query="Umikaji Terrace Senagajima" target="_blank" rel="noopener noreferrer" aria-label="導航至Umikaji Terrace Senagajima"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">距離機場僅 10 分鐘的純白梯田海岸商場，在階梯露台邊吃冰淇淋邊近距離看大客機呼嘯降落，為旅程畫下完美句點。 為提前還車，本段規劃於 13:45 離開。</div>
@@ -3407,7 +3819,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">ORIX 租車 那霸機場店還車</div>
+                            <h3 class="place-name">ORIX 租車 那霸機場店還車</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=ORIX+Rent-a-car+Naha+Airport&amp;query_place_id=ChIJT_QS2gto5TQRpfOpt3jYZC8" title="導航至ORIX Rent-a-car Naha Airport｜沖縄県豊見城市豊崎1-1174" data-place-key="orix" data-place-id="ChIJT_QS2gto5TQRpfOpt3jYZC8" data-route-query="ORIX Rent-a-car Naha Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至ORIX Rent-a-car Naha Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">先在機場周邊加油站加滿油，規劃 14:30 前完成還車驗收，預留 14:30–15:15 搭乘接駁與抵達航廈的時間。</div>
@@ -3418,7 +3830,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <div class="place-name">那霸機場國際線航廈出境大廳</div>
+                            <h3 class="place-name">那霸機場國際線航廈出境大廳</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naha+International+Airport&amp;query_place_id=ChIJjSyLjsRp5TQRkP5WN6rOTFA" title="導航至Naha International Airport｜沖縄県那覇市鏡水150" data-place-key="airport" data-place-id="ChIJjSyLjsRp5TQRkP5WN6rOTFA" data-route-query="Naha International Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至Naha International Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">依確認安排，15:15–17:00 辦理星宇 JX871 登機報到、行李託運與出境手續，採購伴手禮。回程起飛時間請依機票核對。</div>
@@ -3472,12 +3884,12 @@
                 </aside>
             </section>
             <section id="reservations" class="reservation-page trip-panel" role="tabpanel" aria-labelledby="tab-reservations" hidden>
-                <div class="day-header"><div class="day-title-wrap"><div class="day-title-top"><span class="day-num">餐廳訂位總覽</span></div><div class="day-sub-desc">6 項主要行程與備案的預約提醒</div></div><span class="charter-badge">待確認</span></div>
+                <div class="day-header"><div class="day-title-wrap"><h2 class="day-title-top" tabindex="-1"><span class="day-num">餐廳訂位總覽</span></h2><div class="day-sub-desc">6 項主要行程與備案的預約提醒</div></div><span class="charter-badge">待確認</span></div>
                 <div class="reservation-summary"><div><strong>出發前確認預約安排</strong><p>包含所有建議或必須預約的行程，目前未提供訂位碼或確認憑證。</p></div><span class="reservation-count">6</span></div>
                 <div class="reservation-grid">
                     <article class="reservation-card" id="reservation-ten-no-fune" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 2 · 2026/11/27 · 主要行程</span><span class="reservation-status">待確認預約</span></div>
-                        <h2>天之船咖啡廳 (Ten no Fune)</h2>
+                        <h3>天之船咖啡廳 (Ten no Fune)</h3>
                         <p class="reservation-card-note"> 座位極少，強烈建議預約</p>
                         <dl class="reservation-details">
                             <div><dt>預計時段</dt><dd>09:30 - 12:00</dd></div>
@@ -3488,7 +3900,7 @@
                     </article>
                     <article class="reservation-card" id="reservation-ryukyu-beef" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 2 · 2026/11/27 · 主要行程</span><span class="reservation-status">待確認預約</span></div>
-                        <h2>琉球的牛 恩納本館</h2>
+                        <h3>琉球的牛 恩納本館</h3>
                         <p class="reservation-card-note"> 必須提前 1-2 個月線上預約</p>
                         <dl class="reservation-details">
                             <div><dt>預計時段</dt><dd>18:30 - 20:30</dd></div>
@@ -3499,7 +3911,7 @@
                     </article>
                     <article class="reservation-card" id="reservation-ryukyu-annex" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 2 · 2026/11/27 · B 備案</span><span class="reservation-status">待確認預約</span></div>
-                        <h2>琉球的牛 恩納別館</h2>
+                        <h3>琉球的牛 恩納別館</h3>
                         <p class="reservation-card-note">建議提前線上預約</p>
                         <dl class="reservation-details">
                             <div><dt>預計時段</dt><dd>18:30 - 20:30</dd></div>
@@ -3510,7 +3922,7 @@
                     </article>
                     <article class="reservation-card" id="reservation-american-village" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 3 · 2026/11/28 · 主要行程</span><span class="reservation-status">待選定餐廳</span></div>
-                        <h2>美國村 (餐廳尚未選定)</h2>
+                        <h3>美國村 (餐廳尚未選定)</h3>
                         <p class="reservation-card-note">餐廳選定後，再確認營業時間、費用與預約方式。</p>
                         <dl class="reservation-details">
                             <div><dt>預計時段</dt><dd>17:30 - 20:30</dd></div>
@@ -3519,7 +3931,7 @@
                     </article>
                     <article class="reservation-card" id="reservation-buchi" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 4 · 2026/11/29 · 主要行程</span><span class="reservation-status">待確認預約</span></div>
-                        <h2>炭火燒肉 ぶち 久茂地店</h2>
+                        <h3>炭火燒肉 ぶち 久茂地店</h3>
                         <p class="reservation-card-note">建議提前預約</p>
                         <dl class="reservation-details">
                             <div><dt>預計時段</dt><dd>18:30 - 21:00</dd></div>
@@ -3530,7 +3942,7 @@
                     </article>
                     <article class="reservation-card" id="reservation-kushiyaki" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 4 · 2026/11/29 · B 備案</span><span class="reservation-status">待確認預約</span></div>
-                        <h2>Kushiyaki Can (クシヤキ Can 泉崎店)</h2>
+                        <h3>Kushiyaki Can (クシヤキ Can 泉崎店)</h3>
                         <p class="reservation-card-note">建議提前預約</p>
                         <dl class="reservation-details">
                             <div><dt>預計時段</dt><dd>18:30 - 21:00</dd></div>
@@ -3547,9 +3959,9 @@
                 hidden>
                 <div class="day-header expense-header">
                     <div class="day-title-wrap">
-                        <div class="day-title-top">
+                        <h2 class="day-title-top" tabindex="-1">
                             <span class="day-num">花費記錄</span>
-                        </div>
+                        </h2>
                         <div class="day-sub-desc">記一筆你的花費</div>
                     </div>
                     <div class="expense-bar">
@@ -3602,11 +4014,12 @@
         <div class="modal-card">
             <div class="modal-header">
                 <div class="modal-title-group">
-                    <h3 id="notesModalTitle">沖繩行前備忘與行李清單</h3>
+                    <h2 id="notesModalTitle">沖繩行前備忘與行李清單</h2>
                     <p>五天四夜必備品確認與簡單穿搭建議</p>
                 </div>
-                <button class="modal-close-btn" onclick="toggleNotesModal(false)" title="返回行程">
-                    返回行程
+                <button class="modal-close-btn icon-btn" type="button" onclick="toggleNotesModal(false)"
+                    aria-label="關閉行李清單，返回行程" title="返回行程">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
                 </button>
             </div>
 
@@ -3619,7 +4032,7 @@
                         必備清單
                     </button>
                     <button class="modal-tab-btn" id="modalTabClothing" data-tab="clothing" role="tab"
-                        aria-selected="false" aria-controls="paneClothing" onclick="switchModalTab('clothing')">
+                        aria-selected="false" aria-controls="paneClothing" tabindex="-1" onclick="switchModalTab('clothing')">
                         穿搭建議
                     </button>
                 </div>
@@ -3628,8 +4041,12 @@
                 <div class="modal-tab-pane" id="paneChecklist" role="tabpanel" aria-labelledby="modalTabChecklist">
                     <div class="checklist-toolbar">
                         <span class="checklist-progress-text" id="checklistProgress">已勾選 0 / 34 項 (0%)</span>
-                        <button class="checklist-reset-btn" onclick="resetPackingChecklist()">↺ 清空重置</button>
+                        <button class="checklist-reset-btn icon-btn" type="button" onclick="resetPackingChecklist()"
+                            aria-label="清空重置行李清單" title="清空重置">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg>
+                        </button>
                     </div>
+                    <p class="checklist-storage-status" id="checklistStorageStatus" role="status" aria-live="polite"></p>
 
                     <!-- Category: Documents -->
                     <div class="checklist-category">
@@ -3821,6 +4238,59 @@
 
     <!-- Interactive JavaScript -->
     <script>
+        const THEME_STORAGE_KEY = 'okinawa_theme_2026';
+        let themeTransitionTimeout = null;
+
+        function setThemeStatus(message, error = false) {
+            const status = document.getElementById('themeStatus');
+            status.textContent = message;
+            status.dataset.error = String(error);
+        }
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            root.dataset.theme = theme;
+            const dark = theme === 'dark';
+            const label = dark ? '切換至淺色模式' : '切換至深色模式';
+            const button = document.getElementById('themeToggle');
+            button.setAttribute('aria-pressed', String(dark));
+            button.setAttribute('aria-label', label);
+            button.title = label;
+            document.querySelector('meta[name="theme-color"]').content = dark ? '#0c1823' : '#edf7f7';
+        }
+
+        function toggleTheme() {
+            const root = document.documentElement;
+            const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            root.classList.add('theme-animated');
+            root.dataset.themePreference = theme;
+            applyTheme(theme);
+            clearTimeout(themeTransitionTimeout);
+            themeTransitionTimeout = setTimeout(() => root.classList.remove('theme-animated'), 900);
+            try {
+                localStorage.setItem(THEME_STORAGE_KEY, theme);
+                delete root.dataset.themeStorageError;
+                setThemeStatus(theme === 'dark' ? '已切換至深色模式' : '已切換至淺色模式');
+            } catch (error) {
+                console.warn('Theme preference save failed:', error);
+                setThemeStatus('主題已切換，但無法記住偏好。請允許此網站儲存資料，否則重新整理後可能恢復原本的主題。', true);
+            }
+        }
+
+        function initTheme() {
+            const root = document.documentElement;
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+            applyTheme(root.dataset.theme);
+            if (root.dataset.themeStorageError) {
+                setThemeStatus('無法讀取主題偏好，目前依系統設定顯示。請確認瀏覽器允許此網站儲存資料。', true);
+            }
+            systemTheme.addEventListener('change', event => {
+                if (root.dataset.themePreference === 'system') {
+                    applyTheme(event.matches ? 'dark' : 'light');
+                }
+            });
+        }
+
         function toggleBannerMotion(button) {
             const paused = button.getAttribute('aria-pressed') !== 'true';
             button.closest('header').classList.toggle('motion-paused', paused);
@@ -3900,9 +4370,20 @@
             return { start: times[0], end: null };
         }
 
+        function getItineraryFilterFromUrl() {
+            const filter = new URL(window.location.href).searchParams.get('audience');
+            return ['family', 'couple'].includes(filter) ? filter : 'all';
+        }
+
         // The filter stays selected when changing days; common activities are always visible.
-        function applyItineraryFilter(filter) {
+        function applyItineraryFilter(filter, { updateUrl = false } = {}) {
             if (!['all', 'family', 'couple'].includes(filter)) return;
+            if (updateUrl) {
+                const url = new URL(window.location.href);
+                if (filter === 'all') url.searchParams.delete('audience');
+                else url.searchParams.set('audience', filter);
+                if (url.href !== window.location.href) history.pushState(null, '', url.href);
+            }
             document.querySelectorAll('.itinerary-filter-btn').forEach(button => {
                 const active = button.dataset.filter === filter;
                 button.classList.toggle('active', active);
@@ -3919,9 +4400,9 @@
 
         function initItineraryFilter() {
             document.querySelectorAll('.itinerary-filter-btn').forEach(button => {
-                button.addEventListener('click', () => applyItineraryFilter(button.dataset.filter));
+                button.addEventListener('click', () => applyItineraryFilter(button.dataset.filter, { updateUrl: true }));
             });
-            applyItineraryFilter('all');
+            applyItineraryFilter(getItineraryFilterFromUrl());
         }
 
         function getTimelineWindows(section) {
@@ -3965,8 +4446,6 @@
             button.title = enabled
                 ? '關閉「已結束行程轉灰」，分享給別人看時比較好讀'
                 : '開啟「已結束行程轉灰」，看得出走到哪了';
-            const label = document.getElementById('pastDimToggleLabel');
-            if (label) label.textContent = enabled ? '結束轉灰：開' : '結束轉灰：關';
         }
 
         function togglePastDimming() {
@@ -4086,15 +4565,18 @@
             return getPanelIdFromHash() || getDayIdForDate(date);
         }
 
-        function selectDay(dayId, { updateUrl = false, focusTab = false, scroll = false } = {}) {
+        function selectDay(dayId, { updateUrl = false, focusTab = false, focusHeading = false, scroll = false } = {}) {
             const activeSection = document.getElementById(dayId);
             const activeTab = document.querySelector(`.day-chip[href="#${dayId}"]`);
             if (!activeSection || !activeTab) return;
+            const focusedPanel = document.activeElement?.closest('.trip-panel');
+            const focusLeavingPanel = focusedPanel && focusedPanel !== activeSection;
 
             document.querySelectorAll('.trip-panel').forEach(section => {
                 section.hidden = section !== activeSection;
             });
             document.body.classList.toggle('reservation-view', dayId === 'reservations');
+            document.querySelector('.itinerary-filter').hidden = !activeSection.classList.contains('day-section');
 
             document.querySelectorAll('.day-chip').forEach(tab => {
                 const isActive = tab === activeTab;
@@ -4108,10 +4590,11 @@
             }
 
             activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            if (focusTab) activeTab.focus();
+            if (focusTab) activeTab.focus({ preventScroll: true });
+            if (focusHeading || focusLeavingPanel) activeSection.querySelector('.day-title-top').focus({ preventScroll: true });
             if (scroll) {
-                // 切回今天時直接定位到進行中（或下一站）的行程，其他日子維持捲到頂端
-                const liveCard = dayId === getDayIdForDate()
+                // 明確移動焦點時保留標題可見；一般切回今天仍定位進行中（或下一站）的行程。
+                const liveCard = !focusHeading && !focusLeavingPanel && dayId === getDayIdForDate()
                     ? activeSection.querySelector('.timeline-card.is-current, .timeline-card.is-next')
                     : null;
                 if (liveCard) autoScrolledCard = liveCard;
@@ -4231,7 +4714,7 @@
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             const label = document.createElement('span');
-            label.textContent = '完整整天 Google 地圖';
+            label.textContent = '整天路線';
             const meta = document.createElement('span');
             meta.className = 'day-map-meta';
             link.append(label, meta);
@@ -4261,10 +4744,10 @@
                 nextButton.textContent = index < daySections.length - 1 ? `下一天 ${tripDateLabels[index + 1]} →` : '已是最後一天';
 
                 previousButton.addEventListener('click', () => {
-                    selectDay(`day${index}`, { updateUrl: true, scroll: true });
+                    selectDay(`day${index}`, { updateUrl: true, focusHeading: true, scroll: true });
                 });
                 nextButton.addEventListener('click', () => {
-                    selectDay(`day${index + 2}`, { updateUrl: true, scroll: true });
+                    selectDay(`day${index + 2}`, { updateUrl: true, focusHeading: true, scroll: true });
                 });
 
                 pagination.append(previousButton, nextButton);
@@ -4274,6 +4757,7 @@
         }
 
         function syncDayFromUrl() {
+            applyItineraryFilter(getItineraryFilterFromUrl());
             const hashDayId = window.location.hash.slice(1);
             const panelId = getPanelIdFromHash(hashDayId) || getDayIdForDate();
             if (!getPanelIdFromHash(hashDayId)) {
@@ -4311,6 +4795,13 @@
             document.querySelectorAll('[data-copy-code]').forEach(button => {
                 button.addEventListener('click', () => copyTextToClipboard(button.dataset.copyCode, button));
             });
+            document.querySelectorAll('.reservation-day-link').forEach(link => {
+                link.addEventListener('click', event => {
+                    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+                    event.preventDefault();
+                    selectDay(link.getAttribute('href').slice(1), { updateUrl: true, focusHeading: true, scroll: true });
+                });
+            });
         }
 
         function initDayNav() {
@@ -4321,6 +4812,7 @@
 
             dayChips.forEach((chip, index) => {
                 chip.addEventListener('click', event => {
+                    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
                     event.preventDefault();
                     selectDay(chip.getAttribute('aria-controls'), { updateUrl: true, scroll: true });
                 });
@@ -4344,6 +4836,12 @@
 
             window.addEventListener('popstate', syncDayFromUrl);
             window.addEventListener('hashchange', syncDayFromUrl);
+            document.querySelector('.skip-link').addEventListener('click', event => {
+                event.preventDefault();
+                const main = document.getElementById('main-content');
+                main.focus({ preventScroll: true });
+                main.scrollIntoView({ block: 'start' });
+            });
 
             const initialDayId = getInitialDayId();
             if (!getPanelIdFromHash()) {
@@ -4383,12 +4881,14 @@
             }
         }
 
-        function switchModalTab(tabKey) {
+        function switchModalTab(tabKey, { focusTab = false } = {}) {
             const tabBtns = document.querySelectorAll('.modal-tab-btn');
             tabBtns.forEach(btn => {
                 const isActive = btn.dataset.tab === tabKey;
                 btn.classList.toggle('active', isActive);
                 btn.setAttribute('aria-selected', String(isActive));
+                btn.tabIndex = isActive ? 0 : -1;
+                if (isActive && focusTab) btn.focus();
             });
 
             const paneChecklist = document.getElementById('paneChecklist');
@@ -4404,6 +4904,26 @@
                 paneChecklist.hidden = true;
                 paneClothing.hidden = false;
             }
+        }
+
+        function initModalTabs() {
+            const tabs = Array.from(document.querySelectorAll('.modal-tab-btn'));
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('keydown', event => {
+                    let nextIndex = index;
+                    if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+                    else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+                    else if (event.key === 'Home') nextIndex = 0;
+                    else if (event.key === 'End') nextIndex = tabs.length - 1;
+                    else return;
+                    event.preventDefault();
+                    switchModalTab(tabs[nextIndex].dataset.tab, { focusTab: true });
+                });
+            });
+        }
+
+        function setChecklistStorageStatus(message) {
+            document.getElementById('checklistStorageStatus').textContent = message;
         }
 
         function saveChecklistState() {
@@ -4426,8 +4946,10 @@
 
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(states));
+                setChecklistStorageStatus('');
             } catch (err) {
                 console.warn('LocalStorage save failed:', err);
+                setChecklistStorageStatus('無法儲存清單，重新整理可能遺失勾選。請允許此網站儲存資料後再試。');
             }
 
             updateChecklistCounters(checkedCount, checkboxes.length);
@@ -4440,9 +4962,16 @@
                 const saved = localStorage.getItem(STORAGE_KEY);
                 if (saved) {
                     states = JSON.parse(saved);
+                    if (!states || typeof states !== 'object' || Array.isArray(states)
+                        || Object.values(states).some(value => typeof value !== 'boolean')) {
+                        throw new TypeError('Invalid checklist data');
+                    }
                 }
+                setChecklistStorageStatus('');
             } catch (err) {
-                states = {};
+                console.warn('LocalStorage load failed:', err);
+                setChecklistStorageStatus('無法讀取已儲存清單。請確認瀏覽器允許儲存資料；若資料損壞，可使用「清空重置」。');
+                return;
             }
 
             let checkedCount = 0;
@@ -4477,7 +5006,11 @@
             if (confirm('確定要清空所有已勾選的清單紀錄嗎？')) {
                 try {
                     localStorage.removeItem(STORAGE_KEY);
-                } catch (err) { }
+                } catch (err) {
+                    console.warn('LocalStorage reset failed:', err);
+                    setChecklistStorageStatus('無法清空已儲存清單，尚未重置。請允許此網站儲存資料後再試。');
+                    return;
+                }
                 loadChecklistState();
             }
         }
@@ -4494,7 +5027,7 @@
             if (e.key !== 'Tab') return;
             const focusable = Array.from(modal.querySelectorAll(
                 'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
-            )).filter(element => element.offsetParent !== null);
+            )).filter(element => element.offsetParent !== null && element.tabIndex >= 0);
             if (!focusable.length) return;
 
             const first = focusable[0];
@@ -4921,6 +5454,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
             // 網址列的 #dayN 是上次載入自己寫進去的，指向今天時仍要重新定位；
             // 只有刻意連到別天或某張訂房卡時才不打擾使用者。
             const hashPanelId = getPanelIdFromHash();
@@ -4938,6 +5472,7 @@
             initPastDimming();
             initTimelineProgress(shouldAutoLocateTimeline);
             initReservationActions();
+            initModalTabs();
             loadChecklistState();
             initExpenses();
         });
