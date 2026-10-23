@@ -1119,38 +1119,10 @@
             50% { translate: var(--wave-drift) var(--wave-rise); }
         }
 
-        header.motion-paused::before,
-        header.motion-paused .banner-wave {
-            animation-play-state: paused;
-        }
-
-        .banner-motion-toggle {
-            border: 1px solid rgba(255, 248, 236, 0.7);
-            border-radius: 6px;
-            background: #edf7f7;
-            color: #164d5c;
-            cursor: pointer;
-        }
-
-        .banner-motion-toggle:hover { background: #d2efed; }
-
-        .banner-motion-toggle .motion-play,
-        .banner-motion-toggle[aria-pressed="true"] .motion-pause {
-            display: none;
-        }
-
-        .banner-motion-toggle[aria-pressed="true"] .motion-play {
-            display: block;
-        }
-
         @media (prefers-reduced-motion: reduce) {
             header::before,
             .banner-wave {
                 animation: none;
-            }
-
-            .banner-motion-toggle {
-                display: none;
             }
         }
 
@@ -2997,7 +2969,6 @@
         [data-theme="dark"] .banner-moon { translate: 0 0; opacity: 1; }
         [data-theme="dark"] .banner-night-sky { opacity: 1; }
         [data-theme="dark"] :is(.banner-moon, .banner-star, .banner-meteor) { animation-play-state: running; }
-        header.motion-paused :is(.banner-moon, .banner-star, .banner-meteor) { animation-play-state: paused; }
         [data-theme="dark"] header::before,
         [data-theme="dark"] .banner-wave { animation-play-state: paused; }
 
@@ -3014,7 +2985,7 @@
             border-color: var(--border-color);
         }
 
-        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle, .banner-motion-toggle,
+        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
             .modal-close-btn, .copy-code-btn, .flight-link.primary, .reservation-info-btn,
             .reservation-summary, .time-slot, .charter-badge, .tag, .tag.highlight,
             .souvenir-section, .timeline-card.is-current, .timeline-card.is-next,
@@ -3058,7 +3029,7 @@
             color: var(--teal-primary);
         }
 
-        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle, .banner-motion-toggle,
+        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
             .modal-close-btn, .checklist-item, .flight-link, .reservation-info-btn,
             .maps-btn, .reservation-map-link, .expense-reload, .souvenir-action,
             .day-pagination button, .day-chip:not(.active), .day-map-link):hover {
@@ -3077,7 +3048,7 @@
         .theme-animated :is(body, .sticky-control-panel, .day-chip, .tab-date, .tab-label,
             .itinerary-filter-btn, .timeline, .timeline-card, .place-desc, .place-name,
             .day-num, .day-date, .day-route-note, .tag, .time-slot, .charter-badge,
-            .currency-btn, .notes-btn, .dim-btn, .theme-toggle, .banner-motion-toggle, .badge-count,
+            .currency-btn, .notes-btn, .dim-btn, .theme-toggle, .badge-count,
             .flight-code, .flight-note, .flight-terminal, .flight-path, .flight-link,
             .maps-btn, .reservation-map-link, .reservation-info-btn, .reservation-card,
             .reservation-summary, .reservation-day, .reservation-status, .reservation-card h3,
@@ -3126,8 +3097,7 @@
             .banner-moon,
             .banner-star { animation: none !important; }
             .banner-star { opacity: 0.65; }
-            .banner-meteor,
-            header .header-btn-wrap .banner-motion-toggle.icon-btn { display: none; }
+            .banner-meteor { display: none; }
         }
 
         header .header-btn-wrap .icon-btn,
@@ -3153,13 +3123,6 @@
             stroke-width: 1.8;
             stroke-linecap: round;
             stroke-linejoin: round;
-        }
-
-        .banner-motion-toggle.icon-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-            stroke: none;
         }
 
         .notes-btn .badge-count {
@@ -3224,11 +3187,6 @@
                     title="切換至深色模式" aria-pressed="false" onclick="toggleTheme()">
                     <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>
                     <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
-                </button>
-                <button class="banner-motion-toggle icon-btn" type="button" aria-label="暫停封面動畫"
-                    aria-pressed="false" title="暫停封面動畫" onclick="toggleBannerMotion(this)">
-                    <svg class="motion-pause" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg>
-                    <svg class="motion-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1l8 5-8 5z"/></svg>
                 </button>
             </div>
             <span class="theme-status" id="themeStatus" role="status" aria-live="polite"></span>
@@ -4362,14 +4320,6 @@
                     applyTheme(event.matches ? 'dark' : 'light');
                 }
             });
-        }
-
-        function toggleBannerMotion(button) {
-            const paused = button.getAttribute('aria-pressed') !== 'true';
-            button.closest('header').classList.toggle('motion-paused', paused);
-            button.setAttribute('aria-pressed', String(paused));
-            button.setAttribute('aria-label', paused ? '播放封面動畫' : '暫停封面動畫');
-            button.title = paused ? '播放封面動畫' : '暫停封面動畫';
         }
 
         // Tab 按住左右滑動 (Drag to scroll)
