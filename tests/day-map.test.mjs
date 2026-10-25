@@ -37,7 +37,7 @@ test('unidentified lodging links retain the confirmed address and search links r
 });
 
 test('verified business IDs survive in whole-day and segmented directions', () => {
-    const keys = ['moribo', 'hoppe', 'parco', 'wakasa', 'junkudo', 'rokkan', 'buchi'];
+    const keys = ['moribo', 'hoppe', 'parco', 'wakasa', 'junkudo', 'rokkan', 'tomari'];
     const stops = keys.map(key => ({ query: verifiedPlaces[key].name, placeId: verifiedPlaces[key].placeId }));
     for (const segment of [stops, ...app.splitDayMapStops(stops)]) {
         const params = new URL(app.buildDayMapUrl(segment)).searchParams;
@@ -57,7 +57,7 @@ test('the playground and its shopping mall remain distinct stops even at the sam
         dataset: { placeId: verifiedPlaces[key].placeId, routeQuery: verifiedPlaces[key].name },
         closest: () => null
     }));
-    const stops = app.getDayMapStops({ querySelectorAll: () => links });
+    const stops = app.getDayMapStops({ dataset: {}, querySelectorAll: () => links });
     assert.deepEqual(Array.from(stops, stop => stop.placeId), ['earth', 'rycom', 'nishimatsu', 'rycom'].map(key => verifiedPlaces[key].placeId));
     const params = new URL(app.buildDayMapUrl(stops)).searchParams;
     assert.equal(params.get('origin_place_id'), verifiedPlaces.earth.placeId);
@@ -66,23 +66,70 @@ test('the playground and its shopping mall remain distinct stops even at the sam
     assert.equal(params.get('destination'), verifiedPlaces.rycom.name);
 });
 
-test('all 53 itinerary and reservation links share the same verified destination metadata', () => {
+test('daily routes include lodging departure and return without duplicating consecutive stops', () => {
+    const lodging = key => ({
+        href: `https://www.google.com/maps/search/?api=1&query=${key}`,
+        dataset: { placeId: verifiedPlaces[key].placeId, routeQuery: verifiedPlaces[key].name },
+        closest: () => null
+    });
+    const routeApp = vm.createContext({
+        URL, document: {
+            addEventListener() {},
+            querySelector: selector => lodging(selector.match(/data-place-key="([^"]+)"/)[1])
+        }
+    });
+    vm.runInContext(script, routeApp);
+    const expected = [
+        ['day1', undefined, 'moribo'],
+        ['day2', 'moribo', 'moribo'],
+        ['day3', 'moribo', 'moribo'],
+        ['day4', 'moribo', 'wakasa'],
+        ['day5', 'wakasa', undefined]
+    ];
+    for (const [id, routeStart, routeEnd] of expected) {
+        const tag = html.match(new RegExp(`<section id="${id}"[^>]*>`))[0];
+        assert.equal(tag.match(/data-route-start="([^"]+)"/)?.[1], routeStart);
+        assert.equal(tag.match(/data-route-end="([^"]+)"/)?.[1], routeEnd);
+        const links = [lodging('orix'), lodging('tomari')];
+        if (routeStart) links.unshift(lodging(routeStart));
+        if (routeEnd) links.push(lodging(routeEnd));
+        const stops = plain(routeApp.getDayMapStops({
+            dataset: { routeStart, routeEnd }, querySelectorAll: () => links
+        }));
+        assert.equal(stops.length, links.length);
+        const url = new URL(routeApp.buildDayMapUrl(stops));
+        if (routeStart) assert.equal(url.searchParams.get('origin_place_id'), verifiedPlaces[routeStart].placeId);
+        if (routeEnd) assert.equal(url.searchParams.get('destination_place_id'), verifiedPlaces[routeEnd].placeId);
+        const segments = plain(routeApp.splitDayMapStops(stops));
+        assert.deepEqual(segments[0][0], stops[0]);
+        assert.deepEqual(segments.at(-1).at(-1), stops.at(-1));
+    }
+    const stops = plain(routeApp.getDayMapStops({
+        dataset: { routeStart: 'moribo', routeEnd: 'moribo' },
+        querySelectorAll: () => [lodging('tomari')]
+    }));
+    assert.deepEqual(stops.map(stop => stop.placeId), [
+        verifiedPlaces.moribo.placeId, verifiedPlaces.tomari.placeId, verifiedPlaces.moribo.placeId
+    ]);
+});
+
+test('all 49 itinerary and reservation links share consistent destination metadata', () => {
     const links = [...html.matchAll(/<a class="(?:maps-btn|reservation-map-link)"[^>]*>/g)].map(match => {
         return Object.fromEntries([...match[0].matchAll(/([\w-]+)="([^"]*)"/g)].map(([, key, value]) => [key, value.replaceAll('&amp;', '&')]));
     });
-    assert.equal(links.length, 53);
-    assert.equal(new Set(links.map(link => link['data-place-key'])).size, 41);
+    assert.equal(links.length, 49);
+    assert.equal(new Set(links.map(link => link['data-place-key'])).size, 39);
     for (const link of links) {
         const place = verifiedPlaces[link['data-place-key']];
         assert.ok(place, link.href);
         assert.equal(link['data-place-id'], place.placeId);
-        assert.equal(link['data-route-query'], place.name);
+        assert.equal(link['data-route-query'], place.routeQuery || place.name);
         assert.equal(link.target, '_blank');
         assert.equal(link.rel, 'noopener noreferrer');
         const params = new URL(link.href).searchParams;
         if (link.href.includes('/maps/search/') && link['data-place-key'] !== 'wakasa') {
-            assert.equal(params.get('query_place_id'), place.placeId);
-            assert.equal(params.get('query'), place.name);
+            assert.equal(params.get('query_place_id'), place.placeId || null);
+            assert.equal(params.get('query'), place.routeQuery || place.name);
         }
         const featureIds = [...decodeURIComponent(link.href).matchAll(/!1s(0x[\da-f]+:0x[\da-f]+)/g)];
         if (featureIds.length) assert.equal(featureIds.at(-1)[1], place.featureId);
@@ -93,6 +140,40 @@ test('all 53 itinerary and reservation links share the same verified destination
     assert.match(verifiedPlaces.beachy.address, /恩納6497-1/);
     assert.match(verifiedPlaces.hoppe.address, /内間/);
     assert.match(verifiedPlaces.orix.name, /ORIX/);
+});
+
+test('Day 2 restaurant navigation and route stops use NAKAMA instead of the old business', () => {
+    const links = [...html.matchAll(/<a\b[^>]*data-place-key="beef"[^>]*>/g)];
+    assert.equal(links.length, 2);
+    for (const [tag] of links) {
+        const href = tag.match(/href="([^"]+)"/)[1].replaceAll('&amp;', '&');
+        const params = new URL(href).searchParams;
+        assert.equal(params.get('query'), '琉球燒肉NAKAMA');
+        assert.equal(params.has('query_place_id'), false);
+        assert.deepEqual(plain(app.getDayMapDestination({ href, title: '' })), {
+            query: '琉球燒肉NAKAMA', placeId: ''
+        });
+    }
+    assert.equal(verifiedPlaces.beef.name, '琉球燒肉NAKAMA');
+    assert.equal(verifiedPlaces.beef.placeId, '');
+    assert.doesNotMatch(html, /ChIJPwH7Wsoa5TQRHjRbpuM8Wsk|Ryukyu No Ushi/);
+});
+
+test('Day 4 restaurant uses the supplied address without the old business identity', () => {
+    const links = [...html.matchAll(/<a\b[^>]*data-place-key="buchi"[^>]*>/g)];
+    assert.equal(links.length, 2);
+    for (const [tag] of links) {
+        const href = tag.match(/href="([^"]+)"/)[1].replaceAll('&amp;', '&');
+        const params = new URL(href).searchParams;
+        assert.equal(params.get('query'), '沖縄県那覇市久茂地3-23-10');
+        assert.equal(params.has('query_place_id'), false);
+        assert.deepEqual(plain(app.getDayMapDestination({ href, title: '' })), {
+            query: '沖縄県那覇市久茂地3-23-10', placeId: ''
+        });
+    }
+    assert.equal(verifiedPlaces.buchi.address, '沖縄県那覇市久茂地3-23-10');
+    assert.equal(verifiedPlaces.buchi.placeId, '');
+    assert.doesNotMatch(html, /ChIJzcnA2ndp5TQRRkXi5c02uKk|久茂地３丁目１２−1/);
 });
 
 test('mobile segments preserve every leg and connect at their shared destination', () => {

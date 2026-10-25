@@ -210,18 +210,12 @@
     "checkedOn": "2026-10-22"
   },
   "beef": {
-    "name": "Ryukyu No Ushi",
-    "address": "沖縄県国頭郡恩納村前兼久909-2",
-    "placeId": "ChIJPwH7Wsoa5TQRHjRbpuM8Wsk",
-    "featureId": "0x34e51aca5afb013f:0xc95a3ce3a65b341e",
-    "coordinates": [
-      26.451997199999997,
-      127.8056266
-    ],
+    "name": "琉球燒肉NAKAMA",
+    "placeId": "",
     "key": "beef",
-    "routePoint": "26.4519972,127.8056266",
-    "verifiedUrl": "https://www.google.com/maps/search/%E7%84%BC%E8%82%89%20%E7%90%89%E7%90%83%E3%81%AE%E7%89%9B%20%E6%81%A9%E7%B4%8D%E6%9C%AC%E9%A4%A8/?hl=en",
-    "checkedOn": "2026-10-22"
+    "routePoint": "琉球燒肉NAKAMA",
+    "verifiedUrl": "https://www.google.com/maps/search/?api=1&query=%E7%90%89%E7%90%83%E7%87%92%E8%82%89NAKAMA",
+    "checkedOn": "2026-10-26"
   },
   "annex": {
     "name": "Yakiniku Ryukyunoushi Onnabekkan",
@@ -448,18 +442,14 @@
     "checkedOn": "2026-10-22"
   },
   "buchi": {
-    "name": "Buchi Kumojiten",
-    "address": "沖縄県那覇市久茂地３丁目１２−1",
-    "placeId": "ChIJzcnA2ndp5TQRRkXi5c02uKk",
-    "featureId": "0x34e56977dac0c9cd:0xa9b836cde5e24546",
-    "coordinates": [
-      26.215131,
-      127.68159019999999
-    ],
+    "name": "肉 久茂地",
+    "address": "沖縄県那覇市久茂地3-23-10",
+    "routeQuery": "沖縄県那覇市久茂地3-23-10",
+    "placeId": "",
     "key": "buchi",
-    "routePoint": "26.2151310,127.6815902",
-    "verifiedUrl": "https://www.google.com/maps/search/%E7%82%AD%E7%81%AB%E7%84%BC%E8%82%89%E3%81%B6%E3%81%A1%20%E4%B9%85%E8%8C%82%E5%9C%B0%E5%BA%97/?hl=en",
-    "checkedOn": "2026-10-22"
+    "routePoint": "沖縄県那覇市久茂地3-23-10",
+    "verifiedUrl": "https://www.google.com/maps/search/?api=1&query=%E6%B2%96%E7%B8%84%E7%9C%8C%E9%82%A3%E8%A6%87%E5%B8%82%E4%B9%85%E8%8C%82%E5%9C%B03-23-10",
+    "checkedOn": "2026-10-26"
   },
   "kokusai": {
     "name": "Kokusai-dori",

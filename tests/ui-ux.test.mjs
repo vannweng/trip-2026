@@ -281,7 +281,7 @@ test('backup navigation stays beside the text, including reservation and grouped
 
 test('reservation shortcuts use labeled SVG icons and preserve their targets', () => {
     const links = [...html.matchAll(/<a class="reservation-info-btn"([^>]*)>([\s\S]*?)<\/a>/g)];
-    assert.equal(links.length, 6);
+    assert.equal(links.length, 4);
     for (const [, attributes, content] of links) {
         assert.match(attributes, /href="#reservation-[^"]+"/);
         assert.match(attributes, /aria-label="查看訂位資訊"/);
@@ -289,6 +289,38 @@ test('reservation shortcuts use labeled SVG icons and preserve their targets', (
         assert.match(content, /<svg[^>]*aria-hidden="true"/);
         assert.equal(content.replace(/<[^>]*>/g, '').trim(), '');
     }
+});
+
+test('Day 4 confirmed reservation replaces only the dinner backup', () => {
+    const card = html.match(/<article class="reservation-card" id="reservation-buchi"[\s\S]*?<\/article>/)[0];
+    assert.match(card, /已完成訂位/);
+    assert.match(card, /<h3>肉 久茂地<\/h3>/);
+    assert.match(card, /2026\/11\/29 18:30（日本時間）/);
+    assert.match(card, /6 名（含 1 名兒童）/);
+    assert.match(card, /<code>V8P2JS6YKE<\/code>/);
+    assert.match(card, /data-copy-code="V8P2JS6YKE"/);
+    assert.doesNotMatch(html, /reservation-kushiyaki|Kushiyaki Can/);
+    const day4 = html.match(/<section id="day4"[\s\S]*?<\/section>/)[0];
+    assert.equal((day4.match(/<details class="backup-plan">/g) || []).length, 2);
+    assert.equal((html.match(/<article class="reservation-card"/g) || []).length, 4);
+    assert.match(html, /class="reservation-count">4<\/span>/);
+});
+
+test('Day 2 NAKAMA reservation updates dinner time and removes only the dinner backup', () => {
+    const card = html.match(/<article class="reservation-card" id="reservation-ryukyu-beef"[\s\S]*?<\/article>/)[0];
+    assert.match(card, /已完成訂位/);
+    assert.match(card, /<h3>琉球燒肉NAKAMA<\/h3>/);
+    assert.match(card, /2026\/11\/27 19:00（日本時間）/);
+    assert.match(card, /6 名（含 1 名兒童）/);
+    assert.match(card, /<code>ZG758REKT3<\/code>/);
+    assert.match(card, /data-copy-code="ZG758REKT3"/);
+    assert.doesNotMatch(card, /17:00 - 23:00|¥5,000/);
+    assert.doesNotMatch(html, /reservation-ryukyu-annex|琉球的牛 恩納別館/);
+    const day2 = html.match(/<section id="day2"[\s\S]*?<\/section>/)[0];
+    assert.equal((day2.match(/<details class="backup-plan">/g) || []).length, 4);
+    const dinner = day2.match(/<article class="timeline-card" data-audience="common">(?:(?!<\/article>)[\s\S])*?<h3 class="place-name">琉球燒肉NAKAMA<\/h3>[\s\S]*?<\/article>/)[0];
+    assert.match(dinner, /19:00 - 21:00/);
+    assert.match(html, /2 項已訂位/);
 });
 
 test('sticky scroll offset follows the navigation height as filters appear and disappear', () => {
