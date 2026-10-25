@@ -548,6 +548,27 @@
             line-height: 1.65;
         }
 
+        .restaurant-recommendations {
+            display: grid;
+            gap: 8px;
+            margin: 0;
+            padding-left: 1.5em;
+            overflow-wrap: anywhere;
+        }
+
+        .restaurant-location {
+            display: block;
+            padding-block: 4px;
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .restaurant-location:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 3px;
+        }
+
         /* Travel Tips */
         .tips-box {
             margin-top: 50px;
@@ -3639,10 +3660,14 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <h3 class="place-name">永旺購物中心 (餐廳尚未選定)</h3>
+                            <h3 class="place-name">永旺購物中心 (晚餐推薦・餐廳待選定)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=AEON+MALL+Okinawa+Rycom&amp;query_place_id=ChIJJ_TSFGIS5TQRa_HkdjGALss" title="導航至AEON MALL Okinawa Rycom｜沖縄県中頭郡北中城村ライカム1" data-place-key="rycom" data-place-id="ChIJJ_TSFGIS5TQRa_HkdjGALss" data-route-query="AEON MALL Okinawa Rycom" target="_blank" rel="noopener noreferrer" aria-label="導航至AEON MALL Okinawa Rycom"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
-                        <div class="place-desc">親子組在永旺夢樂城沖繩來客夢安排晚餐，餐廳尚未選定；用餐後可依家庭步調返回住宿休息。</div>
+                        <div class="place-desc">親子組在永旺夢樂城沖繩來客夢安排晚餐，可從下列推薦餐廳擇一；用餐後可依家庭步調返回住宿休息。</div>
+                        <ol class="place-desc restaurant-recommendations" aria-label="永旺購物中心推薦餐廳">
+                            <li><strong>Gokoku AEON MALL Okinawa Rycom</strong>：位於商場 4 樓，主打現炊釜飯與日式家庭料理定食，餐點少油少鹽且溫潤暖胃，非常適合三代同堂用餐。</li>
+                            <li><strong>Shabu Shabu Miyama Rycom</strong>：位於商場 2 樓，提供日式清湯涮涮鍋與壽喜燒吃到飽，湯頭溫和不燥熱，避開重油煙的燒肉負擔。</li>
+                        </ol>
                     </article>
                     <article class="timeline-card" data-audience="couple">
                         <div class="card-top"><span class="time-slot">17:30 - 20:30</span>
@@ -3650,10 +3675,21 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <h3 class="place-name">美國村 (餐廳尚未選定)</h3>
+                            <h3 class="place-name">美國村 (晚餐推薦・餐廳待選定)</h3>
                             <div class="place-actions"><a class="reservation-info-btn" href="#reservation-american-village" aria-label="查看訂位資訊" title="訂位資訊"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5 3 3 5-5"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="導航至American Village｜沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer" aria-label="導航至American Village"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
-                        <div class="place-desc">漫步美國村日落步道欣賞夕陽，再安排晚餐；餐廳尚未選定，導航先以美國村為目的地。</div>
+                        <div class="place-desc">漫步美國村日落步道欣賞夕陽，再從下列推薦餐廳擇一享用晚餐。三間餐廳分散於不同建築與港區，可使用各店位置連結查看地圖；行程導航暫以美國村為目的地，待選定餐廳後再調整。</div>
+                        <ol class="place-desc restaurant-recommendations" aria-label="美國村推薦餐廳">
+                            <li><strong>Chatan Dunchi（北谷殿內）</strong>：坐落於 Depot Island Seaside 大樓 3 樓，是一間能眺望西海岸景致的高質感沖繩創作料理居酒屋。
+                                <a class="restaurant-location" href="https://www.google.com/maps/search/?api=1&amp;query=Chatan+Dunchi+9-21+Mihama+Chatan+Okinawa" target="_blank" rel="noopener noreferrer" aria-label="查看 Chatan Dunchi（北谷殿內）位置（另開分頁）">位置：沖縄県中頭郡北谷町美浜9-21，Depot Island Seaside 3F｜Google Maps</a>
+                            </li>
+                            <li><strong>Chatan Harbour Brewery Restaurant</strong>：坐落在北谷遊艇碼頭旁，是一間結合自釀精釀啤酒與現代義式、美式餐點的海濱休閒餐廳。
+                                <a class="restaurant-location" href="https://www.google.com/maps/search/?api=1&amp;query=Chatan+Harbor+Brewery+Restaurant+53-1+Mihama+Chatan+Okinawa" target="_blank" rel="noopener noreferrer" aria-label="查看 Chatan Harbour Brewery Restaurant 位置（另開分頁）">位置：沖縄県中頭郡北谷町美浜53-1，北谷漁港 Marina 碼頭旁（非 Depot Island Seaside 大樓）｜Google Maps</a>
+                            </li>
+                            <li><strong>Red Lobster Okinawa Chatan</strong>
+                                <a class="restaurant-location" href="https://www.google.com/maps/search/?api=1&amp;query=Red+Lobster+Okinawa+Chatan+8-10+Mihama+Chatan+Okinawa" target="_blank" rel="noopener noreferrer" aria-label="查看 Red Lobster Okinawa Chatan 位置（另開分頁）">位置：沖縄県中頭郡北谷町美浜8-10，American Village 2F，Depot Island 對面（大型龍蝦招牌）｜Google Maps</a>
+                            </li>
+                        </ol>
                     </article>
                 </div>
                 <aside class="souvenir-section" aria-labelledby="souvenir-day3-title">
@@ -3998,8 +4034,8 @@
                     </article>
                     <article class="reservation-card" id="reservation-american-village" tabindex="-1">
                         <div class="reservation-card-head"><span class="reservation-day">Day 3 · 2026/11/28 · 主要行程</span><span class="reservation-status">待選定餐廳</span></div>
-                        <h3>美國村 (餐廳尚未選定)</h3>
-                        <p class="reservation-card-note">餐廳選定後，再確認營業時間、費用與預約方式。</p>
+                        <h3>美國村 (晚餐推薦・餐廳待選定)</h3>
+                        <p class="reservation-card-note">Day 3 已列出 Chatan Dunchi（北谷殿內）、Chatan Harbour Brewery Restaurant 與 Red Lobster Okinawa Chatan 供選擇；選定後，再確認營業時間、費用與預約方式。</p>
                         <dl class="reservation-details">
                             <div><dt>預計時段</dt><dd>17:30 - 20:30</dd></div>
                         </dl>

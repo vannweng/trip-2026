@@ -6,6 +6,60 @@ import vm from 'node:vm';
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 
+test('Day 3 dinner recommendations stay grouped by venue and audience without changing route stops', () => {
+    const day = html.match(/<section id="day3"[\s\S]*?(?=<section id="day4")/)[0];
+    const cards = [...day.matchAll(/<article class="timeline-card"[^>]*>[\s\S]*?<\/article>/g)].map(([card]) => card);
+    const expected = [
+        ['family', '永旺購物中心', 'rycom', ['Gokoku AEON MALL Okinawa Rycom', 'Shabu Shabu Miyama Rycom']],
+        ['couple', '美國村', 'american', ['Chatan Dunchi（北谷殿內）', 'Chatan Harbour Brewery Restaurant', 'Red Lobster Okinawa Chatan']]
+    ];
+    for (const [audience, venue, placeKey, names] of expected) {
+        const card = cards.find(card => card.includes(`<h3 class="place-name">${venue} (`));
+        assert.ok(card, venue);
+        assert.ok(card.includes(`data-audience="${audience}"`));
+        assert.ok(card.includes(`data-place-key="${placeKey}"`));
+        const list = card.match(/<ol class="place-desc restaurant-recommendations"[^>]*>([\s\S]*?)<\/ol>/)[1];
+        const items = [...list.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, item]) => item);
+        assert.equal(items.length, names.length);
+        names.forEach((name, index) => assert.ok(items[index].includes(`<strong>${name}</strong>`)));
+        assert.doesNotMatch(list, /class="maps-btn"/);
+    }
+    assert.match(day, /商場 4 樓/);
+    assert.match(day, /商場 2 樓/);
+    assert.match(day, /Depot Island Seaside 大樓 3 樓/);
+    const reservation = html.match(/<article class="reservation-card" id="reservation-american-village"[\s\S]*?<\/article>/)[0];
+    assert.match(reservation, /待選定餐廳/);
+    for (const name of expected[1][3]) assert.ok(reservation.includes(name));
+});
+
+test('American Village restaurant locations have distinct addresses and individual map links', () => {
+    const list = html.match(/<ol class="place-desc restaurant-recommendations" aria-label="美國村推薦餐廳">([\s\S]*?)<\/ol>/)[1];
+    const items = [...list.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, item]) => item);
+    const expected = [
+        ['Chatan Dunchi', '9-21', 'Depot Island Seaside 3F'],
+        ['Chatan Harbor Brewery Restaurant', '53-1', 'Marina'],
+        ['Red Lobster Okinawa Chatan', '8-10', 'American Village 2F']
+    ];
+    const urls = items.map((item, index) => {
+        const [, tag, href] = item.match(/(<a class="restaurant-location"[^>]*href="([^"]+)"[^>]*>)/);
+        const url = new URL(href.replaceAll('&amp;', '&'));
+        const [name, address, landmark] = expected[index];
+        assert.equal(url.origin, 'https://www.google.com');
+        assert.equal(url.pathname, '/maps/search/');
+        assert.equal(url.searchParams.get('api'), '1');
+        assert.ok(url.searchParams.get('query').includes(name));
+        assert.ok(url.searchParams.get('query').includes(address));
+        assert.ok(item.includes(`北谷町美浜${address}`));
+        assert.ok(item.includes(landmark));
+        assert.match(tag, /target="_blank"/);
+        assert.match(tag, /rel="noopener noreferrer"/);
+        assert.match(tag, /aria-label="查看 .+位置（另開分頁）"/);
+        assert.doesNotMatch(tag, /data-place-key|data-route-query/);
+        return url.href;
+    });
+    assert.equal(new Set(urls).size, 3);
+});
+
 function element(extra = {}) {
     const attributes = {};
     const classes = new Set();
