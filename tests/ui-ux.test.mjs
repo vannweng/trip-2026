@@ -10,7 +10,7 @@ test('Day 3 dinner recommendations stay grouped by venue and audience without ch
     const day = html.match(/<section id="day3"[\s\S]*?(?=<section id="day4")/)[0];
     const cards = [...day.matchAll(/<article class="timeline-card"[^>]*>[\s\S]*?<\/article>/g)].map(([card]) => card);
     const expected = [
-        ['family', '永旺購物中心', 'rycom', ['Gokoku AEON MALL Okinawa Rycom', 'Shabu Shabu Miyama Rycom']],
+        ['family', '永旺夢樂城來客夢', 'rycom', ['Gokoku AEON MALL Okinawa Rycom', 'Shabu Shabu Miyama Rycom']],
         ['couple', '美國村', 'american', ['Chatan Dunchi（北谷殿內）', 'Chatan Harbour Brewery Restaurant', 'Red Lobster Okinawa Chatan']]
     ];
     for (const [audience, venue, placeKey, names] of expected) {
@@ -294,7 +294,7 @@ test('main content has skip navigation, semantic headings and explicit transitio
     assert.match(html, /class="skip-link" href="#main-content"/);
     assert.match(html, /<main id="main-content" tabindex="-1">/);
     assert.equal((html.match(/<h2 class="day-title-top" tabindex="-1">/g) || []).length, 7);
-    assert.equal((html.match(/<h3 class="place-name">/g) || []).length, 32);
+    assert.equal((html.match(/<h3 class="place-name">/g) || []).length, 30);
     assert.doesNotMatch(html, /transition:\s*all\b/);
     assert.match(html, /id="checklistStorageStatus" role="status" aria-live="polite"/);
 });

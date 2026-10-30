@@ -113,11 +113,11 @@ test('daily routes include lodging departure and return without duplicating cons
     ]);
 });
 
-test('all 49 itinerary and reservation links share consistent destination metadata', () => {
+test('all 48 itinerary and reservation links share consistent destination metadata', () => {
     const links = [...html.matchAll(/<a class="(?:maps-btn|reservation-map-link)"[^>]*>/g)].map(match => {
         return Object.fromEntries([...match[0].matchAll(/([\w-]+)="([^"]*)"/g)].map(([, key, value]) => [key, value.replaceAll('&amp;', '&')]));
     });
-    assert.equal(links.length, 49);
+    assert.equal(links.length, 48);
     assert.equal(new Set(links.map(link => link['data-place-key'])).size, 39);
     for (const link of links) {
         const place = verifiedPlaces[link['data-place-key']];
