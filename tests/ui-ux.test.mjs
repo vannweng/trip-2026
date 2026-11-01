@@ -32,7 +32,7 @@ test('Day 3 dinner recommendations stay grouped by venue and audience without ch
     for (const name of expected[1][3]) assert.ok(reservation.includes(name));
 });
 
-test('American Village restaurant locations have distinct addresses and individual map links', () => {
+test('American Village restaurants use right-side map icons with distinct addresses', () => {
     const list = html.match(/<ol class="place-desc restaurant-recommendations" aria-label="美國村推薦餐廳">([\s\S]*?)<\/ol>/)[1];
     const items = [...list.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(([, item]) => item);
     const expected = [
@@ -41,7 +41,9 @@ test('American Village restaurant locations have distinct addresses and individu
         ['Red Lobster Okinawa Chatan', '8-10', 'American Village 2F']
     ];
     const urls = items.map((item, index) => {
-        const [, tag, href] = item.match(/(<a class="restaurant-location"[^>]*href="([^"]+)"[^>]*>)/);
+        const row = item.match(/<div class="restaurant-row">\s*<p>([\s\S]*?)<\/p>\s*(<a class="restaurant-map-link"[^>]*href="([^"]+)"[^>]*>)([\s\S]*?)<\/a>\s*<\/div>/);
+        assert.ok(row, 'map icon follows the restaurant text');
+        const [, text, tag, href, content] = row;
         const url = new URL(href.replaceAll('&amp;', '&'));
         const [name, address, landmark] = expected[index];
         assert.equal(url.origin, 'https://www.google.com');
@@ -49,15 +51,24 @@ test('American Village restaurant locations have distinct addresses and individu
         assert.equal(url.searchParams.get('api'), '1');
         assert.ok(url.searchParams.get('query').includes(name));
         assert.ok(url.searchParams.get('query').includes(address));
-        assert.ok(item.includes(`北谷町美浜${address}`));
-        assert.ok(item.includes(landmark));
+        assert.ok(text.includes(`北谷町美浜${address}`));
+        assert.ok(text.includes(landmark));
+        assert.doesNotMatch(text, /<a\b|Google Maps/);
+        assert.match(content, /^<svg class="navigation-icon"[^>]*aria-hidden="true"/);
+        assert.equal(content.replace(/<svg[\s\S]*?<\/svg>/g, '').trim(), '');
+        assert.match(tag, new RegExp(`title="導航至[^"|]+｜[^"]*北谷町美浜${address}`));
         assert.match(tag, /target="_blank"/);
         assert.match(tag, /rel="noopener noreferrer"/);
-        assert.match(tag, /aria-label="查看 .+位置（另開分頁）"/);
+        assert.match(tag, /aria-label="導航至.+（另開分頁）"/);
         assert.doesNotMatch(tag, /data-place-key|data-route-query/);
         return url.href;
     });
     assert.equal(new Set(urls).size, 3);
+    assert.doesNotMatch(html, /class="restaurant-location"/);
+    for (const state of ['', ':hover', ':focus-visible']) {
+        assert.ok(html.includes(`.reservation-map-link${state},\n        .restaurant-map-link${state},`), state || 'base');
+    }
+    assert.match(html, /\.restaurant-row \{\s*display: flex;\s*align-items: center;/);
 });
 
 function element(extra = {}) {
