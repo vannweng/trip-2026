@@ -2090,7 +2090,6 @@
 
         .maps-btn,
         .reservation-map-link,
-        .expense-reload,
         .souvenir-action {
             width: 44px;
             min-width: 44px;
@@ -2104,7 +2103,6 @@
 
         .maps-btn,
         .reservation-map-link,
-        .expense-reload,
         .souvenir-action {
             display: inline-flex;
             align-items: center;
@@ -2121,7 +2119,6 @@
 
         .maps-btn:hover,
         .reservation-map-link:hover,
-        .expense-reload:hover,
         .souvenir-action:hover {
             background: #dceff0;
             color: #006f86;
@@ -2129,15 +2126,13 @@
 
         .maps-btn:focus-visible,
         .reservation-map-link:focus-visible,
-        .expense-reload:focus-visible,
         .souvenir-action:focus-visible {
             outline: 2px solid #399da2;
             outline-offset: 1px;
         }
 
         .souvenir-icon,
-        .navigation-icon,
-        .expense-reload-icon {
+        .navigation-icon {
             display: block;
             width: 20px;
             height: 20px;
@@ -2424,21 +2419,38 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            min-height: 48px;
             font-family: inherit;
             font-size: 0.92rem;
             font-weight: 700;
             text-decoration: none;
-            padding: 14px 16px;
+            padding: 12px 16px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
             background: var(--bg-card);
             color: var(--text-main);
+            cursor: pointer;
+            touch-action: manipulation;
         }
 
         .expense-btn.primary {
             background: var(--teal-primary);
             border-color: var(--teal-primary);
             color: var(--bg-card);
+        }
+
+        .expense-btn.danger {
+            color: #b42318;
+            border-color: rgba(180, 35, 24, 0.4);
+        }
+
+        .expense-btn:disabled {
+            opacity: 0.55;
+            cursor: default;
+        }
+
+        .expense-btn[hidden] {
+            display: none;
         }
 
         .expense-bar {
@@ -2603,13 +2615,34 @@
             display: flex;
             align-items: baseline;
             gap: 10px;
-            padding: 10px 0;
+            width: 100%;
+            margin: 0;
+            padding: 10px 6px;
+            border: 0;
             border-bottom: 1px dashed var(--border-color);
+            border-radius: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .expense-row:hover {
+            background: var(--bg-subtle);
         }
 
         .expense-row:last-child {
             border-bottom: 0;
-            padding-bottom: 0;
+        }
+
+        .expense-row-main,
+        .expense-row-name,
+        .expense-row-meta,
+        .expense-row-amount,
+        .expense-row-summary {
+            display: block;
         }
 
         .expense-row-main {
@@ -2663,6 +2696,218 @@
             line-height: 1.7;
             color: var(--text-dim);
             margin: 0;
+        }
+
+        .expense-app {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .expense-app[hidden],
+        .expense-gate[hidden] {
+            display: none;
+        }
+
+        .expense-pending {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 0 6px;
+            border-radius: 999px;
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            font-weight: 600;
+            vertical-align: 1px;
+        }
+
+        .expense-gate {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-md);
+        }
+
+        .expense-gate-label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .expense-gate-label strong {
+            font-size: 0.98rem;
+            color: var(--text-main);
+        }
+
+        .expense-gate-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .expense-gate-row .expense-input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .expense-input {
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 48px;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .expense-input:focus-visible,
+        .expense-participant input:focus-visible,
+        .expense-legacy summary:focus-visible {
+            outline: 3px solid var(--teal-primary);
+            outline-offset: 2px;
+        }
+
+        .expense-form-error {
+            margin: 0;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #b42318;
+        }
+
+        .expense-form-error:empty {
+            display: none;
+        }
+
+        .expense-form-body {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .expense-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .expense-field > label,
+        .expense-field > legend {
+            padding: 0;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .expense-field > legend {
+            margin-bottom: 6px;
+        }
+
+        .expense-field-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .expense-form-rate {
+            margin: -6px 0 0;
+            font-size: 0.74rem;
+            color: var(--text-dim);
+        }
+
+        .expense-form-rate:empty {
+            display: none;
+        }
+
+        .expense-participant-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+            gap: 8px;
+        }
+
+        .expense-participant {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 0 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-size: 0.92rem;
+            cursor: pointer;
+        }
+
+        .expense-participant input {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            accent-color: var(--teal-primary);
+        }
+
+        .expense-form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding-top: 4px;
+        }
+
+        .expense-form-actions .expense-btn {
+            min-width: 112px;
+        }
+
+        .expense-form-actions .expense-btn.danger {
+            margin-right: auto;
+        }
+
+        .expense-legacy {
+            padding: 12px 14px;
+            background: var(--bg-card);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .expense-legacy summary {
+            min-height: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .expense-legacy p {
+            margin: 8px 0;
+        }
+
+        .expense-import-status {
+            font-weight: 600;
+        }
+
+        .expense-import-status:empty {
+            display: none;
+        }
+
+        [data-theme="dark"] :is(.expense-btn.danger, .expense-form-error) {
+            color: #f2b6ac;
+            border-color: rgba(242, 182, 172, 0.45);
         }
 
 
@@ -3025,7 +3270,7 @@
         [data-theme="dark"] :is(.day-num, .flight-code, .flight-path-line, .reservation-count,
             .reservation-day, .reservation-status, .reservation-code-value code, .reservation-day-link,
             .souvenir-heading, .day-pagination button, .day-map-segments a, .credit-list a,
-            .maps-btn, .reservation-map-link, .expense-reload, .souvenir-action,
+            .maps-btn, .reservation-map-link, .souvenir-action,
             .outfit-title, .modal-tab-btn.active, .checklist-cat-title, .checklist-progress-text,
             .clothing-card-tag, .skip-link),
         [data-theme="dark"] .reservation-chip:not(.active) .tab-date {
@@ -3058,7 +3303,7 @@
 
         [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
             .modal-close-btn, .checklist-item, .flight-link, .reservation-info-btn,
-            .maps-btn, .reservation-map-link, .expense-reload, .souvenir-action,
+            .maps-btn, .reservation-map-link, .souvenir-action,
             .day-pagination button, .day-chip:not(.active), .day-map-link):hover {
             background: var(--bg-card-hover);
             color: var(--teal-primary);
@@ -4048,38 +4293,57 @@
                         <h2 class="day-title-top" tabindex="-1">
                             <span class="day-num">花費記錄</span>
                         </h2>
-                        <div class="day-sub-desc">記一筆你的花費</div>
+                        <div class="day-sub-desc">大家一起記，帳本會自動同步</div>
                     </div>
                     <div class="expense-bar">
-                        <button class="expense-reload" type="button" id="expenseReload" aria-label="重新整理花費" title="重新整理">
-                            <svg class="expense-reload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path clip-rule="evenodd" d="m3.15002 11.57c0 .5523.44772 1 1 1 .53668-.0161.96488-.4531.97-.99.0409-2.31799 1.41359-4.40503 3.52584-5.36067 2.11224-.95565 4.58604-.60888 6.35414.8907h-.32c-.5523 0-1 .44771-1 1 0 .55228.4477 1 1 1h2.83c.5523 0 1-.44772 1-1v-2.83c0-.55229-.4477-1-1-1s-1 .44771-1 1v.44c-2.3348-2.10761-5.688-2.65144-8.56932-1.3898-2.88128 1.26164-4.75588 4.09459-4.79066 7.23977zm14.68998.71c0-.5523.4477-1 1-1 .5445.0054.9846.4455.99.99.0334 2.152-.8115 4.2247-2.34 5.74-3.0128 2.9977-7.8437 3.1162-10.99998.27v.44c0 .5523-.44771 1-1 1-.55228 0-1-.4477-1-1v-2.83c0-.5523.44772-1 1-1h2.86c.55229 0 1 .4477 1 1s-.44771 1-1 1h-.35c1.78863 1.4898 4.27758 1.8106 6.38548.8231 2.1079-.9876 3.4544-3.1053 3.4545-5.4331z" fill-rule="evenodd"/></svg>
-                        </button>
                         <span class="expense-status" id="expenseStatus" role="status">載入中…</span>
                     </div>
                 </div>
 
-                <div class="expense-actions">
-                    <a class="expense-btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSd4Ej-mIxT_yaBFaBon5P9vlesgBPnkclUE4wJJscRrooU6nw/viewform?usp=header" target="_blank"> 記一筆花費</a>
-                </div>
-
-                <dl class="expense-totals" id="expenseTotals"></dl>
-
-                <div class="expense-split" id="expenseSplit" hidden>
-                    <div class="expense-split-head">
-                        <strong> 分帳結算</strong>
-                        <span class="expense-rate-note" id="expenseRateNote"></span>
+                <form class="expense-gate" id="expenseGate" novalidate hidden>
+                    <label class="expense-gate-label" for="expenseCode">
+                        <strong>輸入旅行通關碼</strong>
+                        <span>第一次使用時輸入一次，這支手機之後就會記住。通關碼請向建立帳本的家人索取。</span>
+                    </label>
+                    <div class="expense-gate-row">
+                        <input class="expense-input" id="expenseCode" name="code" type="text" autocomplete="off"
+                            autocapitalize="off" spellcheck="false" enterkeyhint="go" required>
+                        <button class="expense-btn primary" id="expenseJoin" type="submit">加入帳本</button>
                     </div>
-                    <div class="expense-balance" id="expenseBalance"></div>
-                    <div class="expense-transfers" id="expenseTransfers"></div>
+                    <p class="expense-form-error" id="expenseGateError" role="alert"></p>
+                </form>
+
+                <div class="expense-app" id="expenseApp" hidden>
+                    <div class="expense-actions">
+                        <button class="expense-btn primary" id="expenseAdd" type="button" disabled>記一筆花費</button>
+                    </div>
+
+                    <dl class="expense-totals" id="expenseTotals"></dl>
+
+                    <div class="expense-split" id="expenseSplit" hidden>
+                        <div class="expense-split-head">
+                            <strong>分帳結算</strong>
+                            <span class="expense-rate-note" id="expenseRateNote"></span>
+                        </div>
+                        <div class="expense-balance" id="expenseBalance"></div>
+                        <div class="expense-transfers" id="expenseTransfers"></div>
+                    </div>
+
+                    <div id="expenseList"></div>
+
+                    <div class="expense-actions">
+                        <button class="expense-btn" id="expenseExport" type="button">匯出 CSV</button>
+                    </div>
+
+                    <details class="expense-legacy">
+                        <summary>從舊的 Google 試算表匯入</summary>
+                        <p>把之前用 Google 表單記的帳搬進新帳本，只需要一個人做一次。重複按也不會重複匯入。</p>
+                        <button class="expense-btn" id="expenseImport" type="button">開始匯入</button>
+                        <p class="expense-import-status" id="expenseImportStatus" role="status"></p>
+                    </details>
                 </div>
 
-                <div id="expenseList"></div>
-
-                <a class="expense-btn"
-                    href="https://docs.google.com/spreadsheets/d/1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58/edit?gid=763400443#gid=763400443"
-                    target="_blank"> 開啟完整帳單</a>
-
-                <p class="expense-note">明細直接讀自表單的回覆試算表，讀到後會存在這支手機裡，沒網路時仍看得到上次的內容。</p>
+                <p class="expense-note">帳本存在雲端資料庫，大家記的帳會即時同步。訊號不好時也能先記，連上網路後會自動上傳。</p>
             </section>
 
         </main>
@@ -4320,6 +4584,65 @@
                 </div>
             </div>
         </div>
+    </dialog>
+
+    <!-- 記一筆／修改花費 -->
+    <dialog class="modal-overlay expense-dialog" id="expenseDialog" aria-labelledby="expenseDialogTitle">
+        <form class="modal-card expense-form" id="expenseForm" novalidate>
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2 id="expenseDialogTitle">記一筆花費</h2>
+                    <p id="expenseDialogHint">送出後所有人的手機都會看到</p>
+                </div>
+                <button class="modal-close-btn icon-btn" type="button" id="expenseDialogClose"
+                    aria-label="關閉，不儲存這筆花費" title="關閉">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+                </button>
+            </div>
+
+            <div class="modal-body expense-form-body">
+                <div class="expense-field">
+                    <label for="expenseName">項目</label>
+                    <input class="expense-input" id="expenseName" name="name" type="text" maxlength="80"
+                        placeholder="例如：午餐、停車費" autocomplete="off" required>
+                </div>
+                <div class="expense-field-row">
+                    <div class="expense-field">
+                        <label for="expenseAmount">金額</label>
+                        <input class="expense-input" id="expenseAmount" name="amount" type="number" step="any"
+                            inputmode="decimal" autocomplete="off" required>
+                    </div>
+                    <div class="expense-field">
+                        <label for="expenseCurrency">幣別</label>
+                        <select class="expense-input" id="expenseCurrency" name="currency"></select>
+                    </div>
+                </div>
+                <p class="expense-form-rate" id="expenseFormRate"></p>
+                <div class="expense-field-row">
+                    <div class="expense-field">
+                        <label for="expensePayer">誰付的</label>
+                        <select class="expense-input" id="expensePayer" name="payer" required></select>
+                    </div>
+                    <div class="expense-field">
+                        <label for="expenseDate">日期</label>
+                        <input class="expense-input" id="expenseDate" name="date" type="date" required>
+                    </div>
+                </div>
+                <div class="expense-field">
+                    <label for="expenseCategory">分類</label>
+                    <select class="expense-input" id="expenseCategory" name="category"></select>
+                </div>
+                <fieldset class="expense-field expense-participants">
+                    <legend>分給誰（預設全部均分）</legend>
+                    <div class="expense-participant-list" id="expenseParticipants"></div>
+                </fieldset>
+                <p class="expense-form-error" id="expenseFormError" role="alert"></p>
+                <div class="expense-form-actions">
+                    <button class="expense-btn danger" id="expenseDelete" type="button" hidden>刪除</button>
+                    <button class="expense-btn primary" id="expenseSave" type="submit">儲存</button>
+                </div>
+            </div>
+        </form>
     </dialog>
 
     <!-- Interactive JavaScript -->
@@ -5138,18 +5461,48 @@
 
 
 
-        const EXPENSE_SHEET_ID = '1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58';
-        const EXPENSE_SHEET_GID = '763400443';
-        const EXPENSE_SHEET_URL = `https://docs.google.com/spreadsheets/d/${EXPENSE_SHEET_ID}/gviz/tq?tqx=out:csv&gid=${EXPENSE_SHEET_GID}`;
-        const EXPENSE_CACHE_KEY = `okinawa_expense_sheet_${EXPENSE_SHEET_ID}_${EXPENSE_SHEET_GID}_split_v2`;
+        // 花費記錄：帳本存在 Firebase Firestore。
+        // 下面的 Firebase 網頁設定本來就會公開；資料的保護靠 firestore.rules 和旅行通關碼
+        // （通關碼存在 Firestore 的 tripAccess，只能在 Firebase 控制台修改，網頁讀不到）。
+        const EXPENSE_TRIP_ID = 'okinawa-2026';
+        const FIREBASE_SDK_URL = 'https://www.gstatic.com/firebasejs/13.1.0';
+        const FIREBASE_CONFIG = {
+            apiKey: 'AIzaSyAI9uX3fDU2SIY2YT5N-MmTy7ZBSoAE4UA',
+            authDomain: 'trip-schedule-website.firebaseapp.com',
+            projectId: 'trip-schedule-website',
+            storageBucket: 'trip-schedule-website.firebasestorage.app',
+            messagingSenderId: '599533210156',
+            appId: '1:599533210156:web:c1369edda07fe6ebdd5f89'
+        };
+        const EXPENSE_CACHE_KEY = `okinawa_expense_${EXPENSE_TRIP_ID}_v3`;
+        const EXPENSE_JOINED_KEY = `okinawa_expense_joined_${EXPENSE_TRIP_ID}`;
+        const EXPENSE_PAYER_KEY = 'okinawa_expense_last_payer';
+        const EXPENSE_OLD_CACHE_KEY = 'okinawa_expense_sheet_1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58_763400443_split_v2';
+        // 舊的 Google 表單回覆試算表，只用來把舊帳一次搬進新帳本。
+        const EXPENSE_LEGACY_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58/gviz/tq?tqx=out:csv&gid=763400443';
         const EXPENSE_RATES_KEY = 'bali_expense_rates_2026';
         // 每筆未勾選分帳對象時，預設由這五位均分；付款人獨立計算代墊。
         const EXPENSE_SHARERS = ['阿均', '國恒', '媽咪', '阿猿', '培芝'];
+        const EXPENSE_CURRENCY_OPTIONS = [['JPY', '日圓'], ['TWD', '台幣'], ['USD', '美金']];
+        const EXPENSE_CATEGORIES = ['餐飲', '交通', '住宿', '門票', '購物', '其他'];
         // 跟「匯率換算」那頁用同一支免費 API（ExchangeRate-API 的開放端點，不需金鑰）。
         const EXPENSE_RATES_URL = 'https://open.er-api.com/v6/latest/USD';
         const EXPENSE_RATES_TTL = 6 * 60 * 60 * 1000;
+        const EXPENSE_JOIN_TIMEOUT = 20000;
         let expenseItems = [];
         let expenseRates = null;
+        let expenseBackendPromise = null;
+        let expenseDialogTrigger = null;
+        const expenseSync = {
+            backend: null,
+            user: null,
+            unsubscribe: null,
+            member: false,
+            editingId: null,
+            fromCache: true,
+            syncedAt: '',
+            notice: ''
+        };
         // 表單的幣別是自由填寫的中文，比對時先找完全相同、再找包含關係（「新台幣」也要對到 TWD）。
         const EXPENSE_CURRENCY_ALIASES = [
             ['印尼盾', 'IDR'], ['印尼幣', 'IDR'], ['IDR', 'IDR'],
@@ -5225,9 +5578,14 @@
             if (index.name < 0 || index.amount < 0) return [];
 
             const pick = (row, position) => (position >= 0 ? String(row[position] ?? '').trim() : '');
+            const seen = new Map();
             return rows.slice(1).map(row => {
                 const amount = Number(pick(row, index.amount).replace(/[,\s]/g, ''));
                 if (!Number.isFinite(amount)) return null;
+                // 用整列內容產生固定的編號，重複匯入時才認得出已經搬過的帳。
+                const fingerprint = hashExpenseText(row.map(cell => String(cell).trim()).join('\u001f'));
+                const repeat = seen.get(fingerprint) || 0;
+                seen.set(fingerprint, repeat + 1);
                 return {
                     date: formatExpenseDate(pick(row, index.date) || pick(row, index.stamp)),
                     name: pick(row, index.name) || '(未命名)',
@@ -5235,9 +5593,22 @@
                     currency: pick(row, index.currency),
                     category: pick(row, index.category),
                     payer: pick(row, index.payer),
-                    participants: parseExpenseParticipants(pick(row, index.participants))
+                    participants: parseExpenseParticipants(pick(row, index.participants)),
+                    legacyKey: `sheet-${fingerprint}${repeat ? `-${repeat}` : ''}`
                 };
             }).filter(Boolean);
+        }
+
+        function hashExpenseText(text) {
+            // 兩組不同起始值的 FNV-1a 32 位元雜湊，合成 16 碼的十六進位字串。
+            let first = 0x811c9dc5;
+            let second = 0x050c5d1f;
+            for (let index = 0; index < text.length; index += 1) {
+                const code = text.charCodeAt(index);
+                first = Math.imul(first ^ code, 0x01000193);
+                second = Math.imul(second ^ code, 0x01000193);
+            }
+            return [first, second].map(value => (value >>> 0).toString(16).padStart(8, '0')).join('');
         }
 
         function formatExpenseDate(value) {
@@ -5253,13 +5624,23 @@
             return prefix ? `${prefix}${number}` : `${number} ${item.currency}`.trim();
         }
 
+        function expenseCurrencyCode(item) {
+            return resolveCurrencyCode(item.currency) || String(item.currency || '').trim();
+        }
+
+        function currencyLabel(code) {
+            return EXPENSE_CURRENCY_OPTIONS.find(([value]) => value === code)?.[1] || code || '未填幣別';
+        }
+
         function sumExpensesByCurrency(items) {
             const totals = new Map();
             items.forEach(item => {
-                totals.set(item.currency, (totals.get(item.currency) || 0) + item.amount);
+                const code = expenseCurrencyCode(item);
+                totals.set(code, (totals.get(code) || 0) + item.amount);
             });
             return [...totals.entries()].map(([currency, amount]) => ({
                 currency,
+                label: currencyLabel(currency),
                 text: formatExpenseAmount({ currency, amount })
             }));
         }
@@ -5270,52 +5651,74 @@
             return holder.innerHTML;
         }
 
+        function escapeExpenseAttribute(value) {
+            return escapeExpenseText(value).replace(/"/g, '&quot;');
+        }
+
+        // 日期新的在上；同一天內依記帳先後排列。
+        function sortExpenses(items) {
+            return [...items].sort((a, b) => b.date.localeCompare(a.date)
+                || (a.createdAt || 0) - (b.createdAt || 0)
+                || String(a.legacyKey || a.id || '').localeCompare(String(b.legacyKey || b.id || '')));
+        }
+
+        // 其他人記帳時清單會即時重畫；原本停在某一筆上的鍵盤焦點要放回同一筆，那筆被刪掉就回到「記一筆花費」。
+        function restoreExpenseListFocus(list, focusedId) {
+            if (focusedId === null) return;
+            const row = [...list.querySelectorAll('[data-expense-id]')].find(node => node.dataset.expenseId === focusedId);
+            const target = row || document.getElementById('expenseAdd');
+            if (target && !target.disabled) target.focus({ preventScroll: true });
+        }
+
         function renderExpenses(items) {
             const totals = document.getElementById('expenseTotals');
             const list = document.getElementById('expenseList');
+            const focusedId = list.contains(document.activeElement) ? (document.activeElement.dataset.expenseId || '') : null;
             expenseItems = items;
             renderExpenseSplit(items);
 
             if (!items.length) {
                 totals.innerHTML = '';
-                list.innerHTML = '<div class="expense-empty">目前沒有任何花費紀錄。<br>用上面的「記一筆花費」送出第一筆吧。</div>';
+                list.innerHTML = '<div class="expense-empty">目前沒有任何花費紀錄。<br>按上面的「記一筆花費」記下第一筆吧。</div>';
+                restoreExpenseListFocus(list, focusedId);
                 return;
             }
 
-            const twdTotal = items.reduce((sum, item) => sum + (toTwdCents(item) || 0), 0) / 100;
+            const converted = items.map(toTwdCents);
+            const twdTotal = converted.reduce((sum, cents) => sum + (cents || 0), 0) / 100;
             totals.innerHTML = [
                 ['筆數', `${items.length} 筆`],
-                ...(expenseRates?.rates ? [['總計 · 台幣', formatTwd(twdTotal)]] : []),
-                ...sumExpensesByCurrency(items).map(total => [`合計 · ${total.currency}`, total.text])
+                ...(converted.every(cents => cents !== null) ? [['總計 · 台幣', formatTwd(twdTotal)]] : []),
+                ...sumExpensesByCurrency(items).map(total => [`合計 · ${total.label}`, total.text])
             ].map(([label, value]) =>
                 `<div><dt>${escapeExpenseText(label)}</dt><dd>${escapeExpenseText(value)}</dd></div>`).join('');
 
             const byDate = new Map();
-            items.forEach(item => {
+            sortExpenses(items).forEach(item => {
                 if (!byDate.has(item.date)) byDate.set(item.date, []);
                 byDate.get(item.date).push(item);
             });
 
             list.innerHTML = [...byDate.entries()]
-                .sort((a, b) => b[0].localeCompare(a[0]))
                 .map(([date, dayItems]) => {
                     const rows = dayItems.map(item => `
-                        <div class="expense-row">
-                            <div class="expense-row-main">
-                                <div class="expense-row-name">${escapeExpenseText(item.name)}</div>
-                                <div class="expense-row-meta">${escapeExpenseText([item.category, item.payer].filter(Boolean).join(' · '))}</div>
-                            </div>
-                            <div class="expense-row-summary">
-                                <div class="expense-row-amount">${escapeExpenseText(formatExpenseAmount(item))}</div>
-                                <div class="expense-row-meta">分帳：${escapeExpenseText(describeExpenseParticipants(item))}</div>
-                            </div>
-                        </div>`).join('');
+                        <button class="expense-row" type="button" data-expense-id="${escapeExpenseAttribute(item.id)}" title="點一下可以修改或刪除">
+                            <span class="expense-row-main">
+                                <span class="expense-row-name">${escapeExpenseText(item.name)}${item.pending ? '<span class="expense-pending">待上傳</span>' : ''}</span>
+                                <span class="expense-row-meta">${escapeExpenseText([item.category, item.payer].filter(Boolean).join(' · '))}</span>
+                            </span>
+                            <span class="expense-row-summary">
+                                <span class="expense-row-amount">${escapeExpenseText(formatExpenseAmount(item))}</span>
+                                <span class="expense-row-meta">分帳：${escapeExpenseText(describeExpenseParticipants(item))}</span>
+                            </span>
+                        </button>`).join('');
                     return `<div class="expense-day">
                         <div class="expense-day-head"><strong>${escapeExpenseText(date)}</strong>
                             <span>${escapeExpenseText(sumExpensesByCurrency(dayItems).map(total => total.text).join('　'))}</span></div>
                         ${rows}
                     </div>`;
                 }).join('');
+            restoreExpenseListFocus(list, focusedId);
         }
 
 
@@ -5333,13 +5736,27 @@
             } catch (err) { }
         }
 
+        // 每筆優先用記帳當下存下的匯率，結算金額才不會隔天跟著匯率變動；
+        // 舊資料或當時沒拿到匯率的才改用最新匯率。
         function toTwd(item) {
-            if (!expenseRates?.rates) return null;
             const code = resolveCurrencyCode(item.currency);
-            const source = code === 'TWD' ? 1 : expenseRates.rates[code];
+            if (code === 'TWD') return item.amount;
+            if (Number.isFinite(item.rateToTwd) && item.rateToTwd > 0) return item.amount * item.rateToTwd;
+            if (!expenseRates?.rates) return null;
+            const source = expenseRates.rates[code];
             const target = expenseRates.rates.TWD;
             if (!Number.isFinite(source) || source <= 0 || !Number.isFinite(target)) return null;
-            return code === 'TWD' ? item.amount : (item.amount / source) * target;
+            return (item.amount / source) * target;
+        }
+
+        // 1 單位外幣可換多少台幣，四捨五入到小數 6 位後存進每一筆。
+        function currentRateToTwd(currency) {
+            const code = resolveCurrencyCode(currency);
+            if (code === 'TWD') return 1;
+            const source = expenseRates?.rates?.[code];
+            const target = expenseRates?.rates?.TWD;
+            if (!Number.isFinite(source) || source <= 0 || !Number.isFinite(target) || target <= 0) return null;
+            return Math.round((target / source) * 1e6) / 1e6;
         }
 
         function toTwdCents(item) {
@@ -5375,11 +5792,13 @@
         }
 
         function describeRates() {
-            if (!expenseRates?.rates) return '匯率讀取失敗，暫時無法換算台幣';
-            const perTwd = expenseRates.rates.TWD / expenseRates.rates.JPY;
-            const note = `1 台幣 ≈ ¥ ${(1 / perTwd).toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
-            const when = expenseRates.stale ? '（離線暫存匯率）' : `（${new Date(expenseRates.fetchedAt).toLocaleString('zh-TW', { hour12: false })} 更新）`;
-            return `${note} ${when}`;
+            const base = '每筆依記帳當下的匯率換算台幣';
+            if (!expenseRates?.rates?.JPY || !expenseRates.rates.TWD) return base;
+            const yenPerTwd = expenseRates.rates.JPY / expenseRates.rates.TWD;
+            const when = expenseRates.stale
+                ? '離線暫存'
+                : `${new Date(expenseRates.fetchedAt).toLocaleString('zh-TW', { hour12: false, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} 更新`;
+            return `${base}・目前 1 台幣 ≈ ¥${yenPerTwd.toLocaleString('en-US', { maximumFractionDigits: 2 })}（${when}）`;
         }
 
         function parseExpenseParticipants(value) {
@@ -5475,13 +5894,10 @@
 
             const balanceBox = document.getElementById('expenseBalance');
             const transferBox = document.getElementById('expenseTransfers');
-
-            if (!expenseRates?.rates) {
-                balanceBox.innerHTML = '<div class="expense-settled">沒有匯率資料，無法換算台幣結算。連上網路後按「重新整理」再試。</div>';
-                transferBox.innerHTML = '';
-                return;
-            }
             const { total, balances, skippedCurrency, skippedPayer } = calculateExpenseSplit(items);
+            const currencyNote = expenseRates?.rates
+                ? `有 ${skippedCurrency} 筆的幣別無法換算，未列入結算。`
+                : `有 ${skippedCurrency} 筆還沒有匯率，連上網路後會自動換算。`;
 
             balanceBox.innerHTML = [
                 `<div class="expense-balance-row"><span>可分攤總額</span><b>${formatTwd(total)}</b></div>`,
@@ -5489,7 +5905,7 @@
                     <span><strong>${escapeExpenseText(entry.name)}</strong> 已付 ${formatTwd(entry.paid)}<br>應分攤 ${formatTwd(entry.owed)}</span>
                     <b>${entry.balance >= 0 ? '應收 ' : '應付 '}${formatTwd(Math.abs(entry.balance))}</b>
                 </div>`),
-                skippedCurrency ? `<div class="expense-settled">有 ${skippedCurrency} 筆的幣別無法換算，未列入結算。</div>` : '',
+                skippedCurrency ? `<div class="expense-settled">${currencyNote}</div>` : '',
                 skippedPayer ? `<div class="expense-settled">有 ${skippedPayer} 筆未填付款人，未列入結算。</div>` : ''
             ].join('');
 
@@ -5506,46 +5922,577 @@
             document.getElementById('expenseStatus').textContent = message;
         }
 
+        function describeExpenseSync({ fromCache, online, syncedAt, pending, notice = '' }) {
+            const parts = [fromCache ? (online ? '同步中…' : '離線中，顯示手機裡的資料') : `已同步 ${syncedAt}`];
+            if (pending) parts.push(`${pending} 筆等待上傳`);
+            if (notice) parts.push(notice);
+            return parts.join('・');
+        }
+
+        function updateExpenseSyncStatus() {
+            if (!expenseSync.member) return;
+            setExpenseStatus(describeExpenseSync({
+                fromCache: expenseSync.fromCache,
+                online: navigator.onLine !== false,
+                syncedAt: expenseSync.syncedAt,
+                pending: expenseItems.filter(item => item.pending).length,
+                notice: expenseSync.notice
+            }));
+        }
+
         function readExpenseCache() {
             return readJson(EXPENSE_CACHE_KEY);
         }
 
-        async function loadExpenseSheet() {
-            setExpenseStatus('讀取中…');
-            await loadExpenseRates();
+        function writeExpenseCache(items) {
+            writeJson(EXPENSE_CACHE_KEY, { items, savedAt: Date.now() });
+        }
+
+        function readExpenseFlag(key) {
             try {
-                const response = await fetch(EXPENSE_SHEET_URL, { cache: 'no-store' });
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const items = sheetRowsToExpenses(parseCsv(await response.text()));
-                const fetchedAt = new Date().toLocaleString('zh-TW', { hour12: false });
-                renderExpenses(items);
-                setExpenseStatus(fetchedAt);
-                try {
-                    localStorage.setItem(EXPENSE_CACHE_KEY, JSON.stringify({ items, fetchedAt }));
-                } catch (err) { }
+                return localStorage.getItem(key) || '';
             } catch (err) {
-                const cached = readExpenseCache();
-                if (cached?.items?.length) {
-                    renderExpenses(cached.items);
-                    setExpenseStatus(`讀取失敗，顯示 ${cached.fetchedAt} 的暫存資料`);
+                return '';
+            }
+        }
+
+        // Firestore 文件 → 畫面用的花費資料；欄位缺漏時給安全的預設值。
+        function expenseFromDoc(id, data, pending = false) {
+            const toMillis = value => (typeof value?.toMillis === 'function' ? value.toMillis() : 0);
+            const amount = Number(data.amount);
+            const rate = Number(data.rateToTwd);
+            return {
+                id,
+                date: String(data.date || ''),
+                name: String(data.name || '(未命名)'),
+                amount: Number.isFinite(amount) ? amount : 0,
+                currency: String(data.currency || ''),
+                rateToTwd: Number.isFinite(rate) && rate > 0 ? rate : null,
+                payer: String(data.payer || ''),
+                category: String(data.category || ''),
+                participants: parseExpenseParticipants(data.participants),
+                createdAt: toMillis(data.createdAt),
+                legacyKey: String(data.legacyKey || ''),
+                pending: Boolean(pending)
+            };
+        }
+
+        // 五個人全勾時存成空陣列，代表「全部均分」，跟舊資料的意思一樣。
+        function participantsForStorage(selected) {
+            const names = parseExpenseParticipants(selected);
+            const everyone = names.length === EXPENSE_SHARERS.length && EXPENSE_SHARERS.every(name => names.includes(name));
+            return everyone ? [] : names;
+        }
+
+        function buildExpenseRecord(fields, previous = null) {
+            const currency = resolveCurrencyCode(fields.currency);
+            const keepRate = previous && expenseCurrencyCode(previous) === currency && previous.rateToTwd;
+            return {
+                date: String(fields.date || '').trim(),
+                name: String(fields.name || '').trim(),
+                amount: Number(String(fields.amount ?? '').replace(/[,\s]/g, '')),
+                currency,
+                rateToTwd: keepRate ? previous.rateToTwd : currentRateToTwd(currency),
+                payer: String(fields.payer || '').trim(),
+                category: String(fields.category || '').trim(),
+                participants: participantsForStorage(fields.participants)
+            };
+        }
+
+        // 跟 firestore.rules 的檢查一致，先在手機上擋下，才不會送出後才被雲端拒絕。
+        function validateExpenseRecord(record) {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(record.date)) return '請選擇日期';
+            if (!record.name) return '請填寫項目';
+            if (record.name.length > 80) return '項目請在 80 個字以內';
+            if (!Number.isFinite(record.amount) || record.amount === 0) return '請填寫金額';
+            if (Math.abs(record.amount) >= 1e8) return '金額太大了，請再確認一次';
+            if (!/^[A-Z]{3}$/.test(record.currency)) return '請選擇幣別';
+            if (!record.payer) return '請選擇誰付的';
+            if (record.payer.length > 30) return '付款人名稱太長';
+            if (record.category.length > 20) return '分類名稱太長';
+            if (record.participants.length > 20) return '分帳對象太多';
+            return '';
+        }
+
+        function planLegacyImport(sheetItems, existingItems) {
+            const known = new Set(existingItems.map(item => item.legacyKey).filter(Boolean));
+            const records = [];
+            let already = 0;
+            let invalid = 0;
+            sheetItems.forEach(item => {
+                if (known.has(item.legacyKey)) {
+                    already += 1;
                     return;
                 }
-                document.getElementById('expenseList').innerHTML =
-                    '<div class="expense-empty">讀不到帳單資料。<br>請確認試算表已設為「知道連結的任何人皆可檢視」，或改用上方的「開啟完整帳單」。</div>';
-                setExpenseStatus(`讀取失敗（${err.message}）`);
+                const record = {
+                    ...buildExpenseRecord({
+                        ...item,
+                        name: String(item.name || '').slice(0, 80),
+                        category: String(item.category || '').slice(0, 20)
+                    }),
+                    legacyKey: item.legacyKey
+                };
+                if (validateExpenseRecord(record)) {
+                    invalid += 1;
+                    return;
+                }
+                known.add(item.legacyKey);
+                records.push(record);
+            });
+            return { records, already, invalid };
+        }
+
+        function expensesToCsv(items) {
+            // 開頭是 = + - @ 的文字在試算表裡會被當成公式，前面補一個單引號。
+            const guard = value => (/^[=+\-@\t\r]/.test(String(value)) ? `'${value}` : value);
+            const cell = value => {
+                const text = String(value ?? '');
+                return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+            };
+            const header = ['日期', '項目', '金額', '幣別', '付款人', '分類', '分帳對象', '匯率（1 單位兌台幣）', '台幣金額'];
+            const rows = [...items]
+                .sort((a, b) => a.date.localeCompare(b.date) || (a.createdAt || 0) - (b.createdAt || 0))
+                .map(item => {
+                    const cents = toTwdCents(item);
+                    return [
+                        item.date, guard(item.name), item.amount, expenseCurrencyCode(item), guard(item.payer),
+                        guard(item.category), guard(describeExpenseParticipants(item)), item.rateToTwd ?? '',
+                        cents === null ? '' : cents / 100
+                    ];
+                });
+            return [header, ...rows].map(row => row.map(cell).join(',')).join('\r\n');
+        }
+
+        function todayIsoDate(date = new Date()) {
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        function describeExpenseError(err) {
+            return err?.code || err?.message || '未知錯誤';
+        }
+
+        function describeJoinError(err) {
+            const code = err?.code || '';
+            if (code === 'permission-denied') return '通關碼不正確，請再確認一次（英文大小寫也要一樣）。';
+            if (code === 'timeout') return '驗證逾時，請確認網路後再試一次。';
+            if (code === 'auth/operation-not-allowed' || code === 'auth/admin-restricted-operation') {
+                return 'Firebase 還沒開啟「匿名登入」，請建立帳本的人到 Authentication 開啟。';
+            }
+            if (code === 'auth/network-request-failed' || code === 'unavailable' || err?.name === 'TypeError') {
+                return '連不上帳本，請確認網路後再試一次。';
+            }
+            return `加入失敗（${describeExpenseError(err)}）`;
+        }
+
+        function withExpenseTimeout(promise, milliseconds) {
+            let timer;
+            const timeout = new Promise((_, reject) => {
+                timer = setTimeout(() => reject(Object.assign(new Error('timeout'), { code: 'timeout' })), milliseconds);
+            });
+            return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+        }
+
+        // 只在本機測試用：網址加上 ?firebaseEmulator=127.0.0.1 會改連 Firebase 模擬器，正式網站不受影響。
+        function getFirebaseEmulatorHost() {
+            try {
+                if (!['localhost', '127.0.0.1'].includes(window.location.hostname)) return '';
+                return new URLSearchParams(window.location.search).get('firebaseEmulator') || '';
+            } catch (err) {
+                return '';
+            }
+        }
+
+        // Firebase SDK 只在需要時才下載，沒加入帳本的訪客不會載入。
+        function loadExpenseBackend() {
+            if (!expenseBackendPromise) {
+                expenseBackendPromise = Promise.all(['app', 'auth', 'firestore']
+                    .map(name => import(`${FIREBASE_SDK_URL}/firebase-${name}.js`)))
+                    .then(([appSdk, authSdk, fs]) => {
+                        const app = appSdk.initializeApp(FIREBASE_CONFIG);
+                        const auth = authSdk.getAuth(app);
+                        let db;
+                        try {
+                            // 記帳先存進手機（IndexedDB），連上網路後自動上傳；多個分頁共用同一份資料。
+                            db = fs.initializeFirestore(app, {
+                                localCache: fs.persistentLocalCache({ tabManager: fs.persistentMultipleTabManager() })
+                            });
+                        } catch (err) {
+                            db = fs.getFirestore(app);
+                        }
+                        const emulatorHost = getFirebaseEmulatorHost();
+                        if (emulatorHost) {
+                            authSdk.connectAuthEmulator(auth, `http://${emulatorHost}:9099`, { disableWarnings: true });
+                            fs.connectFirestoreEmulator(db, emulatorHost, 8080);
+                        }
+                        return { auth, authSdk, db, fs };
+                    });
+                expenseBackendPromise.catch(() => { expenseBackendPromise = null; });
+            }
+            return expenseBackendPromise;
+        }
+
+        function expenseCollection() {
+            const { fs, db } = expenseSync.backend;
+            return fs.collection(db, 'trips', EXPENSE_TRIP_ID, 'expenses');
+        }
+
+        function refreshExpenseControls() {
+            const ready = expenseSync.member && Boolean(expenseSync.backend);
+            document.getElementById('expenseAdd').disabled = !ready;
+            document.getElementById('expenseImport').disabled = !ready;
+        }
+
+        function showExpenseView(view, message = '') {
+            const gate = view === 'gate';
+            document.getElementById('expenseGate').hidden = !gate;
+            document.getElementById('expenseApp').hidden = gate;
+            document.getElementById('expenseGateError').textContent = message;
+            if (gate) setExpenseStatus('尚未加入帳本');
+            refreshExpenseControls();
+        }
+
+        function revokeExpenseAccess(message) {
+            expenseSync.unsubscribe?.();
+            expenseSync.unsubscribe = null;
+            expenseSync.member = false;
+            try {
+                localStorage.removeItem(EXPENSE_JOINED_KEY);
+                localStorage.removeItem(EXPENSE_CACHE_KEY);
+            } catch (err) { }
+            closeExpenseDialog();
+            renderExpenses([]);
+            showExpenseView('gate', message);
+        }
+
+        function subscribeExpenses() {
+            const { fs } = expenseSync.backend;
+            expenseSync.unsubscribe?.();
+            expenseSync.unsubscribe = fs.onSnapshot(expenseCollection(), { includeMetadataChanges: true }, snapshot => {
+                const items = snapshot.docs.map(entry => expenseFromDoc(
+                    entry.id,
+                    entry.data({ serverTimestamps: 'estimate' }),
+                    entry.metadata.hasPendingWrites
+                ));
+                expenseSync.member = true;
+                expenseSync.fromCache = snapshot.metadata.fromCache;
+                if (!snapshot.metadata.fromCache) {
+                    expenseSync.syncedAt = new Date().toLocaleTimeString('zh-TW', { hour12: false, hour: '2-digit', minute: '2-digit' });
+                }
+                refreshExpenseControls();
+                renderExpenses(items);
+                writeExpenseCache(items);
+                updateExpenseSyncStatus();
+            }, err => {
+                expenseSync.unsubscribe = null;
+                if (err.code === 'permission-denied') revokeExpenseAccess('通關碼已經更換，請輸入新的通關碼。');
+                else setExpenseStatus(`同步中斷（${describeExpenseError(err)}），請重新整理頁面`);
+            });
+        }
+
+        async function connectExpenses() {
+            setExpenseStatus('連線中…');
+            let backend;
+            try {
+                backend = await loadExpenseBackend();
+                await backend.auth.authStateReady();
+            } catch (err) {
+                setExpenseStatus('連不上帳本，請確認網路後重新整理頁面');
+                return;
+            }
+            if (!backend.auth.currentUser) {
+                revokeExpenseAccess('這支手機需要重新輸入通關碼。');
+                return;
+            }
+            expenseSync.backend = backend;
+            expenseSync.user = backend.auth.currentUser;
+            subscribeExpenses();
+        }
+
+        async function joinExpenseTrip(event) {
+            event.preventDefault();
+            const input = document.getElementById('expenseCode');
+            const button = document.getElementById('expenseJoin');
+            const error = document.getElementById('expenseGateError');
+            const code = input.value.trim();
+            if (!code) {
+                error.textContent = '請輸入通關碼。';
+                input.focus();
+                return;
+            }
+            if (navigator.onLine === false) {
+                error.textContent = '第一次加入需要網路，請連上網路後再試。';
+                return;
+            }
+            error.textContent = '';
+            button.disabled = true;
+            button.textContent = '驗證中…';
+            try {
+                const backend = await loadExpenseBackend();
+                const { auth, authSdk, fs, db } = backend;
+                await auth.authStateReady();
+                const user = auth.currentUser || (await authSdk.signInAnonymously(auth)).user;
+                // 雲端規則會比對這裡寫入的通關碼，對了才建立得起來。
+                await withExpenseTimeout(fs.setDoc(fs.doc(db, 'trips', EXPENSE_TRIP_ID, 'members', user.uid), {
+                    code,
+                    joinedAt: fs.serverTimestamp()
+                }), EXPENSE_JOIN_TIMEOUT);
+                try {
+                    localStorage.setItem(EXPENSE_JOINED_KEY, '1');
+                } catch (err) { }
+                input.value = '';
+                expenseSync.backend = backend;
+                expenseSync.user = user;
+                expenseSync.member = true;
+                showExpenseView('app');
+                setExpenseStatus('同步中…');
+                subscribeExpenses();
+                document.getElementById('expenseAdd').focus({ preventScroll: true });
+            } catch (err) {
+                error.textContent = describeJoinError(err);
+            } finally {
+                button.disabled = false;
+                button.textContent = '加入帳本';
+            }
+        }
+
+        function expenseOptions(entries, selected) {
+            return entries.map(([value, label]) =>
+                `<option value="${escapeExpenseAttribute(value)}"${value === selected ? ' selected' : ''}>${escapeExpenseText(label)}</option>`).join('');
+        }
+
+        function fillExpenseForm(item) {
+            const storedPayer = readExpenseFlag(EXPENSE_PAYER_KEY);
+            const payers = [...new Set([...EXPENSE_SHARERS, ...(item?.payer ? [item.payer] : [])])];
+            const payer = item?.payer || (payers.includes(storedPayer) ? storedPayer : '');
+            const currency = item ? expenseCurrencyCode(item) : 'JPY';
+            const currencies = [...EXPENSE_CURRENCY_OPTIONS];
+            if (!currencies.some(([code]) => code === currency)) currencies.push([currency, currency]);
+            const categories = [...EXPENSE_CATEGORIES];
+            if (item?.category && !categories.includes(item.category)) categories.push(item.category);
+            const selected = item ? getExpenseParticipants(item) : [...EXPENSE_SHARERS];
+            const people = [...new Set([...EXPENSE_SHARERS, ...selected])];
+
+            document.getElementById('expenseName').value = item?.name || '';
+            document.getElementById('expenseAmount').value = item ? String(item.amount) : '';
+            document.getElementById('expenseDate').value = item?.date || todayIsoDate();
+            document.getElementById('expenseCurrency').innerHTML =
+                expenseOptions(currencies.map(([code, label]) => [code, `${label}（${code}）`]), currency);
+            document.getElementById('expensePayer').innerHTML =
+                '<option value="">請選擇</option>' + expenseOptions(payers.map(name => [name, name]), payer);
+            document.getElementById('expenseCategory').innerHTML =
+                '<option value="">不分類</option>' + expenseOptions(categories.map(name => [name, name]), item?.category || '');
+            document.getElementById('expenseParticipants').innerHTML = people.map(name => `
+                <label class="expense-participant"><input type="checkbox" name="participants" value="${escapeExpenseAttribute(name)}"${selected.includes(name) ? ' checked' : ''}>${escapeExpenseText(name)}</label>`).join('');
+            document.getElementById('expenseFormError').textContent = '';
+            updateExpenseFormRate();
+        }
+
+        function updateExpenseFormRate() {
+            const currency = document.getElementById('expenseCurrency').value;
+            const note = document.getElementById('expenseFormRate');
+            const previous = expenseItems.find(item => item.id === expenseSync.editingId);
+            const kept = previous && expenseCurrencyCode(previous) === currency && previous.rateToTwd;
+            const rate = kept ? previous.rateToTwd : currentRateToTwd(currency);
+            if (currency === 'TWD') note.textContent = '';
+            else if (rate) {
+                note.textContent = `以 1 ${currencyLabel(currency)} ≈ NT$${rate.toLocaleString('en-US', { maximumFractionDigits: 4 })} 換算台幣${kept ? '（記帳當時的匯率）' : ''}`;
+            } else note.textContent = '目前拿不到匯率，結算時會改用最新匯率換算。';
+        }
+
+        function readExpenseFormFields() {
+            return {
+                name: document.getElementById('expenseName').value,
+                amount: document.getElementById('expenseAmount').value,
+                currency: document.getElementById('expenseCurrency').value,
+                payer: document.getElementById('expensePayer').value,
+                date: document.getElementById('expenseDate').value,
+                category: document.getElementById('expenseCategory').value,
+                participants: [...document.querySelectorAll('#expenseParticipants input:checked')].map(input => input.value)
+            };
+        }
+
+        function openExpenseDialog(item = null) {
+            if (!expenseSync.member || !expenseSync.backend) return;
+            const dialog = document.getElementById('expenseDialog');
+            expenseSync.editingId = item?.id || null;
+            fillExpenseForm(item);
+            document.getElementById('expenseDialogTitle').textContent = item ? '修改花費' : '記一筆花費';
+            document.getElementById('expenseDialogHint').textContent = item ? '修改後所有人的手機都會更新' : '送出後所有人的手機都會看到';
+            document.getElementById('expenseDelete').hidden = !item;
+            expenseDialogTrigger = document.activeElement;
+            dialog.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if (!dialog.open) dialog.showModal();
+            document.getElementById('expenseName').focus({ preventScroll: true });
+        }
+
+        function closeExpenseDialog() {
+            const dialog = document.getElementById('expenseDialog');
+            if (dialog?.open) dialog.close();
+        }
+
+        function handleExpenseDialogClosed() {
+            document.getElementById('expenseDialog').classList.remove('active');
+            document.body.style.overflow = '';
+            expenseSync.editingId = null;
+            const trigger = expenseDialogTrigger;
+            expenseDialogTrigger = null;
+            // 修改後清單會重畫，原本那一列的按鈕已經不在了，就回到「記一筆花費」。
+            const target = trigger?.isConnected ? trigger : document.getElementById('expenseAdd');
+            if (target && !target.disabled) target.focus({ preventScroll: true });
+        }
+
+        function handleExpenseWriteError(err) {
+            expenseSync.notice = err?.code === 'permission-denied'
+                ? '有一筆沒有存成功（沒有權限），請重新整理後再記一次'
+                : `有一筆沒有存成功（${describeExpenseError(err)}），請再記一次`;
+            updateExpenseSyncStatus();
+        }
+
+        function saveExpenseFromForm(event) {
+            event.preventDefault();
+            const error = document.getElementById('expenseFormError');
+            const fields = readExpenseFormFields();
+            if (!fields.participants.length) {
+                error.textContent = '請至少勾選一位分帳對象';
+                return;
+            }
+            const previous = expenseItems.find(item => item.id === expenseSync.editingId) || null;
+            const record = buildExpenseRecord(fields, previous);
+            const message = validateExpenseRecord(record);
+            if (message) {
+                error.textContent = message;
+                return;
+            }
+            if (!expenseSync.backend || !expenseSync.user) {
+                error.textContent = '還沒連上帳本，請稍候再試';
+                return;
+            }
+            const { fs } = expenseSync.backend;
+            const uid = expenseSync.user.uid;
+            const stamp = { updatedAt: fs.serverTimestamp(), updatedBy: uid };
+            // 不等雲端回應：沒網路時也會先存在手機裡、清單上標示「待上傳」。
+            const write = previous
+                ? fs.updateDoc(fs.doc(expenseCollection(), previous.id), { ...record, ...stamp })
+                : fs.setDoc(fs.doc(expenseCollection()), { ...record, ...stamp, createdAt: fs.serverTimestamp(), createdBy: uid });
+            write.catch(handleExpenseWriteError);
+            expenseSync.notice = '';
+            try {
+                localStorage.setItem(EXPENSE_PAYER_KEY, record.payer);
+            } catch (err) { }
+            closeExpenseDialog();
+        }
+
+        function deleteEditingExpense() {
+            const item = expenseItems.find(entry => entry.id === expenseSync.editingId);
+            if (!item || !expenseSync.backend) return;
+            if (!confirm(`確定要刪除「${item.name}」嗎？刪除後所有人的手機都會看不到這筆。`)) return;
+            const { fs } = expenseSync.backend;
+            fs.deleteDoc(fs.doc(expenseCollection(), item.id)).catch(handleExpenseWriteError);
+            expenseSync.notice = '';
+            expenseDialogTrigger = document.getElementById('expenseAdd');
+            closeExpenseDialog();
+        }
+
+        function exportExpenses() {
+            if (!expenseItems.length) {
+                setExpenseStatus('目前沒有花費可以匯出');
+                return;
+            }
+            const blob = new Blob(['﻿', expensesToCsv(expenseItems)], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            // 檔名用英文：部分手機瀏覽器遇到中文檔名會改成「download」。
+            link.download = `okinawa-expenses-${todayIsoDate()}.csv`;
+            document.body.append(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        async function importLegacyExpenses() {
+            const status = document.getElementById('expenseImportStatus');
+            const button = document.getElementById('expenseImport');
+            if (!expenseSync.member || !expenseSync.backend) return;
+            button.disabled = true;
+            status.textContent = '讀取舊試算表中…';
+            try {
+                await loadExpenseRates();
+                const response = await fetch(EXPENSE_LEGACY_SHEET_URL, { cache: 'no-store' });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const sheetItems = sheetRowsToExpenses(parseCsv(await response.text()));
+                const { records, already, invalid } = planLegacyImport(sheetItems, expenseItems);
+                const notes = [];
+                if (records.length) {
+                    status.textContent = `匯入 ${records.length} 筆中…`;
+                    const { fs, db } = expenseSync.backend;
+                    const uid = expenseSync.user.uid;
+                    for (let start = 0; start < records.length; start += 400) {
+                        const batch = fs.writeBatch(db);
+                        records.slice(start, start + 400).forEach(record => {
+                            batch.set(fs.doc(expenseCollection(), record.legacyKey), {
+                                ...record,
+                                createdAt: fs.serverTimestamp(),
+                                createdBy: uid,
+                                updatedAt: fs.serverTimestamp(),
+                                updatedBy: uid
+                            });
+                        });
+                        await batch.commit();
+                    }
+                    notes.push(`已匯入 ${records.length} 筆`);
+                }
+                if (already) notes.push(`${already} 筆之前已經匯入過`);
+                if (invalid) notes.push(`${invalid} 筆缺少日期、金額、幣別或付款人，沒有匯入，請手動補記`);
+                status.textContent = notes.length ? `${notes.join('；')}。` : '舊試算表裡沒有資料。';
+            } catch (err) {
+                status.textContent = `匯入失敗（${describeExpenseError(err)}）。請確認網路正常，而且試算表仍設為「知道連結的任何人皆可檢視」。`;
+            } finally {
+                refreshExpenseControls();
             }
         }
 
         function initExpenses() {
             if (!document.getElementById('expenseList')) return;
+            try {
+                localStorage.removeItem(EXPENSE_OLD_CACHE_KEY);
+            } catch (err) { }
             expenseRates = readJson(EXPENSE_RATES_KEY);
-            const cached = readExpenseCache();
-            if (cached?.items?.length) {
-                renderExpenses(cached.items);
-                setExpenseStatus(`暫存資料（${cached.fetchedAt}）`);
+
+            document.getElementById('expenseGate').addEventListener('submit', joinExpenseTrip);
+            document.getElementById('expenseAdd').addEventListener('click', () => openExpenseDialog());
+            document.getElementById('expenseList').addEventListener('click', event => {
+                const row = event.target.closest('[data-expense-id]');
+                const item = row && expenseItems.find(entry => entry.id === row.dataset.expenseId);
+                if (item) openExpenseDialog(item);
+            });
+            document.getElementById('expenseForm').addEventListener('submit', saveExpenseFromForm);
+            document.getElementById('expenseForm').addEventListener('input', () => {
+                document.getElementById('expenseFormError').textContent = '';
+            });
+            document.getElementById('expenseCurrency').addEventListener('change', updateExpenseFormRate);
+            document.getElementById('expenseDelete').addEventListener('click', deleteEditingExpense);
+            document.getElementById('expenseDialogClose').addEventListener('click', closeExpenseDialog);
+            document.getElementById('expenseDialog').addEventListener('close', handleExpenseDialogClosed);
+            document.getElementById('expenseExport').addEventListener('click', exportExpenses);
+            document.getElementById('expenseImport').addEventListener('click', importLegacyExpenses);
+            window.addEventListener('online', updateExpenseSyncStatus);
+            window.addEventListener('offline', updateExpenseSyncStatus);
+
+            loadExpenseRates().then(() => {
+                if (!document.getElementById('expenseApp').hidden) renderExpenses(expenseItems);
+            });
+
+            if (!readExpenseFlag(EXPENSE_JOINED_KEY)) {
+                showExpenseView('gate');
+                return;
             }
-            document.getElementById('expenseReload').addEventListener('click', loadExpenseSheet);
-            loadExpenseSheet();
+            // 先顯示上次存在手機裡的帳，再連上雲端同步。
+            showExpenseView('app');
+            const cached = readExpenseCache();
+            renderExpenses(Array.isArray(cached?.items) ? cached.items : []);
+            connectExpenses();
         }
 
         document.addEventListener('DOMContentLoaded', () => {

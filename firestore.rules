@@ -1,0 +1,75 @@
+rules_version = '2';
+
+// 旅行記帳的 Firestore 安全規則。
+// 到 Firebase 控制台 → Firestore Database → 規則，整份貼上後按「發布」。
+//
+// 資料結構：
+//   tripAccess/{tripId}              { code }        旅行通關碼，只能在控制台建立或修改，網頁完全讀不到
+//   trips/{tripId}/members/{uid}     { code, joinedAt }  這支手機輸入過的通關碼
+//   trips/{tripId}/expenses/{id}     每一筆花費
+//
+// 手機輸入的通關碼必須和 tripAccess 裡的一樣才能讀寫花費；
+// 在控制台改掉通關碼後，所有手機都要重新輸入新的通關碼。
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function tripCode(tripId) {
+      return get(/databases/$(database)/documents/tripAccess/$(tripId)).data.code;
+    }
+
+    function isMember(tripId) {
+      let member = /databases/$(database)/documents/trips/$(tripId)/members/$(request.auth.uid);
+      return signedIn() && exists(member) && get(member).data.code == tripCode(tripId);
+    }
+
+    function isText(value, min, max) {
+      return value is string && value.size() >= min && value.size() <= max;
+    }
+
+    function isPositiveNumberOrNull(value) {
+      return value == null || (value is number && value > 0);
+    }
+
+    function validExpense(data) {
+      return data.keys().hasAll(['date', 'name', 'amount', 'currency', 'payer', 'participants',
+                                 'createdAt', 'createdBy', 'updatedAt', 'updatedBy'])
+        && data.keys().hasOnly(['date', 'name', 'amount', 'currency', 'rateToTwd', 'payer', 'category',
+                                'participants', 'createdAt', 'createdBy', 'updatedAt', 'updatedBy', 'legacyKey'])
+        && isText(data.date, 10, 10) && data.date.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}')
+        && isText(data.name, 1, 80)
+        && data.amount is number && data.amount > -100000000 && data.amount < 100000000
+        && isText(data.currency, 3, 3)
+        && isPositiveNumberOrNull(data.get('rateToTwd', null))
+        && isText(data.payer, 1, 30)
+        && isText(data.get('category', ''), 0, 20)
+        && data.participants is list && data.participants.size() <= 20
+        && isText(data.get('legacyKey', 'x'), 1, 60)
+        && data.updatedBy == request.auth.uid
+        && data.updatedAt == request.time;
+    }
+
+    match /tripAccess/{tripId} {
+      allow read, write: if false;
+    }
+
+    match /trips/{tripId}/members/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['code', 'joinedAt'])
+        && request.resource.data.code == tripCode(tripId);
+    }
+
+    match /trips/{tripId}/expenses/{expenseId} {
+      allow read, delete: if isMember(tripId);
+      allow create: if isMember(tripId) && validExpense(request.resource.data)
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdAt == request.time;
+      allow update: if isMember(tripId) && validExpense(request.resource.data)
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.createdAt == resource.data.createdAt;
+    }
+  }
+}
