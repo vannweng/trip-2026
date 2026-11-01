@@ -37,7 +37,7 @@ function assertSettles(context, result) {
     assert.ok([...pending.values()].every(value => value === 0));
 }
 
-test('blank selection and legacy records split among all five members', () => {
+test('blank or missing selections split among all five members', () => {
     const context = app();
     for (const participants of [undefined, '', '  ', []]) {
         const result = split(context, [expense({ participants })]);
@@ -47,24 +47,12 @@ test('blank selection and legacy records split among all five members', () => {
     }
 });
 
-test('Google Forms CSV parses quoted checkbox names and descriptive column titles', () => {
+test('participant descriptions show the all-member default or the selected names', () => {
     const context = app();
-    const csv = '時間戳記,日期,項目,金額 (輸入數字就好）,幣別,付款人,分類,分帳對象(未勾選=全部分帳）\r\n'
-        + '2026/11/26 12:00:00,2026/11/26,午餐,120,台幣,培芝,餐飲,"阿均, 國恒"';
-    const records = context.sheetRowsToExpenses(context.parseCsv(csv));
-    assert.equal(records.length, 1);
-    assert.deepEqual([...records[0].participants], ['阿均', '國恒']);
-    const result = split(context, records);
-    assert.equal(result.balances.find(person => person.name === '阿均').owed, 60);
-    assert.equal(result.balances.find(person => person.name === '培芝').balance, 120);
-    assertSettles(context, result);
-});
-
-test('missing participant column retains the all-member default', () => {
-    const context = app();
-    const records = context.sheetRowsToExpenses(context.parseCsv('日期,項目,金額,幣別,付款人\n2026/11/26,午餐,500,台幣,阿均'));
-    assert.equal(context.describeExpenseParticipants(records[0]), '全部 5 人');
-    assert.ok(split(context, records).balances.every(person => person.owed === 100));
+    assert.equal(context.describeExpenseParticipants(expense()), '全部 5 人');
+    assert.equal(context.describeExpenseParticipants(expense({ participants: [] })), '全部 5 人');
+    assert.equal(context.describeExpenseParticipants(expense({ participants: [...members].reverse() })), '全部 5 人');
+    assert.equal(context.describeExpenseParticipants(expense({ participants: ['阿均', '國恒'] })), '阿均、國恒');
 });
 
 for (const count of [1, 2, 3, 4]) {

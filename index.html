@@ -2769,8 +2769,7 @@
         }
 
         .expense-input:focus-visible,
-        .expense-participant input:focus-visible,
-        .expense-legacy summary:focus-visible {
+        .expense-participant input:focus-visible {
             outline: 3px solid var(--teal-primary);
             outline-offset: 2px;
         }
@@ -2874,35 +2873,6 @@
 
         .expense-form-actions .expense-btn.danger {
             margin-right: auto;
-        }
-
-        .expense-legacy {
-            padding: 12px 14px;
-            background: var(--bg-card);
-            border: 1px dashed var(--border-color);
-            border-radius: var(--radius-md);
-            font-size: 0.82rem;
-            line-height: 1.6;
-            color: var(--text-muted);
-        }
-
-        .expense-legacy summary {
-            min-height: 28px;
-            font-weight: 700;
-            color: var(--text-main);
-            cursor: pointer;
-        }
-
-        .expense-legacy p {
-            margin: 8px 0;
-        }
-
-        .expense-import-status {
-            font-weight: 600;
-        }
-
-        .expense-import-status:empty {
-            display: none;
         }
 
         [data-theme="dark"] :is(.expense-btn.danger, .expense-form-error) {
@@ -4334,13 +4304,6 @@
                     <div class="expense-actions">
                         <button class="expense-btn" id="expenseExport" type="button">匯出 CSV</button>
                     </div>
-
-                    <details class="expense-legacy">
-                        <summary>從舊的 Google 試算表匯入</summary>
-                        <p>把之前用 Google 表單記的帳搬進新帳本，只需要一個人做一次。重複按也不會重複匯入。</p>
-                        <button class="expense-btn" id="expenseImport" type="button">開始匯入</button>
-                        <p class="expense-import-status" id="expenseImportStatus" role="status"></p>
-                    </details>
                 </div>
 
                 <p class="expense-note">帳本存在雲端資料庫，大家記的帳會即時同步。訊號不好時也能先記，連上網路後會自動上傳。</p>
@@ -5477,9 +5440,6 @@
         const EXPENSE_CACHE_KEY = `okinawa_expense_${EXPENSE_TRIP_ID}_v3`;
         const EXPENSE_JOINED_KEY = `okinawa_expense_joined_${EXPENSE_TRIP_ID}`;
         const EXPENSE_PAYER_KEY = 'okinawa_expense_last_payer';
-        const EXPENSE_OLD_CACHE_KEY = 'okinawa_expense_sheet_1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58_763400443_split_v2';
-        // 舊的 Google 表單回覆試算表，只用來把舊帳一次搬進新帳本。
-        const EXPENSE_LEGACY_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1YUBF5Egmucg4qih9hZZBcCEh-jIxwp3NRHK8WXXNA58/gviz/tq?tqx=out:csv&gid=763400443';
         const EXPENSE_RATES_KEY = 'bali_expense_rates_2026';
         // 每筆未勾選分帳對象時，預設由這五位均分；付款人獨立計算代墊。
         const EXPENSE_SHARERS = ['阿均', '國恒', '媽咪', '阿猿', '培芝'];
@@ -5503,7 +5463,7 @@
             syncedAt: '',
             notice: ''
         };
-        // 表單的幣別是自由填寫的中文，比對時先找完全相同、再找包含關係（「新台幣」也要對到 TWD）。
+        // 幣別可以是代碼或中文名稱，比對時先找完全相同、再找包含關係（「新台幣」也要對到 TWD）。
         const EXPENSE_CURRENCY_ALIASES = [
             ['印尼盾', 'IDR'], ['印尼幣', 'IDR'], ['IDR', 'IDR'],
             ['新台幣', 'TWD'], ['台幣', 'TWD'], ['臺幣', 'TWD'], ['TWD', 'TWD'],
@@ -5530,92 +5490,6 @@
             if (exact) return exact[1];
             const partial = EXPENSE_CURRENCY_ALIASES.find(([name]) => value.includes(name.toUpperCase()));
             return partial ? partial[1] : value;
-        }
-
-        function parseCsv(text) {
-            const rows = [];
-            let row = [];
-            let cell = '';
-            let quoted = false;
-
-            for (let index = 0; index < text.length; index += 1) {
-                const char = text[index];
-                if (quoted) {
-                    if (char !== '"') cell += char;
-                    else if (text[index + 1] === '"') { cell += '"'; index += 1; }
-                    else quoted = false;
-                    continue;
-                }
-                if (char === '"') quoted = true;
-                else if (char === ',') { row.push(cell); cell = ''; }
-                else if (char === '\n' || char === '\r') {
-                    if (char === '\r' && text[index + 1] === '\n') index += 1;
-                    row.push(cell);
-                    if (row.some(value => value.trim())) rows.push(row);
-                    row = [];
-                    cell = '';
-                } else cell += char;
-            }
-            row.push(cell);
-            if (row.some(value => value.trim())) rows.push(row);
-            return rows;
-        }
-
-        function sheetRowsToExpenses(rows) {
-            if (rows.length < 2) return [];
-            const header = rows[0].map(name => name.trim());
-            const columnOf = name => header.findIndex(title => title.includes(name));
-            const index = {
-                stamp: columnOf('時間戳記'),
-                date: columnOf('日期'),
-                name: columnOf('項目'),
-                amount: columnOf('金額'),
-                currency: columnOf('幣別'),
-                payer: columnOf('付款人'),
-                category: columnOf('分類'),
-                participants: columnOf('分帳對象')
-            };
-            if (index.name < 0 || index.amount < 0) return [];
-
-            const pick = (row, position) => (position >= 0 ? String(row[position] ?? '').trim() : '');
-            const seen = new Map();
-            return rows.slice(1).map(row => {
-                const amount = Number(pick(row, index.amount).replace(/[,\s]/g, ''));
-                if (!Number.isFinite(amount)) return null;
-                // 用整列內容產生固定的編號，重複匯入時才認得出已經搬過的帳。
-                const fingerprint = hashExpenseText(row.map(cell => String(cell).trim()).join('\u001f'));
-                const repeat = seen.get(fingerprint) || 0;
-                seen.set(fingerprint, repeat + 1);
-                return {
-                    date: formatExpenseDate(pick(row, index.date) || pick(row, index.stamp)),
-                    name: pick(row, index.name) || '(未命名)',
-                    amount,
-                    currency: pick(row, index.currency),
-                    category: pick(row, index.category),
-                    payer: pick(row, index.payer),
-                    participants: parseExpenseParticipants(pick(row, index.participants)),
-                    legacyKey: `sheet-${fingerprint}${repeat ? `-${repeat}` : ''}`
-                };
-            }).filter(Boolean);
-        }
-
-        function hashExpenseText(text) {
-            // 兩組不同起始值的 FNV-1a 32 位元雜湊，合成 16 碼的十六進位字串。
-            let first = 0x811c9dc5;
-            let second = 0x050c5d1f;
-            for (let index = 0; index < text.length; index += 1) {
-                const code = text.charCodeAt(index);
-                first = Math.imul(first ^ code, 0x01000193);
-                second = Math.imul(second ^ code, 0x01000193);
-            }
-            return [first, second].map(value => (value >>> 0).toString(16).padStart(8, '0')).join('');
-        }
-
-        function formatExpenseDate(value) {
-            const parts = String(value).trim().split(' ')[0].split(/[\/\-]/);
-            if (parts.length < 3) return String(value).trim();
-            const [year, month, day] = parts;
-            return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         }
 
         function formatExpenseAmount(item) {
@@ -5659,7 +5533,7 @@
         function sortExpenses(items) {
             return [...items].sort((a, b) => b.date.localeCompare(a.date)
                 || (a.createdAt || 0) - (b.createdAt || 0)
-                || String(a.legacyKey || a.id || '').localeCompare(String(b.legacyKey || b.id || '')));
+                || String(a.id || '').localeCompare(String(b.id || '')));
         }
 
         // 其他人記帳時清單會即時重畫；原本停在某一筆上的鍵盤焦點要放回同一筆，那筆被刪掉就回到「記一筆花費」。
@@ -5972,7 +5846,6 @@
                 category: String(data.category || ''),
                 participants: parseExpenseParticipants(data.participants),
                 createdAt: toMillis(data.createdAt),
-                legacyKey: String(data.legacyKey || ''),
                 pending: Boolean(pending)
             };
         }
@@ -6014,36 +5887,8 @@
             return '';
         }
 
-        function planLegacyImport(sheetItems, existingItems) {
-            const known = new Set(existingItems.map(item => item.legacyKey).filter(Boolean));
-            const records = [];
-            let already = 0;
-            let invalid = 0;
-            sheetItems.forEach(item => {
-                if (known.has(item.legacyKey)) {
-                    already += 1;
-                    return;
-                }
-                const record = {
-                    ...buildExpenseRecord({
-                        ...item,
-                        name: String(item.name || '').slice(0, 80),
-                        category: String(item.category || '').slice(0, 20)
-                    }),
-                    legacyKey: item.legacyKey
-                };
-                if (validateExpenseRecord(record)) {
-                    invalid += 1;
-                    return;
-                }
-                known.add(item.legacyKey);
-                records.push(record);
-            });
-            return { records, already, invalid };
-        }
-
         function expensesToCsv(items) {
-            // 開頭是 = + - @ 的文字在試算表裡會被當成公式，前面補一個單引號。
+            // 開頭是 = + - @ 的文字在 Excel 裡會被當成公式，前面補一個單引號。
             const guard = value => (/^[=+\-@\t\r]/.test(String(value)) ? `'${value}` : value);
             const cell = value => {
                 const text = String(value ?? '');
@@ -6139,7 +5984,6 @@
         function refreshExpenseControls() {
             const ready = expenseSync.member && Boolean(expenseSync.backend);
             document.getElementById('expenseAdd').disabled = !ready;
-            document.getElementById('expenseImport').disabled = !ready;
         }
 
         function showExpenseView(view, message = '') {
@@ -6411,53 +6255,8 @@
             setTimeout(() => URL.revokeObjectURL(url), 1000);
         }
 
-        async function importLegacyExpenses() {
-            const status = document.getElementById('expenseImportStatus');
-            const button = document.getElementById('expenseImport');
-            if (!expenseSync.member || !expenseSync.backend) return;
-            button.disabled = true;
-            status.textContent = '讀取舊試算表中…';
-            try {
-                await loadExpenseRates();
-                const response = await fetch(EXPENSE_LEGACY_SHEET_URL, { cache: 'no-store' });
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const sheetItems = sheetRowsToExpenses(parseCsv(await response.text()));
-                const { records, already, invalid } = planLegacyImport(sheetItems, expenseItems);
-                const notes = [];
-                if (records.length) {
-                    status.textContent = `匯入 ${records.length} 筆中…`;
-                    const { fs, db } = expenseSync.backend;
-                    const uid = expenseSync.user.uid;
-                    for (let start = 0; start < records.length; start += 400) {
-                        const batch = fs.writeBatch(db);
-                        records.slice(start, start + 400).forEach(record => {
-                            batch.set(fs.doc(expenseCollection(), record.legacyKey), {
-                                ...record,
-                                createdAt: fs.serverTimestamp(),
-                                createdBy: uid,
-                                updatedAt: fs.serverTimestamp(),
-                                updatedBy: uid
-                            });
-                        });
-                        await batch.commit();
-                    }
-                    notes.push(`已匯入 ${records.length} 筆`);
-                }
-                if (already) notes.push(`${already} 筆之前已經匯入過`);
-                if (invalid) notes.push(`${invalid} 筆缺少日期、金額、幣別或付款人，沒有匯入，請手動補記`);
-                status.textContent = notes.length ? `${notes.join('；')}。` : '舊試算表裡沒有資料。';
-            } catch (err) {
-                status.textContent = `匯入失敗（${describeExpenseError(err)}）。請確認網路正常，而且試算表仍設為「知道連結的任何人皆可檢視」。`;
-            } finally {
-                refreshExpenseControls();
-            }
-        }
-
         function initExpenses() {
             if (!document.getElementById('expenseList')) return;
-            try {
-                localStorage.removeItem(EXPENSE_OLD_CACHE_KEY);
-            } catch (err) { }
             expenseRates = readJson(EXPENSE_RATES_KEY);
 
             document.getElementById('expenseGate').addEventListener('submit', joinExpenseTrip);
@@ -6476,7 +6275,6 @@
             document.getElementById('expenseDialogClose').addEventListener('click', closeExpenseDialog);
             document.getElementById('expenseDialog').addEventListener('close', handleExpenseDialogClosed);
             document.getElementById('expenseExport').addEventListener('click', exportExpenses);
-            document.getElementById('expenseImport').addEventListener('click', importLegacyExpenses);
             window.addEventListener('online', updateExpenseSyncStatus);
             window.addEventListener('offline', updateExpenseSyncStatus);
 

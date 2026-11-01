@@ -81,7 +81,7 @@ test('client validation mirrors the Firestore rules', () => {
         assert.match(context.validateExpenseRecord(context.buildExpenseRecord(record(overrides))), new RegExp(message), JSON.stringify(overrides));
     }
     assert.equal(context.validateExpenseRecord(context.buildExpenseRecord(record({ amount: -300 }))), '');
-    for (const field of ['date', 'name', 'amount', 'currency', 'rateToTwd', 'payer', 'category', 'participants', 'legacyKey']) {
+    for (const field of ['date', 'name', 'amount', 'currency', 'rateToTwd', 'payer', 'category', 'participants']) {
         assert.ok(rules.includes(`'${field}'`), `${field} is allowed by the rules`);
     }
 });
@@ -90,11 +90,11 @@ test('Firestore documents become display items with safe defaults and pending fl
     const context = app();
     const item = plain(context.expenseFromDoc('doc1', {
         date: '2026-11-28', name: '晚餐', amount: 9000, currency: 'JPY', rateToTwd: 0.2, payer: '媽咪',
-        participants: ['媽咪', '培芝'], createdAt: { toMillis: () => 1234 }, legacyKey: 'sheet-1'
+        participants: ['媽咪', '培芝'], createdAt: { toMillis: () => 1234 }
     }, true));
     assert.deepEqual(item, {
         id: 'doc1', date: '2026-11-28', name: '晚餐', amount: 9000, currency: 'JPY', rateToTwd: 0.2, payer: '媽咪',
-        category: '', participants: ['媽咪', '培芝'], createdAt: 1234, legacyKey: 'sheet-1', pending: true
+        category: '', participants: ['媽咪', '培芝'], createdAt: 1234, pending: true
     });
     const sparse = plain(context.expenseFromDoc('doc2', { amount: 'oops', rateToTwd: null, createdAt: null }));
     assert.equal(sparse.name, '(未命名)');
@@ -113,42 +113,6 @@ test('expenses sort newest day first and chronologically within a day', () => {
         { id: 'd', date: '2026-11-27', createdAt: 3 }
     ]);
     assert.deepEqual(plain(sorted.map(item => item.id)), ['d', 'c', 'a', 'b']);
-});
-
-test('spreadsheet rows get stable legacy keys, and identical rows stay distinct', () => {
-    const context = app();
-    const csv = '時間戳記,日期,項目,金額,幣別,付款人,分類,分帳對象\n'
-        + '2026/11/26 12:00:00,2026/11/26,午餐,1200,日圓,培芝,餐飲,\n'
-        + '2026/11/26 13:00:00,2026/11/26,飲料,300,日圓,阿均,餐飲,\n'
-        + '2026/11/26 13:00:00,2026/11/26,飲料,300,日圓,阿均,餐飲,';
-    const first = plain(context.sheetRowsToExpenses(context.parseCsv(csv))).map(item => item.legacyKey);
-    const second = plain(context.sheetRowsToExpenses(context.parseCsv(csv))).map(item => item.legacyKey);
-    assert.deepEqual(first, second);
-    assert.equal(new Set(first).size, 3);
-    assert.match(first[0], /^sheet-[0-9a-f]{16}$/);
-    assert.equal(first[2], `${first[1]}-1`);
-});
-
-test('legacy import skips rows already imported and rows the rules would reject', () => {
-    const context = app();
-    const csv = '時間戳記,日期,項目,金額,幣別,付款人,分類,分帳對象(未勾選=全部分帳）\n'
-        + '2026/11/20 09:00:00,2026/11/20,機票,24000,台幣,阿均,交通,\n'
-        + '2026/11/21 09:00:00,2026/11/21,租車,30000,日幣,國恒,交通,"阿均, 國恒"\n'
-        + '2026/11/22 09:00:00,2026/11/22,沒寫幣別,500,,國恒,,\n'
-        + '2026/11/23 09:00:00,2026/11/23,沒寫付款人,500,台幣,,,';
-    const sheetItems = context.sheetRowsToExpenses(context.parseCsv(csv));
-    const existing = [{ legacyKey: sheetItems[0].legacyKey }];
-    const plan = plain(context.planLegacyImport(sheetItems, existing));
-    assert.equal(plan.already, 1);
-    assert.equal(plan.invalid, 2);
-    assert.equal(plan.records.length, 1);
-    assert.deepEqual(plan.records[0], {
-        date: '2026-11-21', name: '租車', amount: 30000, currency: 'JPY', rateToTwd: 0.2, payer: '國恒',
-        category: '交通', participants: ['阿均', '國恒'], legacyKey: sheetItems[1].legacyKey
-    });
-    const again = plain(context.planLegacyImport(sheetItems, [...existing, ...plan.records]));
-    assert.equal(again.records.length, 0);
-    assert.equal(again.already, 2);
 });
 
 test('CSV export quotes text, guards spreadsheet formulas and includes the TWD amount', () => {
@@ -182,7 +146,7 @@ test('join errors are explained in plain language', () => {
 test('Firebase loads lazily from a pinned SDK version and only allows emulators on localhost', () => {
     assert.match(script, /const FIREBASE_SDK_URL = 'https:\/\/www\.gstatic\.com\/firebasejs\/\d+\.\d+\.\d+';/);
     assert.match(script, /projectId: 'trip-schedule-website'/);
-    assert.doesNotMatch(html, /docs\.google\.com\/forms/);
+    assert.doesNotMatch(html, /docs\.google\.com/);
     const context = app();
     context.window = { location: { hostname: 'vannweng.github.io', search: '?firebaseEmulator=127.0.0.1' } };
     assert.equal(context.getFirebaseEmulatorHost(), '');
