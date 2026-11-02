@@ -184,3 +184,28 @@ test('the passcode lives only in Firestore rules data, never in the page', () =>
     assert.match(script, /const EXPENSE_TRIP_ID = 'okinawa-2026';/);
     assert.doesNotMatch(script, /['"`]tripAccess/);
 });
+
+test('undo restores a deleted entry with its original fields and leaves out an empty note', () => {
+    const context = app();
+    const deleted = context.expenseFromDoc('abc', {
+        date: '2026-11-27', name: '午餐', amount: 1500, currency: 'JPY', rateToTwd: 0.21, payer: '阿均',
+        category: '餐飲', participants: ['阿均', '國恒'], note: '含兒童餐', createdAt: { toMillis: () => 5 }
+    });
+    assert.deepEqual(plain(context.expenseRestorePayload(deleted)), {
+        date: '2026-11-27', name: '午餐', amount: 1500, currency: 'JPY', rateToTwd: 0.21, payer: '阿均',
+        category: '餐飲', participants: ['阿均', '國恒'], note: '含兒童餐'
+    });
+    const plainEntry = context.expenseFromDoc('def', { date: '2026-10-20', name: '住宿', amount: 100, currency: 'TWD', payer: '培芝', participants: [] });
+    const payload = plain(context.expenseRestorePayload(plainEntry));
+    assert.equal('note' in payload, false);
+    assert.equal(payload.rateToTwd, null);
+    assert.deepEqual(payload.participants, []);
+    assert.equal(context.validateExpenseRecord({ ...payload, note: '' }), '');
+});
+
+test('rows show a decorative edit icon and deletes offer an announced undo', () => {
+    assert.match(script, /<svg class="expense-row-edit"[^>]*aria-hidden="true"/);
+    assert.match(html, /<div class="expense-toast" id="expenseToast" role="status" aria-live="polite" hidden>/);
+    assert.match(html, /<button class="expense-toast-undo" id="expenseUndo" type="button">復原<\/button>/);
+    assert.match(script, /const EXPENSE_UNDO_DURATION = 8000;/);
+});

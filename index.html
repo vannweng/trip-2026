@@ -2784,6 +2784,73 @@
             resize: vertical;
         }
 
+        .expense-row-edit {
+            align-self: center;
+            flex: 0 0 18px;
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: var(--text-dim);
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .expense-row:hover .expense-row-edit {
+            stroke: var(--teal-primary);
+        }
+
+        .expense-toast {
+            position: fixed;
+            left: 50%;
+            bottom: max(16px, env(safe-area-inset-bottom));
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-sizing: border-box;
+            width: min(calc(100% - 32px), 480px);
+            padding: 6px 6px 6px 16px;
+            border-radius: var(--radius-md);
+            background: var(--text-main);
+            color: var(--bg-card);
+            box-shadow: var(--shadow-soft);
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+        }
+
+        .expense-toast[hidden] {
+            display: none;
+        }
+
+        .expense-toast-text {
+            flex: 1;
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .expense-toast-undo {
+            flex: 0 0 auto;
+            min-width: 64px;
+            min-height: 44px;
+            padding: 0 12px;
+            border: 0;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .expense-toast-undo:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: -4px;
+        }
+
         .expense-row-note {
             display: block;
             margin-top: 3px;
@@ -4584,6 +4651,12 @@
         </div>
     </dialog>
 
+    <!-- 刪除後的復原提示 -->
+    <div class="expense-toast" id="expenseToast" role="status" aria-live="polite" hidden>
+        <span class="expense-toast-text" id="expenseToastText"></span>
+        <button class="expense-toast-undo" id="expenseUndo" type="button">復原</button>
+    </div>
+
     <!-- 記一筆／修改花費 -->
     <dialog class="modal-overlay expense-dialog" id="expenseDialog" aria-labelledby="expenseDialogTitle">
         <form class="modal-card expense-form" id="expenseForm" novalidate>
@@ -5489,6 +5562,7 @@
         const EXPENSE_RATES_URL = 'https://open.er-api.com/v6/latest/USD';
         const EXPENSE_RATES_TTL = 6 * 60 * 60 * 1000;
         const EXPENSE_JOIN_TIMEOUT = 20000;
+        const EXPENSE_UNDO_DURATION = 8000;
         let expenseItems = [];
         let expenseRates = null;
         let expenseBackendPromise = null;
@@ -5626,6 +5700,7 @@
                                 <span class="expense-row-amount">${escapeExpenseText(formatExpenseAmount(item))}</span>
                                 <span class="expense-row-meta">分帳：${escapeExpenseText(describeExpenseParticipants(item))}</span>
                             </span>
+                            <svg class="expense-row-edit" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h4L18.5 9.5a2.12 2.12 0 0 0-3-3L5 17v3ZM13.5 6.5l3 3"/></svg>
                         </button>`).join('');
                     return `<div class="expense-day">
                         <div class="expense-day-head"><strong>${escapeExpenseText(date)}</strong>
@@ -6055,6 +6130,7 @@
                 localStorage.removeItem(EXPENSE_CACHE_KEY);
             } catch (err) { }
             closeExpenseDialog();
+            hideExpenseUndo();
             renderExpenses([]);
             showExpenseView('gate', message);
         }
@@ -6290,6 +6366,67 @@
             expenseSync.notice = '';
             expenseDialogTrigger = document.getElementById('expenseAdd');
             closeExpenseDialog();
+            showExpenseUndo(item);
+        }
+
+        // 復原時用同一個編號重新建立；雲端規則要求建立時間是當下，所以這筆會排到當天最後。
+        function expenseRestorePayload(item) {
+            return expenseWritePayload({
+                date: item.date,
+                name: item.name,
+                amount: item.amount,
+                currency: expenseCurrencyCode(item),
+                rateToTwd: item.rateToTwd ?? null,
+                payer: item.payer,
+                category: item.category || '',
+                participants: parseExpenseParticipants(item.participants),
+                note: item.note || ''
+            });
+        }
+
+        let expenseUndoItem = null;
+        let expenseUndoTimer = null;
+
+        function hideExpenseUndo() {
+            clearTimeout(expenseUndoTimer);
+            expenseUndoTimer = null;
+            expenseUndoItem = null;
+            const toast = document.getElementById('expenseToast');
+            const hadFocus = toast.contains(document.activeElement);
+            toast.hidden = true;
+            if (hadFocus) document.getElementById('expenseAdd')?.focus({ preventScroll: true });
+        }
+
+        // 約 8 秒後自動收起；手指或焦點還停在提示上時先不收。
+        function scheduleExpenseUndoHide() {
+            clearTimeout(expenseUndoTimer);
+            expenseUndoTimer = setTimeout(() => {
+                const toast = document.getElementById('expenseToast');
+                if (toast.contains(document.activeElement) || toast.matches(':hover')) scheduleExpenseUndoHide();
+                else hideExpenseUndo();
+            }, EXPENSE_UNDO_DURATION);
+        }
+
+        function showExpenseUndo(item) {
+            expenseUndoItem = item;
+            document.getElementById('expenseToastText').textContent = `已刪除「${item.name}」`;
+            document.getElementById('expenseToast').hidden = false;
+            scheduleExpenseUndoHide();
+        }
+
+        function undoExpenseDelete() {
+            const item = expenseUndoItem;
+            if (!item || !expenseSync.backend || !expenseSync.user) return;
+            const { fs } = expenseSync.backend;
+            const uid = expenseSync.user.uid;
+            fs.setDoc(fs.doc(expenseCollection(), item.id), {
+                ...expenseRestorePayload(item),
+                createdAt: fs.serverTimestamp(),
+                createdBy: uid,
+                updatedAt: fs.serverTimestamp(),
+                updatedBy: uid
+            }).catch(handleExpenseWriteError);
+            hideExpenseUndo();
         }
 
         function exportExpenses() {
@@ -6326,6 +6463,7 @@
             });
             document.getElementById('expenseCurrency').addEventListener('change', updateExpenseFormRate);
             document.getElementById('expenseDelete').addEventListener('click', deleteEditingExpense);
+            document.getElementById('expenseUndo').addEventListener('click', undoExpenseDelete);
             document.getElementById('expenseDialogClose').addEventListener('click', closeExpenseDialog);
             document.getElementById('expenseDialog').addEventListener('close', handleExpenseDialogClosed);
             document.getElementById('expenseExport').addEventListener('click', exportExpenses);
