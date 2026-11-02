@@ -2768,6 +2768,22 @@
             font-size: 1rem;
         }
 
+        .expense-input-multiline {
+            min-height: 76px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        .expense-row-note {
+            display: block;
+            margin-top: 3px;
+            font-size: 0.76rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            white-space: pre-line;
+            overflow-wrap: anywhere;
+        }
+
         .expense-input:focus-visible,
         .expense-participant input:focus-visible {
             outline: 3px solid var(--teal-primary);
@@ -4599,6 +4615,11 @@
                     <legend>分給誰（預設全部均分）</legend>
                     <div class="expense-participant-list" id="expenseParticipants"></div>
                 </fieldset>
+                <div class="expense-field">
+                    <label for="expenseNote">備註（選填）</label>
+                    <textarea class="expense-input expense-input-multiline" id="expenseNote" name="note" rows="2"
+                        maxlength="200" placeholder="例如：含兒童餐、刷誰的卡"></textarea>
+                </div>
                 <p class="expense-form-error" id="expenseFormError" role="alert"></p>
                 <div class="expense-form-actions">
                     <button class="expense-btn danger" id="expenseDelete" type="button" hidden>刪除</button>
@@ -5580,6 +5601,7 @@
                             <span class="expense-row-main">
                                 <span class="expense-row-name">${escapeExpenseText(item.name)}${item.pending ? '<span class="expense-pending">待上傳</span>' : ''}</span>
                                 <span class="expense-row-meta">${escapeExpenseText([item.category, item.payer].filter(Boolean).join(' · '))}</span>
+                                ${item.note ? `<span class="expense-row-note">${escapeExpenseText(item.note)}</span>` : ''}
                             </span>
                             <span class="expense-row-summary">
                                 <span class="expense-row-amount">${escapeExpenseText(formatExpenseAmount(item))}</span>
@@ -5845,6 +5867,7 @@
                 payer: String(data.payer || ''),
                 category: String(data.category || ''),
                 participants: parseExpenseParticipants(data.participants),
+                note: String(data.note || ''),
                 createdAt: toMillis(data.createdAt),
                 pending: Boolean(pending)
             };
@@ -5868,8 +5891,16 @@
                 rateToTwd: keepRate ? previous.rateToTwd : currentRateToTwd(currency),
                 payer: String(fields.payer || '').trim(),
                 category: String(fields.category || '').trim(),
-                participants: participantsForStorage(fields.participants)
+                participants: participantsForStorage(fields.participants),
+                note: String(fields.note || '').trim()
             };
+        }
+
+        // 沒寫備註就不送出 note 欄位；修改時把原本的備註清空，則把欄位刪掉。
+        function expenseWritePayload(record, { hadNote = false, deleteField } = {}) {
+            const { note, ...rest } = record;
+            if (note) return { ...rest, note };
+            return hadNote ? { ...rest, note: deleteField() } : rest;
         }
 
         // 跟 firestore.rules 的檢查一致，先在手機上擋下，才不會送出後才被雲端拒絕。
@@ -5884,6 +5915,7 @@
             if (record.payer.length > 30) return '付款人名稱太長';
             if (record.category.length > 20) return '分類名稱太長';
             if (record.participants.length > 20) return '分帳對象太多';
+            if (record.note.length > 200) return '備註請在 200 個字以內';
             return '';
         }
 
@@ -5894,7 +5926,7 @@
                 const text = String(value ?? '');
                 return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
             };
-            const header = ['日期', '項目', '金額', '幣別', '付款人', '分類', '分帳對象', '匯率（1 單位兌台幣）', '台幣金額'];
+            const header = ['日期', '項目', '金額', '幣別', '付款人', '分類', '分帳對象', '匯率（1 單位兌台幣）', '台幣金額', '備註'];
             const rows = [...items]
                 .sort((a, b) => a.date.localeCompare(b.date) || (a.createdAt || 0) - (b.createdAt || 0))
                 .map(item => {
@@ -5902,7 +5934,7 @@
                     return [
                         item.date, guard(item.name), item.amount, expenseCurrencyCode(item), guard(item.payer),
                         guard(item.category), guard(describeExpenseParticipants(item)), item.rateToTwd ?? '',
-                        cents === null ? '' : cents / 100
+                        cents === null ? '' : cents / 100, guard(item.note || '')
                     ];
                 });
             return [header, ...rows].map(row => row.map(cell).join(',')).join('\r\n');
@@ -6119,6 +6151,7 @@
             document.getElementById('expenseName').value = item?.name || '';
             document.getElementById('expenseAmount').value = item ? String(item.amount) : '';
             document.getElementById('expenseDate').value = item?.date || todayIsoDate();
+            document.getElementById('expenseNote').value = item?.note || '';
             document.getElementById('expenseCurrency').innerHTML =
                 expenseOptions(currencies.map(([code, label]) => [code, `${label}（${code}）`]), currency);
             document.getElementById('expensePayer').innerHTML =
@@ -6151,7 +6184,8 @@
                 payer: document.getElementById('expensePayer').value,
                 date: document.getElementById('expenseDate').value,
                 category: document.getElementById('expenseCategory').value,
-                participants: [...document.querySelectorAll('#expenseParticipants input:checked')].map(input => input.value)
+                participants: [...document.querySelectorAll('#expenseParticipants input:checked')].map(input => input.value),
+                note: document.getElementById('expenseNote').value
             };
         }
 
@@ -6215,10 +6249,11 @@
             const { fs } = expenseSync.backend;
             const uid = expenseSync.user.uid;
             const stamp = { updatedAt: fs.serverTimestamp(), updatedBy: uid };
+            const payload = expenseWritePayload(record, { hadNote: Boolean(previous?.note), deleteField: fs.deleteField });
             // 不等雲端回應：沒網路時也會先存在手機裡、清單上標示「待上傳」。
             const write = previous
-                ? fs.updateDoc(fs.doc(expenseCollection(), previous.id), { ...record, ...stamp })
-                : fs.setDoc(fs.doc(expenseCollection()), { ...record, ...stamp, createdAt: fs.serverTimestamp(), createdBy: uid });
+                ? fs.updateDoc(fs.doc(expenseCollection(), previous.id), { ...payload, ...stamp })
+                : fs.setDoc(fs.doc(expenseCollection()), { ...payload, ...stamp, createdAt: fs.serverTimestamp(), createdBy: uid });
             write.catch(handleExpenseWriteError);
             expenseSync.notice = '';
             try {

@@ -94,7 +94,7 @@ test('Firestore documents become display items with safe defaults and pending fl
     }, true));
     assert.deepEqual(item, {
         id: 'doc1', date: '2026-11-28', name: '晚餐', amount: 9000, currency: 'JPY', rateToTwd: 0.2, payer: '媽咪',
-        category: '', participants: ['媽咪', '培芝'], createdAt: 1234, pending: true
+        category: '', participants: ['媽咪', '培芝'], note: '', createdAt: 1234, pending: true
     });
     const sparse = plain(context.expenseFromDoc('doc2', { amount: 'oops', rateToTwd: null, createdAt: null }));
     assert.equal(sparse.name, '(未命名)');
@@ -119,12 +119,36 @@ test('CSV export quotes text, guards spreadsheet formulas and includes the TWD a
     const context = app();
     const csv = context.expensesToCsv([
         { date: '2026-11-27', name: '=SUM(A1)', amount: 1000, currency: 'JPY', rateToTwd: 0.21, payer: '阿均', category: '', participants: [], createdAt: 2 },
-        { date: '2026-11-26', name: '早餐, "飯糰"', amount: 120, currency: 'TWD', rateToTwd: 1, payer: '媽咪', category: '餐飲', participants: ['媽咪', '培芝'], createdAt: 1 }
+        { date: '2026-11-26', name: '早餐, "飯糰"', amount: 120, currency: 'TWD', rateToTwd: 1, payer: '媽咪', category: '餐飲', participants: ['媽咪', '培芝'], note: '含兒童餐\n刷媽咪的卡', createdAt: 1 }
     ]);
     const lines = csv.split('\r\n');
-    assert.equal(lines[0], '日期,項目,金額,幣別,付款人,分類,分帳對象,匯率（1 單位兌台幣）,台幣金額');
-    assert.equal(lines[1], '2026-11-26,"早餐, ""飯糰""",120,TWD,媽咪,餐飲,媽咪、培芝,1,120');
-    assert.equal(lines[2], "2026-11-27,'=SUM(A1),1000,JPY,阿均,,全部 5 人,0.21,210");
+    assert.equal(lines[0], '日期,項目,金額,幣別,付款人,分類,分帳對象,匯率（1 單位兌台幣）,台幣金額,備註');
+    assert.equal(lines[1], '2026-11-26,"早餐, ""飯糰""",120,TWD,媽咪,餐飲,媽咪、培芝,1,120,"含兒童餐\n刷媽咪的卡"');
+    assert.equal(lines[2], "2026-11-27,'=SUM(A1),1000,JPY,阿均,,全部 5 人,0.21,210,");
+});
+
+test('notes are optional, trimmed, limited to 200 characters and read back from Firestore', () => {
+    const context = app();
+    assert.equal(context.buildExpenseRecord(record()).note, '');
+    assert.equal(context.buildExpenseRecord(record({ note: '  含兒童餐\n刷媽咪的卡  ' })).note, '含兒童餐\n刷媽咪的卡');
+    assert.equal(context.validateExpenseRecord(context.buildExpenseRecord(record({ note: 'x'.repeat(200) }))), '');
+    assert.match(context.validateExpenseRecord(context.buildExpenseRecord(record({ note: 'x'.repeat(201) }))), /備註/);
+    assert.equal(context.expenseFromDoc('a', { note: '停車場在 B1' }).note, '停車場在 B1');
+    assert.equal(context.expenseFromDoc('b', {}).note, '');
+    assert.match(rules, /'note'/);
+    assert.match(rules, /isText\(data\.get\('note', ''\), 0, 200\)/);
+    assert.match(html, /<textarea[^>]*id="expenseNote"[^>]*maxlength="200"/);
+});
+
+test('an empty note is left out of new entries and only deleted when an edit clears an existing note', () => {
+    const context = app();
+    const deleteField = () => 'DELETE';
+    const empty = context.buildExpenseRecord(record());
+    assert.equal('note' in context.expenseWritePayload(empty, { deleteField }), false);
+    assert.equal('note' in context.expenseWritePayload(empty, { hadNote: false, deleteField }), false);
+    assert.equal(context.expenseWritePayload(empty, { hadNote: true, deleteField }).note, 'DELETE');
+    const withNote = context.buildExpenseRecord(record({ note: '含兒童餐' }));
+    assert.equal(context.expenseWritePayload(withNote, { hadNote: true, deleteField }).note, '含兒童餐');
 });
 
 test('sync status explains offline, pending uploads and failures', () => {
