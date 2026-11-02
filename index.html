@@ -556,17 +556,23 @@
             overflow-wrap: anywhere;
         }
 
-        .restaurant-location {
-            display: block;
-            padding-block: 4px;
-            color: inherit;
-            text-decoration: underline;
-            text-underline-offset: 3px;
+        .restaurant-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
         }
 
-        .restaurant-location:focus-visible {
-            outline: 2px solid currentColor;
-            outline-offset: 3px;
+        .restaurant-row > p {
+            flex: 1;
+            min-width: 0;
+            margin: 0;
+        }
+
+        .restaurant-address {
+            display: block;
+            margin-top: 2px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
         }
 
         /* Travel Tips */
@@ -2090,6 +2096,7 @@
 
         .maps-btn,
         .reservation-map-link,
+        .restaurant-map-link,
         .souvenir-action {
             width: 44px;
             min-width: 44px;
@@ -2103,6 +2110,7 @@
 
         .maps-btn,
         .reservation-map-link,
+        .restaurant-map-link,
         .souvenir-action {
             display: inline-flex;
             align-items: center;
@@ -2119,6 +2127,7 @@
 
         .maps-btn:hover,
         .reservation-map-link:hover,
+        .restaurant-map-link:hover,
         .souvenir-action:hover {
             background: #dceff0;
             color: #006f86;
@@ -2126,6 +2135,7 @@
 
         .maps-btn:focus-visible,
         .reservation-map-link:focus-visible,
+        .restaurant-map-link:focus-visible,
         .souvenir-action:focus-visible {
             outline: 2px solid #399da2;
             outline-offset: 1px;
@@ -3256,7 +3266,7 @@
         [data-theme="dark"] :is(.day-num, .flight-code, .flight-path-line, .reservation-count,
             .reservation-day, .reservation-status, .reservation-code-value code, .reservation-day-link,
             .souvenir-heading, .day-pagination button, .day-map-segments a, .credit-list a,
-            .maps-btn, .reservation-map-link, .souvenir-action,
+            .maps-btn, .reservation-map-link, .restaurant-map-link, .souvenir-action,
             .outfit-title, .modal-tab-btn.active, .checklist-cat-title, .checklist-progress-text,
             .clothing-card-tag, .skip-link),
         [data-theme="dark"] .reservation-chip:not(.active) .tab-date {
@@ -3289,7 +3299,7 @@
 
         [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
             .modal-close-btn, .checklist-item, .flight-link, .reservation-info-btn,
-            .maps-btn, .reservation-map-link, .souvenir-action,
+            .maps-btn, .reservation-map-link, .restaurant-map-link, .souvenir-action,
             .day-pagination button, .day-chip:not(.active), .day-map-link):hover {
             background: var(--bg-card-hover);
             color: var(--teal-primary);
@@ -3308,7 +3318,7 @@
             .day-num, .day-date, .day-route-note, .tag, .time-slot, .charter-badge,
             .currency-btn, .notes-btn, .dim-btn, .theme-toggle, .badge-count,
             .flight-code, .flight-note, .flight-terminal, .flight-path, .flight-link,
-            .maps-btn, .reservation-map-link, .reservation-info-btn, .reservation-card,
+            .maps-btn, .reservation-map-link, .restaurant-map-link, .reservation-info-btn, .reservation-card,
             .reservation-summary, .reservation-day, .reservation-status, .reservation-card h3,
             .reservation-card-note, .reservation-details dt, .reservation-details dd,
             .reservation-day-link, .souvenir-section, .souvenir-card, .souvenir-heading,
@@ -3893,16 +3903,25 @@
                             <h3 class="place-name">美國村 (晚餐推薦・餐廳待選定)</h3>
                             <div class="place-actions"><a class="reservation-info-btn" href="#reservation-american-village" aria-label="查看訂位資訊" title="訂位資訊"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5 3 3 5-5"/></svg></a><a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=American+Village&amp;query_place_id=ChIJzZoVCAUT5TQRzIueHYt83hs" title="導航至American Village｜沖縄県中頭郡北谷町美浜" data-place-key="american" data-place-id="ChIJzZoVCAUT5TQRzIueHYt83hs" data-route-query="American Village" target="_blank" rel="noopener noreferrer" aria-label="導航至American Village"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a></div>
                         </div>
-                        <div class="place-desc">漫步美國村日落步道欣賞夕陽，再從下列推薦餐廳擇一享用晚餐。三間餐廳分散於不同建築與港區，可使用各店位置連結查看地圖；行程導航暫以美國村為目的地，待選定餐廳後再調整。</div>
+                        <div class="place-desc">漫步美國村日落步道欣賞夕陽，再從下列推薦餐廳擇一享用晚餐。三間餐廳分散於不同建築與港區，可點各店右側地圖圖示查看位置；行程導航暫以美國村為目的地，待選定餐廳後再調整。</div>
                         <ol class="place-desc restaurant-recommendations" aria-label="美國村推薦餐廳">
-                            <li><strong>Chatan Dunchi（北谷殿內）</strong>：坐落於 Depot Island Seaside 大樓 3 樓，是一間能眺望西海岸景致的高質感沖繩創作料理居酒屋。
-                                <a class="restaurant-location" href="https://www.google.com/maps/search/?api=1&amp;query=Chatan+Dunchi+9-21+Mihama+Chatan+Okinawa" target="_blank" rel="noopener noreferrer" aria-label="查看 Chatan Dunchi（北谷殿內）位置（另開分頁）">位置：沖縄県中頭郡北谷町美浜9-21，Depot Island Seaside 3F｜Google Maps</a>
+                            <li>
+                                <div class="restaurant-row">
+                                    <p><strong>Chatan Dunchi（北谷殿內）</strong>：坐落於 Depot Island Seaside 大樓 3 樓，是一間能眺望西海岸景致的高質感沖繩創作料理居酒屋。<span class="restaurant-address">位置：沖縄県中頭郡北谷町美浜9-21，Depot Island Seaside 3F</span></p>
+                                    <a class="restaurant-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Chatan+Dunchi+9-21+Mihama+Chatan+Okinawa" title="導航至Chatan Dunchi（北谷殿內）｜沖縄県中頭郡北谷町美浜9-21，Depot Island Seaside 3F" target="_blank" rel="noopener noreferrer" aria-label="導航至Chatan Dunchi（北谷殿內）（另開分頁）"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
                             </li>
-                            <li><strong>Chatan Harbour Brewery Restaurant</strong>：坐落在北谷遊艇碼頭旁，是一間結合自釀精釀啤酒與現代義式、美式餐點的海濱休閒餐廳。
-                                <a class="restaurant-location" href="https://www.google.com/maps/search/?api=1&amp;query=Chatan+Harbor+Brewery+Restaurant+53-1+Mihama+Chatan+Okinawa" target="_blank" rel="noopener noreferrer" aria-label="查看 Chatan Harbour Brewery Restaurant 位置（另開分頁）">位置：沖縄県中頭郡北谷町美浜53-1，北谷漁港 Marina 碼頭旁（非 Depot Island Seaside 大樓）｜Google Maps</a>
+                            <li>
+                                <div class="restaurant-row">
+                                    <p><strong>Chatan Harbour Brewery Restaurant</strong>：坐落在北谷遊艇碼頭旁，是一間結合自釀精釀啤酒與現代義式、美式餐點的海濱休閒餐廳。<span class="restaurant-address">位置：沖縄県中頭郡北谷町美浜53-1，北谷漁港 Marina 碼頭旁（非 Depot Island Seaside 大樓）</span></p>
+                                    <a class="restaurant-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Chatan+Harbor+Brewery+Restaurant+53-1+Mihama+Chatan+Okinawa" title="導航至Chatan Harbour Brewery Restaurant｜沖縄県中頭郡北谷町美浜53-1，北谷漁港 Marina 碼頭旁（非 Depot Island Seaside 大樓）" target="_blank" rel="noopener noreferrer" aria-label="導航至Chatan Harbour Brewery Restaurant（另開分頁）"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
                             </li>
-                            <li><strong>Red Lobster Okinawa Chatan</strong>
-                                <a class="restaurant-location" href="https://www.google.com/maps/search/?api=1&amp;query=Red+Lobster+Okinawa+Chatan+8-10+Mihama+Chatan+Okinawa" target="_blank" rel="noopener noreferrer" aria-label="查看 Red Lobster Okinawa Chatan 位置（另開分頁）">位置：沖縄県中頭郡北谷町美浜8-10，American Village 2F，Depot Island 對面（大型龍蝦招牌）｜Google Maps</a>
+                            <li>
+                                <div class="restaurant-row">
+                                    <p><strong>Red Lobster Okinawa Chatan</strong><span class="restaurant-address">位置：沖縄県中頭郡北谷町美浜8-10，American Village 2F，Depot Island 對面（大型龍蝦招牌）</span></p>
+                                    <a class="restaurant-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Red+Lobster+Okinawa+Chatan+8-10+Mihama+Chatan+Okinawa" title="導航至Red Lobster Okinawa Chatan｜沖縄県中頭郡北谷町美浜8-10，American Village 2F，Depot Island 對面（大型龍蝦招牌）" target="_blank" rel="noopener noreferrer" aria-label="導航至Red Lobster Okinawa Chatan（另開分頁）"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
+                                </div>
                             </li>
                         </ol>
                     </article>
