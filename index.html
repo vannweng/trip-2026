@@ -111,14 +111,12 @@
             font-weight: 700;
             cursor: pointer;
             transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.12);
         }
 
         .notes-btn:hover {
             background: var(--gold-accent);
             color: #0b1116;
             transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
         }
 
         .notes-btn .badge-count {
@@ -185,16 +183,6 @@
             font-size: 0.95rem;
             font-weight: 700;
             color: var(--sky-accent);
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
         }
 
         /* Sticky Navigation (Primary Date + Secondary Persona) */
@@ -266,45 +254,6 @@
             font-weight: 800;
         }
 
-        /* 2. Persona Selector (lives inside each day's outfit card) */
-        .persona-selector {
-            display: flex;
-            gap: 4px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 3px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .persona-btn {
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-family: var(--font-sans);
-            font-size: 0.78rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 999px;
-            cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            white-space: nowrap;
-        }
-
-        .persona-btn:hover {
-            color: var(--text-main);
-        }
-
-        .persona-btn.active {
-            background: rgba(45, 212, 191, 0.2);
-            color: var(--teal-primary);
-            border: 1px solid rgba(45, 212, 191, 0.5);
-            box-shadow: none;
-        }
-
         /* Day Card Container */
         .day-section {
             margin-bottom: 40px;
@@ -362,50 +311,6 @@
             color: var(--gold-accent);
             border-radius: var(--radius-sm);
             font-weight: 600;
-        }
-
-        /* Daily Outfit Card */
-        .outfit-card {
-            background: linear-gradient(135deg, rgba(45, 212, 191, 0.06), rgba(245, 158, 11, 0.03));
-            border: 1px solid rgba(45, 212, 191, 0.2);
-            border-radius: var(--radius-lg);
-            padding: 14px 18px;
-            margin-bottom: 16px;
-        }
-
-        .outfit-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: nowrap;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .outfit-title {
-            flex: 0 0 auto;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--teal-primary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-
-        .outfit-content {
-            font-size: 0.88rem;
-            color: #cbd5e1;
-            line-height: 1.5;
-        }
-
-        .outfit-tip {
-            font-size: 0.78rem;
-            color: var(--gold-accent);
-            margin-top: 6px;
-            display: flex;
-            align-items: flex-start;
-            gap: 4px;
         }
 
         /* Unified Day Timeline Card (All day itinerary in 1 single card) */
@@ -471,11 +376,6 @@
             border-radius: 4px;
             background: var(--bg-subtle);
             color: var(--text-muted);
-        }
-
-        .tag.highlight {
-            background: var(--gold-glow);
-            color: var(--gold-accent);
         }
 
         .place-title-row {
@@ -548,43 +448,6 @@
             margin-top: 2px;
             color: var(--text-dim);
             font-size: 0.8rem;
-        }
-
-        /* Travel Tips */
-        .tips-box {
-            margin-top: 50px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-        }
-
-        .tips-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .tip-item {
-            background: var(--bg-subtle);
-            border-radius: var(--radius-sm);
-            padding: 14px;
-            font-size: 0.85rem;
-        }
-
-        .tip-item h4 {
-            color: var(--gold-accent);
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .tip-item p {
-            color: var(--text-muted);
-            line-height: 1.45;
         }
 
         /* Footer */
@@ -964,11 +827,6 @@
                 font-size: var(--fs-label);
             }
 
-            .persona-btn {
-                font-size: 0.75rem;
-                padding: 4px 8px;
-            }
-
             .day-chip {
                 min-width: 66px;
                 padding: 7px 12px;
@@ -1329,26 +1187,6 @@
             color: var(--on-accent);
         }
 
-        .persona-selector {
-            flex: 0 0 auto;
-            margin-left: auto;
-            border-color: rgba(109, 200, 199, 0.7);
-            border-radius: 6px;
-            background: var(--bg-main);
-        }
-
-        .persona-btn {
-            min-height: 36px;
-            border-radius: 4px;
-            color: var(--text-muted);
-        }
-
-        .persona-btn.active {
-            border-color: rgba(57, 157, 162, 0.68);
-            background: var(--bg-card-hover);
-            color: var(--text-main);
-        }
-
         .day-section {
             margin-bottom: 28px;
             animation: day-reveal 0.42s ease both;
@@ -1371,7 +1209,6 @@
         }
 
         .day-num,
-        .section-title,
         .modal-title-group h2 {
             font-family: var(--font-display);
         }
@@ -1396,23 +1233,6 @@
         .charter-badge {
             background: var(--bg-card-hover);
             color: var(--text-main);
-        }
-
-        .outfit-card {
-            border-left: 4px solid #6dc8c7;
-            border-color: rgba(109, 200, 199, 0.58);
-            border-left-color: #6dc8c7;
-            border-radius: 6px;
-            background: var(--bg-card-hover);
-        }
-
-        .outfit-title {
-            color: var(--teal-primary);
-        }
-
-        .outfit-content {
-            color: var(--text-muted);
-            transition: opacity 0.18s ease;
         }
 
         .timeline {
@@ -1507,34 +1327,6 @@
             object-fit: cover;
         }
 
-        .day-feature {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 21 / 8;
-            margin: -2px 0 18px;
-            overflow: hidden;
-            border-radius: 8px;
-            background: var(--bg-main);
-        }
-
-        .day-feature img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .day-feature figcaption {
-            position: absolute;
-            right: 12px;
-            bottom: 10px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            background: rgba(0, 111, 134, 0.84);
-            color: #fff8ec;
-            font-size: var(--fs-label);
-        }
-
         .place-image figcaption {
             position: absolute;
             width: 1px;
@@ -1551,11 +1343,6 @@
         .tag {
             background: var(--bg-main);
             color: var(--text-muted);
-        }
-
-        .tag.highlight {
-            background: var(--bg-card-hover);
-            color: var(--text-main);
         }
 
         .maps-btn {
@@ -1685,57 +1472,12 @@
                 width: 44px;
                 padding-inline: 0;
             }
-
-            .currency-btn-label {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                overflow: hidden;
-                clip: rect(0, 0, 0, 0);
-                white-space: nowrap;
-            }
-
-            .outfit-header {
-                gap: 6px;
-            }
-
-            .outfit-title {
-                gap: 4px;
-                font-size: 0.8rem;
-            }
-
-            .outfit-card .persona-selector {
-                gap: 2px;
-                padding: 2px;
-            }
-
-            .outfit-card .persona-btn {
-                width: 34px;
-                min-height: 36px;
-                padding: 4px;
-                gap: 0;
-                font-size: 0;
-            }
-
-            .outfit-card .persona-btn span {
-                font-size: 1rem;
-                line-height: 1;
-            }
         }
 
         @media (max-width: 520px) {
             .dim-btn {
                 width: 44px;
                 padding-inline: 0;
-            }
-
-            .dim-btn-label {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                overflow: hidden;
-                clip: rect(0, 0, 0, 0);
-                white-space: nowrap;
             }
 
             .flight-route {
@@ -1980,34 +1722,16 @@
             color: var(--on-accent);
         }
 
-        .tag.reservation-tag {
-            background: var(--bg-main);
-            color: var(--text-main);
-            font-weight: 700;
-        }
-
-        .reservation-view .tips-box,
         .reservation-view .photo-credits {
             display: none;
         }
 
-        .tips-box,
-        .tip-item,
         .weather-box,
         .clothing-card,
         .checklist-item {
             border-color: rgba(0, 111, 134, 0.18);
             background: var(--bg-card);
             color: var(--text-main);
-        }
-
-        .tips-box {
-            border-radius: 8px;
-        }
-
-        .tip-item {
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
         }
 
         .souvenir-section {
@@ -2333,10 +2057,6 @@
                 min-width: 92px;
             }
 
-            .persona-btn {
-                min-height: 40px;
-            }
-
             .timeline {
                 padding: 0 14px;
             }
@@ -2348,10 +2068,6 @@
 
             .place-image {
                 order: -1;
-                aspect-ratio: 16 / 9;
-            }
-
-            .day-feature {
                 aspect-ratio: 16 / 9;
             }
 
@@ -2955,7 +2671,6 @@
             border-color: rgba(242, 182, 172, 0.45);
         }
 
-
         /* Group filtering and compact alternatives inherit the existing page palette. */
         .timeline-card[hidden] { display: none; }
         .itinerary-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; border-top: 1px solid var(--border-color); padding-top: 8px; margin-top: 8px; }
@@ -2979,21 +2694,18 @@
         .backup-content .map-links { flex: 0 0 auto; flex-wrap: nowrap; justify-content: flex-end; }
         .place-title-row.multiple-destinations { grid-template-columns: minmax(0, 1fr); gap: 6px; }
         .destination-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; }
-        .itinerary-source-note { color: var(--text-dim); font-size: .72rem; margin-top: 16px; }
         @media (max-width: 600px) {
 
             .day-section { scroll-margin-top: 210px; }
             .card-top { align-items: flex-start; flex-wrap: wrap; }
             .itinerary-filter-btn { flex: 1; padding-inline: 8px; }
         }
-        .tips-box[hidden] { display: none; }
         .timeline-card .meta-tags { justify-content: flex-end; max-width: 100%; }
         .timeline-card .place-details-tags { justify-content: flex-start; }
         .hours-tag, .price-tag { overflow-wrap: anywhere; }
         @media (max-width: 720px) {
             .header-btn-wrap { flex-wrap: wrap; max-width: calc(100% - 28px); gap: 6px; }
             .currency-btn, .notes-btn, .dim-btn { width: auto; padding: 6px 8px; font-size: .7rem; }
-            .currency-btn-label, .dim-btn-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; }
         }
         .skip-link {
             position: fixed;
@@ -3296,8 +3008,8 @@
             box-shadow: var(--shadow-soft);
         }
 
-        [data-theme="dark"] :is(.reservation-card, .tips-box, .tip-item, .weather-box,
-            .clothing-card, .checklist-item, .day-pagination button, .photo-credits, .skip-link) {
+        [data-theme="dark"] :is(.reservation-card, .weather-box, .clothing-card, .checklist-item,
+            .day-pagination button, .photo-credits, .skip-link) {
             background: var(--bg-card);
             border-color: var(--border-color);
         }
@@ -4383,7 +4095,6 @@
 
         </main>
 
-        <section class="tips-box" hidden><div class="section-title">沖繩雙軌旅行實用錦囊</div><div class="tips-grid"><div class="tip-item"><h4> 分流與會合</h4><p>Day 2 午餐、晚餐會合；Day 3 晚餐分開；Day 4 晚餐再會合。分流前確認各組交通與集合地點。</p></div><div class="tip-item"><h4> 親子隨身包</h4><p>準備推車、替換衣物、水壺與小點心，依孩子狀況安排休息，車程與停留時間保留彈性。</p></div><div class="tip-item"><h4> 預約與備案</h4><p>天之船咖啡、琉球的牛、ぶち燒肉優先確認預約。A 方案額滿或不便前往時，可展開卡片下方的 B 備案。</p></div><div class="tip-item"><h4> 最後一天還車</h4><p>回程班機 15:25 起飛，規劃 13:15 前完成加油與還車，13:30 抵達航廈辦理出境。</p></div></div><p class="itinerary-source-note">行程、車程、營業時間與費用依提供的 Excel 整理；回程還車提前安排。店家資訊與實際交通狀況請於出發前確認。</p></section>
 
         <details class="photo-credits"><summary>照片來源與授權</summary><p>景點照片經縮圖處理並依版面裁切顯示。</p><ol class="credit-list"><li><a href="https://commons.wikimedia.org/wiki/File:Churaumi_Aquarium_main_tank_%27Kuroshio_Sea%27.jpg" target="_blank" rel="noopener noreferrer">美麗海水族館・黑潮之海</a>：Megapixie，Public domain。</li></ol></details>
         <!-- Footer -->
