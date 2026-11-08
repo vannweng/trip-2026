@@ -5049,6 +5049,17 @@
             document.documentElement.style.setProperty('--sticky-offset', `${offset}px`);
         }
 
+        // 只水平捲動日期列：scrollIntoView 會連帶捲動整頁，Chrome 還會把 Tab 起點移到該分頁。
+        function centerTabInNav(tab) {
+            const nav = tab.closest?.('.day-nav');
+            if (!nav || nav.scrollWidth <= nav.clientWidth) return;
+            const navRect = nav.getBoundingClientRect();
+            const tabRect = tab.getBoundingClientRect();
+            const left = nav.scrollLeft + tabRect.left - navRect.left - (nav.clientWidth - tabRect.width) / 2;
+            const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+            nav.scrollTo({ left, behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
+
         function selectDay(dayId, { updateUrl = false, focusTab = false, focusHeading = false, scroll = false } = {}) {
             const activeSection = document.getElementById(dayId);
             const activeTab = document.querySelector(`.day-chip[href="#${dayId}"]`);
@@ -5074,7 +5085,7 @@
                 history.pushState(null, '', `#${dayId}`);
             }
 
-            activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            centerTabInNav(activeTab);
             if (focusTab) activeTab.focus({ preventScroll: true });
             if (focusHeading || focusLeavingPanel) activeSection.querySelector('.day-title-top').focus({ preventScroll: true });
             if (scroll) {
@@ -5337,10 +5348,9 @@
                 main.scrollIntoView({ block: 'start' });
             });
 
+            // 首次載入不寫入 hash：載入期間改網址錨點會讓瀏覽器捲到該區塊、蓋掉標題列，
+            // 也會把鍵盤 Tab 起點移進內容。沒有 hash 時重新整理也會回到當天行程。
             const initialDayId = getInitialDayId();
-            if (!getPanelIdFromHash()) {
-                history.replaceState(null, '', `#${initialDayId}`);
-            }
             selectDay(initialDayId);
             focusReservationFromHash();
         }
