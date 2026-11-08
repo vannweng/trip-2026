@@ -124,7 +124,7 @@
         .notes-btn .badge-count {
             background: rgba(245, 158, 11, 0.25);
             color: var(--gold-accent);
-            font-size: 0.68rem;
+            font-size: var(--fs-label);
             padding: 1px 6px;
             border-radius: 999px;
             font-weight: 700;
@@ -466,7 +466,7 @@
         }
 
         .tag {
-            font-size: 0.68rem;
+            font-size: var(--fs-label);
             padding: 1px 6px;
             border-radius: 4px;
             background: var(--bg-subtle);
@@ -503,7 +503,7 @@
             color: var(--teal-primary);
             padding: 1px 8px;
             border-radius: 4px;
-            font-size: 0.7rem;
+            font-size: var(--fs-label);
             font-weight: 600;
             transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             white-space: nowrap;
@@ -763,7 +763,7 @@
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-dim);
-            font-size: 0.72rem;
+            font-size: var(--fs-label);
             padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
@@ -869,7 +869,7 @@
         }
 
         .clothing-card-tag {
-            font-size: 0.7rem;
+            font-size: var(--fs-label);
             padding: 2px 8px;
             border-radius: 999px;
             background: var(--teal-glow);
@@ -952,7 +952,7 @@
             }
 
             .weather-item .desc {
-                font-size: 0.72rem;
+                font-size: var(--fs-label);
             }
 
             .weather-item .val {
@@ -961,7 +961,7 @@
 
             .maps-btn {
                 padding: 1px 7px;
-                font-size: 0.68rem;
+                font-size: var(--fs-label);
             }
 
             .persona-btn {
@@ -1002,6 +1002,7 @@
             --radius-sm: 4px;
             --radius-md: 6px;
             --radius-lg: 8px;
+            --fs-label: 0.75rem; /* 功能文字下限：標籤、徽章、輔助說明 */
             --shadow-soft: 0 14px 36px rgba(0, 111, 134, 0.14);
             --on-accent: #fff8ec;
             color-scheme: light;
@@ -1473,7 +1474,7 @@
             background: var(--bg-subtle);
             color: var(--text-main);
             font-family: var(--font-sans);
-            font-size: 0.68rem;
+            font-size: var(--fs-label);
             font-weight: 700;
             vertical-align: middle;
         }
@@ -1531,7 +1532,7 @@
             border-radius: 4px;
             background: rgba(0, 111, 134, 0.84);
             color: #fff8ec;
-            font-size: 0.72rem;
+            font-size: var(--fs-label);
         }
 
         .place-image figcaption {
@@ -1602,7 +1603,7 @@
 
         .flight-terminal {
             color: var(--text-muted);
-            font-size: 0.72rem;
+            font-size: var(--fs-label);
         }
 
         .flight-time {
@@ -1615,7 +1616,7 @@
             flex-direction: column;
             align-items: center;
             color: var(--text-dim);
-            font-size: 0.68rem;
+            font-size: var(--fs-label);
             text-align: center;
         }
 
@@ -1656,7 +1657,7 @@
             border: 1px solid #399da2;
             border-radius: 4px;
             color: var(--teal-primary);
-            font-size: 0.72rem;
+            font-size: var(--fs-label);
             font-weight: 700;
             transition: background 0.18s ease, color 0.18s ease;
         }
@@ -1746,6 +1747,11 @@
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
+            /* 落單的最後一個連結佔滿整列，長標籤不會被擠到斷行 */
+            .flight-actions > .flight-link:last-child:nth-child(odd) {
+                grid-column: 1 / -1;
+            }
         }
 
         .reservation-chip:not(.active) .tab-date {
@@ -1833,13 +1839,13 @@
 
         .reservation-day {
             color: var(--teal-primary);
-            font-size: 0.74rem;
+            font-size: var(--fs-label);
             font-weight: 700;
         }
 
         .reservation-status {
             color: var(--teal-primary);
-            font-size: 0.74rem;
+            font-size: var(--fs-label);
             font-weight: 700;
         }
 
@@ -1876,7 +1882,7 @@
 
         .reservation-details dt {
             color: var(--text-dim);
-            font-size: 0.74rem;
+            font-size: var(--fs-label);
         }
 
         .reservation-details dd {
@@ -1962,7 +1968,7 @@
             border-radius: 4px;
             background: var(--bg-subtle);
             color: var(--text-main);
-            font-size: 0.7rem;
+            font-size: var(--fs-label);
             font-weight: 700;
             line-height: 1.2;
             text-decoration: none;
@@ -2165,7 +2171,7 @@
         }
 
         .day-map-meta {
-            font-size: 0.72rem;
+            font-size: var(--fs-label);
             font-weight: 400;
         }
 
@@ -2176,7 +2182,7 @@
             gap: 6px 12px;
             margin-top: 8px;
             color: var(--text-muted);
-            font-size: 0.72rem;
+            font-size: var(--fs-label);
         }
 
         .day-map-segments[hidden] { display: none; }
@@ -2227,7 +2233,7 @@
             border-radius: 6px;
             background: rgba(255, 248, 236, 0.78);
             color: var(--text-muted);
-            font-size: 0.74rem;
+            font-size: var(--fs-label);
         }
 
         .photo-credits summary {
@@ -2372,7 +2378,7 @@
 
             .reservation-info-btn {
                 min-height: 34px;
-                font-size: 0.7rem;
+                font-size: var(--fs-label);
             }
         }
 
@@ -2454,7 +2460,7 @@
         }
 
         .expense-status {
-            font-size: 0.68rem;
+            font-size: var(--fs-label);
             color: var(--text-dim);
             text-align: right;
             overflow-wrap: anywhere;
@@ -2475,7 +2481,7 @@
         }
 
         .expense-totals dt {
-            font-size: 0.74rem;
+            font-size: var(--fs-label);
             color: var(--text-muted);
             margin-bottom: 1px;
             line-height: 1.35;
@@ -2513,7 +2519,7 @@
         }
 
         .expense-rate-note {
-            font-size: 0.72rem;
+            font-size: var(--fs-label);
             color: var(--text-dim);
         }
 
@@ -2561,7 +2567,7 @@
         }
 
         .expense-transfer-label {
-            font-size: 0.74rem;
+            font-size: var(--fs-label);
             font-weight: 500;
         }
 
@@ -2644,7 +2650,7 @@
         }
 
         .expense-row-meta {
-            font-size: 0.74rem;
+            font-size: var(--fs-label);
             color: var(--text-dim);
             margin-top: 2px;
         }
@@ -2702,7 +2708,7 @@
             border-radius: 999px;
             background: var(--bg-subtle);
             color: var(--text-muted);
-            font-size: 0.68rem;
+            font-size: var(--fs-label);
             font-weight: 600;
             vertical-align: 1px;
         }
@@ -2894,7 +2900,7 @@
 
         .expense-form-rate {
             margin: -6px 0 0;
-            font-size: 0.74rem;
+            font-size: var(--fs-label);
             color: var(--text-dim);
         }
 
@@ -2963,7 +2969,7 @@
         .audience-tag.couple { background: #fff0eb; color: #a44e3c; }
         .audience-tag.common { background: #e0f3f4; color: var(--text-main); }
 
-        .backup-plan { border-top: 1px dashed rgba(0, 111, 134, .2); margin-top: 3px; padding-top: 7px; font-size: .73rem; color: var(--text-muted); }
+        .backup-plan { border-top: 1px dashed rgba(0, 111, 134, .2); margin-top: 3px; padding-top: 7px; font-size: var(--fs-label); color: var(--text-muted); }
         .backup-plan summary { cursor: pointer; color: #5f777b; line-height: 1.6; }
         .backup-content { display: flex; align-items: center; gap: 7px; margin-top: 8px; padding: 10px; background: var(--bg-subtle); border-radius: 5px; }
         .backup-content > p { flex: 1; min-width: 0; }
@@ -3429,8 +3435,9 @@
             right: -7px;
             padding: 1px 4px;
             border: 1px solid var(--border-color);
-            font-size: 0.625rem;
-            line-height: 1.5;
+            font-size: var(--fs-label);
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
             pointer-events: none;
         }
 
