@@ -402,3 +402,30 @@ test('sticky scroll offset follows the navigation height as filters appear and d
     assert.match(html, /\.reservation-card \{ scroll-margin-top: var\(--sticky-offset, 220px\); \}/);
     assert.match(html, /new ResizeObserver\(updateStickyOffset\)\.observe/);
 });
+
+test('first load leaves the URL alone so the browser does not jump past the header', () => {
+    const init = html.match(/function initDayNav\(\)[\s\S]*?\n        }\n/)[0];
+    assert.doesNotMatch(init, /replaceState/);
+    const selectDay = html.match(/function selectDay\([\s\S]*?\n        }\n/)[0];
+    assert.doesNotMatch(selectDay, /activeTab\.scrollIntoView/);
+    assert.match(selectDay, /centerTabInNav\(activeTab\)/);
+});
+
+test('active day tab is centred by scrolling only the day strip', () => {
+    const app = createApp({}, { window: { matchMedia: () => ({ matches: true }) } });
+    const nav = {
+        scrollWidth: 800,
+        clientWidth: 300,
+        scrollLeft: 40,
+        getBoundingClientRect: () => ({ left: 10 }),
+        scrollTo(options) { this.target = options; }
+    };
+    const tab = { closest: () => nav, getBoundingClientRect: () => ({ left: 510, width: 100 }) };
+    app.centerTabInNav(tab);
+    assert.equal(nav.target.left, 440);
+    assert.equal(nav.target.behavior, 'auto');
+
+    const fittingNav = { ...nav, scrollWidth: 300, target: undefined };
+    app.centerTabInNav({ ...tab, closest: () => fittingNav });
+    assert.equal(fittingNav.target, undefined);
+});

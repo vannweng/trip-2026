@@ -866,6 +866,30 @@
             scroll-behavior: smooth;
         }
 
+        /* 瀏覽器原生介面也跟著主題色：選取文字、輸入游標、段落斷行 */
+        ::selection {
+            background: color-mix(in srgb, var(--teal-primary) 28%, transparent);
+            color: var(--text-main);
+        }
+
+        input,
+        textarea {
+            caret-color: var(--teal-primary);
+        }
+
+        p {
+            text-wrap: pretty;
+        }
+
+        h2,
+        h3 {
+            text-wrap: balance;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+        }
+
         body {
             background-color: var(--bg-main);
             background-image:
@@ -1957,6 +1981,9 @@
         }
 
         .photo-credits summary {
+            /* 加大點擊範圍、不改版面高度 */
+            margin-block: -8px;
+            padding-block: 8px;
             color: var(--text-main);
             font-weight: 700;
             cursor: pointer;
@@ -3572,7 +3599,7 @@
                             </div>
                         </div>
                         <div class="place-title-row">
-                            <h3 class="place-name">ククル読谷サーキット (Go-Karting 戶外賽車場)</h3>
+                            <h3 class="place-name">ククル読谷サーキット (<span class="nowrap">Go-Karting</span> 戶外賽車場)</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kukuru+Yomitan+Circuit&amp;query_place_id=ChIJl1d0-80W5TQRv-JAB7eng8w" title="導航至Kukuru Yomitan Circuit｜沖縄県中頭郡読谷村高志保1020-1" data-place-key="kart" data-place-id="ChIJl1d0-80W5TQRv-JAB7eng8w" data-route-query="Kukuru Yomitan Circuit" target="_blank" rel="noopener noreferrer" aria-label="導航至Kukuru Yomitan Circuit"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
                         <div class="place-desc">【戶外賽車體驗】超刺激戶外標準卡丁車賽道，享受貼地高速過彎與推背感，非觀光化行程，熱血滿分！</div>
