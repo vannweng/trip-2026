@@ -597,6 +597,109 @@
             border-bottom-color: var(--teal-primary);
         }
 
+        .tax-guide {
+            display: grid;
+            gap: 4px;
+        }
+
+        .tax-guide-flow {
+            width: 100%;
+            height: 52px;
+            color: var(--teal-primary);
+        }
+
+        .tax-guide-intro {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.86rem;
+            line-height: 1.65;
+        }
+
+        .tax-guide-step {
+            display: grid;
+            grid-template-columns: 32px minmax(0, 1fr);
+            gap: 10px;
+            padding: 12px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .tax-guide-step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--bg-subtle);
+            color: var(--teal-primary);
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .tax-guide-step h3 {
+            margin: 0 0 3px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .tax-guide-step p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.65;
+        }
+
+        .tax-guide-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 2px;
+        }
+
+        .tax-guide-link,
+        .tax-guide-shortcut {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 7px 10px;
+            border: 1px solid #399da2;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--teal-primary);
+            font: inherit;
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1.3;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .tax-guide-link:hover,
+        .tax-guide-shortcut:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .tax-guide-link:focus-visible,
+        .tax-guide-shortcut:focus-visible {
+            outline: 2px solid #399da2;
+            outline-offset: 2px;
+        }
+
+        .tax-guide-reminder {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
         .modal-body {
             padding: 20px;
             flex: 1;
@@ -3962,7 +4065,7 @@
                             <h3 class="place-name">那霸機場國際線航廈出境大廳</h3>
                             <a class="maps-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Naha+International+Airport&amp;query_place_id=ChIJjSyLjsRp5TQRkP5WN6rOTFA" title="導航至Naha International Airport｜沖縄県那覇市鏡水150" data-place-key="airport" data-place-id="ChIJjSyLjsRp5TQRkP5WN6rOTFA" data-route-query="Naha International Airport" target="_blank" rel="noopener noreferrer" aria-label="導航至Naha International Airport"><svg class="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z"/><path d="M12,24a5.271,5.271,0,0,1-4.311-2.2c-3.811-5.257-5.744-9.209-5.744-11.747a10.055,10.055,0,0,1,20.11,0c0,2.538-1.933,6.49-5.744,11.747A5.271,5.271,0,0,1,12,24ZM12,2.181a7.883,7.883,0,0,0-7.874,7.874c0,2.01,1.893,5.727,5.329,10.466a3.145,3.145,0,0,0,5.09,0c3.436-4.739,5.329-8.456,5.329-10.466A7.883,7.883,0,0,0,12,2.181Z"/></svg></a>
                         </div>
-                        <div class="place-desc">星宇 JX871 表定 15:25 自那霸起飛、16:10（台灣時間）抵達桃園。13:30 抵達航廈後依序辦理退稅確認、報到託運與出境手續，報到櫃台通常於起飛前 60 分鐘關閉，請把握時間採購伴手禮。<br><strong>退稅提醒（11/1 新制）：</strong>免稅商品購買時先付含稅全額，出境時須攜帶護照與商品本體，經海關確認帶出日本後才會退還消費稅。<strong>到航廈請先辦退稅確認，再去報到託運</strong>；商品一旦託運或不在手邊就無法退稅，可將退稅品集中放在同一袋方便出示。</div>
+                        <div class="place-desc">星宇 JX871 表定 15:25 自那霸起飛、16:10（台灣時間）抵達桃園。13:30 抵達航廈後依序辦理退稅確認、報到託運與出境手續，報到櫃台通常於起飛前 60 分鐘關閉，請把握時間採購伴手禮。</div>
                         <div class="flight-details" aria-label="JX871 航班資訊">
                             <div class="flight-route">
                                 <div class="flight-airport"><span class="flight-code">OKA</span><span class="flight-terminal">那霸機場 15:25 起飛</span>
@@ -4011,6 +4114,10 @@
                     </div>
 
                 </aside>
+                <section class="tax-guide-reminder" aria-label="退稅提醒">
+                    <span>退稅商品請在託運前完成海關確認。</span>
+                    <button class="tax-guide-shortcut" type="button" onclick="openTaxGuide()">查看退稅指南</button>
+                </section>
             </section>
             <section id="reservations" class="reservation-page trip-panel" role="tabpanel" aria-labelledby="tab-reservations" hidden>
                 <div class="day-header"><div class="day-title-wrap"><h2 class="day-title-top" tabindex="-1"><span class="day-num">餐廳訂位總覽</span></h2><div class="day-sub-desc">4 項主要行程與備案的預約提醒</div></div><span class="charter-badge">2 項已訂位</span></div>
@@ -4153,6 +4260,10 @@
                     <button class="modal-tab-btn" id="modalTabClothing" data-tab="clothing" role="tab"
                         aria-selected="false" aria-controls="paneClothing" tabindex="-1" onclick="switchModalTab('clothing')">
                         穿搭建議
+                    </button>
+                    <button class="modal-tab-btn" id="modalTabTax" data-tab="tax" role="tab"
+                        aria-selected="false" aria-controls="paneTax" tabindex="-1" onclick="switchModalTab('tax')">
+                        退稅指南
                     </button>
                 </div>
 
@@ -4350,6 +4461,38 @@
                 <div class="modal-tab-pane" id="paneClothing" role="tabpanel" aria-labelledby="modalTabClothing"
                     style="display: none;" hidden>
 <div class="clothing-grid"><div class="clothing-card"><div class="clothing-card-header"><div class="clothing-card-title">大人簡單穿搭</div><span class="clothing-card-tag">五天四夜</span></div><ul class="clothing-list"><li><span>上衣搭配舒適長褲</span><strong>方便活動</strong></li><li><span>薄外套或輕便防風外層</span><strong>隨身備用</strong></li><li><span>好走、防滑的包頭鞋</span><strong>步行首選</strong></li><li><span>內衣褲與襪子</span><strong>每日替換</strong></li><li><span>帽子、晴雨傘</span><strong>按需攜帶</strong></li></ul></div><div class="clothing-card"><div class="clothing-card-header"><div class="clothing-card-title">幼童備用穿搭</div><span class="clothing-card-tag">多備替換</span></div><ul class="clothing-list"><li><span>柔軟上衣與彈性長褲</span><strong>好穿脫</strong></li><li><span>薄外套與替換襪</span><strong>隨身備用</strong></li><li><span>合腳防滑鞋</span><strong>穩定行走</strong></li><li><span>替換衣物與小毛巾</span><strong>每天備妥</strong></li><li><span>睡衣、尿布或學習褲</span><strong>依日常用量</strong></li></ul></div><div class="clothing-card"><div class="clothing-card-header"><div class="clothing-card-title">情境搭配提醒</div><span class="clothing-card-tag">簡單好準備</span></div><ul class="clothing-list"><li><span>機場與長途車程</span><strong>寬鬆舒適</strong></li><li><span>海邊與戶外散步</span><strong>外層隨時增減</strong></li><li><span>商場與室內遊戲</span><strong>方便活動</strong></li><li><span>餐廳與咖啡散策</span><strong>日常休閒</strong></li><li><span>出發前看天氣預報</span><strong>調整衣物厚薄</strong></li></ul></div></div>
+                </div>
+
+                <div class="modal-tab-pane" id="paneTax" role="tabpanel" aria-labelledby="modalTabTax"
+                    style="display: none;" hidden>
+                    <div class="tax-guide">
+                        <svg class="tax-guide-flow" viewBox="0 0 300 52" fill="none" stroke="currentColor" stroke-width="1.8" aria-label="購物、海關確認、退款流程" role="img">
+                            <rect x="19" y="16" width="24" height="29" rx="3"/><path d="M25 16v-4a6 6 0 0 1 12 0v4M72 26h40m-7-5 7 5-7 5"/>
+                            <rect x="135" y="7" width="30" height="30" rx="3"/><path d="m142 21 6 6 11-12M150 37v8m-10 0h20M188 26h40m-7-5 7 5-7 5"/>
+                            <rect x="252" y="14" width="33" height="24" rx="3"/><path d="M252 22h33M258 31h8"/>
+                        </svg>
+                        <p class="tax-guide-intro">2026/11 起適用新制，先付含稅金額，出境確認後退款。</p>
+                        <section class="tax-guide-step">
+                            <span class="tax-guide-step-number" aria-hidden="true">1</span>
+                            <div><h3>購物時登記</h3><p>出示護照，依店家指示登記退款方式。</p></div>
+                        </section>
+                        <section class="tax-guide-step">
+                            <span class="tax-guide-step-number" aria-hidden="true">2</span>
+                            <div><h3>託運前，先確認</h3><p>備好護照與商品，使用 TAX 機台或下方方式辦理。</p></div>
+                        </section>
+                        <section class="tax-guide-step">
+                            <span class="tax-guide-step-number" aria-hidden="true">3</span>
+                            <div><h3>也可用 Visit Japan Web</h3><p>在那霸國際線出發大廳、安檢前的指定手續 Wi-Fi 區辦理海關確認，依畫面指示操作。</p></div>
+                        </section>
+                        <section class="tax-guide-step">
+                            <span class="tax-guide-step-number" aria-hidden="true">4</span>
+                            <div><h3>通過確認，再託運領款</h3><p>需查驗時出示商品。退款方式與時間依店家或服務商指示。</p></div>
+                        </section>
+                        <div class="tax-guide-links">
+                            <a class="tax-guide-link" href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00023.html" target="_blank" rel="noopener noreferrer">官方旅客說明</a>
+                            <a class="tax-guide-link" href="https://services.digital.go.jp/en/visit-japan-web/" target="_blank" rel="noopener noreferrer">Visit Japan Web</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -5099,19 +5242,19 @@
                 if (isActive && focusTab) btn.focus();
             });
 
-            const paneChecklist = document.getElementById('paneChecklist');
-            const paneClothing = document.getElementById('paneClothing');
-            if (tabKey === 'checklist') {
-                paneChecklist.style.display = 'block';
-                paneClothing.style.display = 'none';
-                paneChecklist.hidden = false;
-                paneClothing.hidden = true;
-            } else {
-                paneChecklist.style.display = 'none';
-                paneClothing.style.display = 'block';
-                paneChecklist.hidden = true;
-                paneClothing.hidden = false;
-            }
+            tabBtns.forEach(btn => {
+                const paneId = btn.getAttribute?.('aria-controls') || `pane${btn.dataset.tab.charAt(0).toUpperCase()}${btn.dataset.tab.slice(1)}`;
+                const pane = document.getElementById(paneId);
+                if (!pane) return;
+                const isActive = btn.dataset.tab === tabKey;
+                pane.style.display = isActive ? 'block' : 'none';
+                pane.hidden = !isActive;
+            });
+        }
+
+        function openTaxGuide() {
+            toggleNotesModal(true);
+            switchModalTab('tax');
         }
 
         function initModalTabs() {
