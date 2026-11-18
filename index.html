@@ -599,13 +599,14 @@
 
         .tax-guide {
             display: grid;
-            gap: 4px;
+            gap: 10px;
         }
 
-        .tax-guide-flow {
-            width: 100%;
-            height: 52px;
+        .tax-guide-title {
+            margin: 0;
             color: var(--teal-primary);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
         }
 
         .tax-guide-intro {
@@ -617,10 +618,13 @@
 
         .tax-guide-step {
             display: grid;
-            grid-template-columns: 32px minmax(0, 1fr);
+            grid-template-columns: 34px minmax(0, 1fr) 40px;
             gap: 10px;
-            padding: 12px 0;
-            border-top: 1px solid var(--border-color);
+            align-items: center;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-card);
         }
 
         .tax-guide-step-number {
@@ -637,7 +641,7 @@
         }
 
         .tax-guide-step h3 {
-            margin: 0 0 3px;
+            margin: 0 0 2px;
             color: var(--text-main);
             font-size: 0.9rem;
         }
@@ -647,6 +651,99 @@
             color: var(--text-muted);
             font-size: 0.82rem;
             line-height: 1.65;
+        }
+
+        .tax-guide-icon {
+            width: 36px;
+            height: 36px;
+            color: var(--teal-primary);
+        }
+
+        .tax-guide-signal {
+            display: grid;
+            gap: 6px;
+            padding: 2px 0;
+        }
+
+        .tax-guide-signal-row {
+            display: grid;
+            grid-template-columns: 12px minmax(0, 1fr);
+            gap: 8px;
+            align-items: baseline;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .tax-guide-signal-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+
+        .tax-guide-signal-dot.pass { background: #319b82; }
+        .tax-guide-signal-dot.inspect { background: #c8754a; }
+
+        .tax-guide-info {
+            display: grid;
+            gap: 8px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-subtle);
+        }
+
+        .tax-guide-info h3 {
+            margin: 0;
+            color: var(--teal-primary);
+            font-size: 0.9rem;
+        }
+
+        .tax-guide-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .tax-guide-refund-methods {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .tax-guide-refund-methods div {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-card);
+        }
+
+        .tax-guide-refund-methods strong,
+        .tax-guide-refund-methods span {
+            display: block;
+        }
+
+        .tax-guide-refund-methods strong {
+            color: var(--text-main);
+            font-size: 0.82rem;
+        }
+
+        .tax-guide-refund-methods span {
+            margin-top: 3px;
+            color: var(--text-muted);
+            font-size: 0.76rem;
+            line-height: 1.5;
+        }
+
+        .tax-guide-important {
+            padding: 12px;
+            border-radius: 8px;
+            background: var(--teal-primary);
+            color: var(--on-accent);
+            font-size: 0.82rem;
+            font-weight: 700;
+            line-height: 1.6;
         }
 
         .tax-guide-links {
@@ -684,6 +781,12 @@
         .tax-guide-shortcut:focus-visible {
             outline: 2px solid #399da2;
             outline-offset: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .tax-guide-step { grid-template-columns: 30px minmax(0, 1fr) 32px; padding: 10px; }
+            .tax-guide-icon { width: 30px; height: 30px; }
+            .tax-guide-refund-methods { grid-template-columns: 1fr; }
         }
 
         .tax-guide-reminder {
@@ -4466,28 +4569,41 @@
                 <div class="modal-tab-pane" id="paneTax" role="tabpanel" aria-labelledby="modalTabTax"
                     style="display: none;" hidden>
                     <div class="tax-guide">
-                        <svg class="tax-guide-flow" viewBox="0 0 300 52" fill="none" stroke="currentColor" stroke-width="1.8" aria-label="購物、海關確認、退款流程" role="img">
-                            <rect x="19" y="16" width="24" height="29" rx="3"/><path d="M25 16v-4a6 6 0 0 1 12 0v4M72 26h40m-7-5 7 5-7 5"/>
-                            <rect x="135" y="7" width="30" height="30" rx="3"/><path d="m142 21 6 6 11-12M150 37v8m-10 0h20M188 26h40m-7-5 7 5-7 5"/>
-                            <rect x="252" y="14" width="33" height="24" rx="3"/><path d="M252 22h33M258 31h8"/>
-                        </svg>
-                        <p class="tax-guide-intro">2026/11 起適用新制，先付含稅金額，出境確認後退款。</p>
+                        <h3 class="tax-guide-title">沖繩退稅流程</h3>
+                        <p class="tax-guide-intro">依那霸機場現場指示辦理，退稅商品與護照請先留在隨身行李。</p>
                         <section class="tax-guide-step">
                             <span class="tax-guide-step-number" aria-hidden="true">1</span>
-                            <div><h3>購物時登記</h3><p>出示護照，依店家指示登記退款方式。</p></div>
+                            <div><h3>到機場 3 樓 10 號門</h3><p>找到 TAX 機台，掃描護照。</p></div>
+                            <svg class="tax-guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h5M8 15h8"/></svg>
                         </section>
                         <section class="tax-guide-step">
                             <span class="tax-guide-step-number" aria-hidden="true">2</span>
-                            <div><h3>託運前，先確認</h3><p>備好護照與商品，使用 TAX 機台或下方方式辦理。</p></div>
+                            <div><h3>確認綠燈或紅燈</h3><div class="tax-guide-signal"><div class="tax-guide-signal-row"><span class="tax-guide-signal-dot pass"></span><span>綠燈通過，可託運行李。</span></div><div class="tax-guide-signal-row"><span class="tax-guide-signal-dot inspect"></span><span>紅燈顯示，帶免稅物品前往檢查。</span></div></div></div>
+                            <svg class="tax-guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="2"/><circle cx="12" cy="8" r="2"/><path d="M8 15h8M8 18h8"/></svg>
                         </section>
                         <section class="tax-guide-step">
                             <span class="tax-guide-step-number" aria-hidden="true">3</span>
-                            <div><h3>也可用 Visit Japan Web</h3><p>在那霸國際線出發大廳、安檢前的指定手續 Wi-Fi 區辦理海關確認，依畫面指示操作。</p></div>
+                            <div><h3>託運完成後，前往出境</h3><p>下到 2 樓，往出境方向通過安檢。</p></div>
+                            <svg class="tax-guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 12h14M13 7l5 5-5 5"/><path d="M5 6v12"/></svg>
                         </section>
                         <section class="tax-guide-step">
                             <span class="tax-guide-step-number" aria-hidden="true">4</span>
-                            <div><h3>通過確認，再託運領款</h3><p>需查驗時出示商品。退款方式與時間依店家或服務商指示。</p></div>
+                            <div><h3>找到 42B 旁的退稅機台</h3><p>掃描護照，依指示操作，即可領取退稅現金。</p></div>
+                            <svg class="tax-guide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4" y="4" width="16" height="14" rx="2"/><path d="M7 8h10M8 12h4M9 21h6"/></svg>
                         </section>
+                        <section class="tax-guide-info">
+                            <h3>購物時記得</h3>
+                            <p>結帳時告知店家「我要辦理退稅」。店家會協助提供 QR Code，掃描後完成註冊登入。</p>
+                            <p>指定手續 Wi-Fi 區也可透過 Visit Japan Web 辦理海關確認，請依現場標示與畫面指示操作。</p>
+                        </section>
+                        <section class="tax-guide-info">
+                            <h3>退稅方式</h3>
+                            <div class="tax-guide-refund-methods">
+                                <div><strong>現金退款</strong><span>到機場指定機台操作領取。</span></div>
+                                <div><strong>信用卡退款</strong><span>可回台灣後再處理。</span></div>
+                            </div>
+                        </section>
+                        <p class="tax-guide-important">不論選擇現金或信用卡退款，都要先到 3 樓 TAX 機台掃描護照，並依現場指示完成程序。</p>
                         <div class="tax-guide-links">
                             <a class="tax-guide-link" href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00023.html" target="_blank" rel="noopener noreferrer">官方旅客說明</a>
                             <a class="tax-guide-link" href="https://services.digital.go.jp/en/visit-japan-web/" target="_blank" rel="noopener noreferrer">Visit Japan Web</a>
