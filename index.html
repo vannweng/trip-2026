@@ -3308,14 +3308,14 @@
         [data-theme="dark"] .day-section.is-today .day-date::after { color: var(--teal-primary); }
 
         [data-theme="dark"] :is(.currency-btn, .notes-btn, .vjw-btn, .dim-btn, .theme-toggle,
-            .modal-close-btn, .checklist-item, .flight-link, .vjw-qr-trigger, .reservation-info-btn,
+            .modal-close-btn, .checklist-item, .flight-link, .reservation-info-btn,
             .maps-btn, .reservation-map-link, .restaurant-map-link, .souvenir-action,
             .day-pagination button, .day-chip:not(.active), .day-map-link):hover {
             background: var(--bg-card-hover);
             color: var(--teal-primary);
         }
 
-        [data-theme="dark"] :is(.timeline, .timeline-card, .flight-details, .flight-link, .vjw-qr-trigger,
+        [data-theme="dark"] :is(.timeline, .timeline-card, .flight-details, .flight-link,
             .reservation-day-link, .day-header, .backup-plan, .clothing-list li) {
             border-color: var(--border-color);
         }
@@ -3326,7 +3326,7 @@
             .itinerary-filter-btn, .timeline, .timeline-card, .place-desc, .place-name,
             .day-num, .day-date, .day-route-note, .tag, .time-slot, .charter-badge,
             .currency-btn, .notes-btn, .vjw-btn, .dim-btn, .theme-toggle, .badge-count,
-            .flight-code, .flight-note, .flight-terminal, .flight-path, .flight-link, .vjw-qr-trigger,
+            .flight-code, .flight-note, .flight-terminal, .flight-path, .flight-link,
             .maps-btn, .reservation-map-link, .restaurant-map-link, .reservation-info-btn, .reservation-card,
             .reservation-summary, .reservation-day, .reservation-status, .reservation-card h3,
             .reservation-card-note, .reservation-details dt, .reservation-details dd,
@@ -3419,56 +3419,11 @@
             box-shadow: 0 10px 24px rgba(12, 53, 73, 0.28);
         }
 
-        .vjw-qr-strip {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .vjw-qr-trigger {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            min-height: 44px;
-            padding: 8px 12px;
-            border: 1px solid var(--teal-primary);
-            border-radius: 6px;
-            background: var(--bg-subtle);
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            font-size: var(--fs-label);
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
-        }
-
-        .vjw-qr-trigger svg {
-            width: 18px;
-            height: 18px;
-            flex: 0 0 18px;
-            fill: none;
-            stroke: var(--teal-primary);
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .vjw-qr-trigger:hover {
-            background: var(--teal-primary);
-            color: var(--on-accent);
-        }
-
-        .vjw-qr-trigger:hover svg {
-            stroke: currentColor;
-        }
-
         .vjw-modal-body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
         }
 
         .vjw-tabs {
@@ -3476,7 +3431,7 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 8px;
             width: 100%;
-            max-width: 420px;
+            max-width: 480px;
         }
 
         .vjw-tab-btn {
@@ -3506,7 +3461,7 @@
 
         .vjw-qr-pane {
             width: 100%;
-            max-width: 420px;
+            max-width: 480px;
         }
 
         .vjw-qr-pane[hidden] {
@@ -3518,8 +3473,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            padding: 20px 18px;
+            gap: 14px;
+            padding: 18px 16px;
             border: 1px solid var(--border-color);
             border-radius: 12px;
             background: #ffffff;
@@ -3542,8 +3497,11 @@
         .vjw-qr-img {
             display: block;
             width: 100%;
-            max-width: 340px;
+            max-width: 440px;
             height: auto;
+            aspect-ratio: 1 / 1;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
             border-radius: 4px;
         }
 
@@ -3557,7 +3515,7 @@
 
         .vjw-qr-tip {
             width: 100%;
-            max-width: 420px;
+            max-width: 480px;
             margin: 0;
             padding: 10px 14px;
             border: 1px solid var(--border-color);
@@ -3567,6 +3525,17 @@
             font-size: 0.8rem;
             line-height: 1.6;
             text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .modal-body.vjw-modal-body {
+                padding: 12px 10px 20px;
+            }
+
+            .vjw-qr-frame {
+                padding: 14px 12px;
+                gap: 12px;
+            }
         }
 
         .notes-btn .badge-count {
@@ -3682,10 +3651,9 @@
                     target="_blank" rel="noopener noreferrer" aria-label="開啟即時匯率換算工具" title="開啟即時匯率換算工具">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4"/></svg>
                 </a>
-                <button class="notes-btn icon-btn" type="button" aria-label="開啟行李清單" title="行李清單"
+                <button class="notes-btn icon-btn" type="button" aria-label="開啟行前備忘與指南" title="行前備忘與指南"
                     onclick="toggleNotesModal(true)">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 6V3h6v3M9 10v7m6-7v7"/></svg>
-                    <span class="badge-count" id="checklistCounter">0/34</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
                 </button>
                 <button class="vjw-btn icon-btn" type="button" aria-label="開啟 VJW 入境 QR code" title="VJW 入境 QR"
                     onclick="openVjwQrModal()">
@@ -3759,16 +3727,6 @@
                                 </div>
                                 <div class="flight-airport"><span class="flight-code">OKA</span><strong class="flight-time">14:15 抵達那霸</strong>
                                 </div>
-                            </div>
-                            <div class="vjw-qr-strip" role="group" aria-label="快速顯示 Visit Japan Web 入境 QR code">
-                                <button class="vjw-qr-trigger" type="button" data-vjw-person="ayuan" onclick="openVjwQrModal('ayuan')">
-                                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1M6.5 6.5h.01M17.5 6.5h.01M6.5 17.5h.01"/></svg>
-                                    <span>阿猿 VJW QR</span>
-                                </button>
-                                <button class="vjw-qr-trigger" type="button" data-vjw-person="peizhi" onclick="openVjwQrModal('peizhi')">
-                                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1M6.5 6.5h.01M17.5 6.5h.01M6.5 17.5h.01"/></svg>
-                                    <span>培芝 VJW QR</span>
-                                </button>
                             </div>
                             <div class="flight-actions"><a class="flight-link primary" href="https://www.flightaware.com/live/flight/SJX870" target="_blank" rel="noopener noreferrer"> 即時動態</a><a class="flight-link" href="https://www.flightradar24.com/data/flights/jx870" target="_blank" rel="noopener noreferrer"> 飛機位置</a><a class="flight-link" href="https://www.taoyuan-airport.com/flight_depart" target="_blank" rel="noopener noreferrer">TPE 起飛資訊</a><a class="flight-link" href="https://www.naha-airport.co.jp/" target="_blank" rel="noopener noreferrer">OKA 機場資訊</a><a class="flight-link" href="https://services.digital.go.jp/en/visit-japan-web/" target="_blank" rel="noopener noreferrer">Visit Japan Web 入境登錄</a>
                             </div>
@@ -4864,7 +4822,7 @@
                     <div class="vjw-qr-frame">
                         <span class="vjw-qr-badge">阿猿 ・ HUANG CHIEN HAO</span>
                         <img class="vjw-qr-img" src="assets/images/vjw-ayuan.png"
-                            alt="阿猿（HUANG CHIEN HAO）Visit Japan Web 入境 QR code" width="658" height="459" decoding="async">
+                            alt="阿猿（HUANG CHIEN HAO）Visit Japan Web 入境 QR code" width="570" height="570" decoding="async">
                         <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
                     </div>
                 </div>
@@ -4873,7 +4831,7 @@
                     <div class="vjw-qr-frame">
                         <span class="vjw-qr-badge">培芝 ・ WENG PEI ZHI</span>
                         <img class="vjw-qr-img" src="assets/images/vjw-peizhi.png"
-                            alt="培芝（WENG PEI ZHI）Visit Japan Web 入境 QR code" width="668" height="460" decoding="async">
+                            alt="培芝（WENG PEI ZHI）Visit Japan Web 入境 QR code" width="570" height="570" decoding="async">
                         <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
                     </div>
                 </div>

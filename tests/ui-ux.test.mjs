@@ -319,7 +319,7 @@ test('compact tool buttons use SVG icons with accessible names and tooltips, not
         assert.match(content, /<svg[^>]*aria-hidden="true"/);
         assert.doesNotMatch(content, /\p{Extended_Pictographic}/u);
         const visibleText = content.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]*>/g, '').trim();
-        assert.ok(visibleText === '' || visibleText === '0/34');
+        assert.equal(visibleText, '');
     }
 });
 
@@ -430,21 +430,21 @@ test('active day tab is centred by scrolling only the day strip', () => {
     assert.equal(fittingNav.target, undefined);
 });
 
-test('VJW QR images, Day 1 shortcuts, header button and white-frame modal are wired cleanly', () => {
+test('VJW QR images, header-only shortcut, handbook button and white-frame modal are wired cleanly', () => {
     assert.ok(existsSync(new URL('../assets/images/vjw-ayuan.png', import.meta.url)));
     assert.ok(existsSync(new URL('../assets/images/vjw-peizhi.png', import.meta.url)));
 
     const day1 = html.match(/<section id="day1"[\s\S]*?(?=<section id="day2")/)[0];
-    assert.match(day1, /onclick="openVjwQrModal\('ayuan'\)"/);
-    assert.match(day1, /阿猿 VJW QR/);
-    assert.match(day1, /onclick="openVjwQrModal\('peizhi'\)"/);
-    assert.match(day1, /培芝 VJW QR/);
+    assert.doesNotMatch(day1, /openVjwQrModal|vjw-qr-strip/);
     assert.match(html, /class="vjw-btn icon-btn"[\s\S]*?onclick="openVjwQrModal\(\)"/);
+    assert.doesNotMatch(html, /id="checklistCounter"/);
+    assert.match(html, /class="notes-btn icon-btn"[\s\S]*?aria-label="開啟行前備忘與指南"/);
 
     const modal = html.match(/<dialog class="modal-overlay vjw-modal" id="vjwModal"[\s\S]*?<\/dialog>/)[0];
-    assert.match(modal, /src="assets\/images\/vjw-ayuan\.png"[\s\S]*?HUANG CHIEN HAO/);
-    assert.match(modal, /src="assets\/images\/vjw-peizhi\.png"[\s\S]*?WENG PEI ZHI/);
+    assert.match(modal, /src="assets\/images\/vjw-ayuan\.png"[\s\S]*?width="570" height="570"/);
+    assert.match(modal, /src="assets\/images\/vjw-peizhi\.png"[\s\S]*?width="570" height="570"/);
     assert.match(html, /\.vjw-qr-frame \{[\s\S]*?background: #ffffff;/);
+    assert.match(html, /\.vjw-qr-img \{[\s\S]*?aspect-ratio: 1 \/ 1;/);
 });
 
 test('VJW modal opens directly to the requested traveler and supports keyboard switching', () => {
