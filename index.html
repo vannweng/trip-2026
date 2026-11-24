@@ -3275,7 +3275,7 @@
             border-color: var(--border-color);
         }
 
-        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
+        [data-theme="dark"] :is(.currency-btn, .notes-btn, .vjw-btn, .dim-btn, .theme-toggle,
             .modal-close-btn, .copy-code-btn, .reservation-summary, .time-slot,
             .charter-badge, .tag, .souvenir-section, .timeline-card.is-current,
             .timeline-card.is-next, .weather-item) {
@@ -3284,7 +3284,7 @@
             border-color: var(--border-color);
         }
 
-        [data-theme="dark"] :is(.modal-tab-btn.active, .checklist-cat-title, .checklist-progress-text, .clothing-card-tag),
+        [data-theme="dark"] :is(.modal-tab-btn.active, .vjw-tab-btn.active, .checklist-cat-title, .checklist-progress-text, .clothing-card-tag),
         [data-theme="dark"] .reservation-chip:not(.active) .tab-date {
             color: var(--teal-primary);
         }
@@ -3307,15 +3307,15 @@
         [data-theme="dark"] .tag.audience-tag.couple { background: #46343c; color: #f2b6ac; }
         [data-theme="dark"] .day-section.is-today .day-date::after { color: var(--teal-primary); }
 
-        [data-theme="dark"] :is(.currency-btn, .notes-btn, .dim-btn, .theme-toggle,
-            .modal-close-btn, .checklist-item, .flight-link, .reservation-info-btn,
+        [data-theme="dark"] :is(.currency-btn, .notes-btn, .vjw-btn, .dim-btn, .theme-toggle,
+            .modal-close-btn, .checklist-item, .flight-link, .vjw-qr-trigger, .reservation-info-btn,
             .maps-btn, .reservation-map-link, .restaurant-map-link, .souvenir-action,
             .day-pagination button, .day-chip:not(.active), .day-map-link):hover {
             background: var(--bg-card-hover);
             color: var(--teal-primary);
         }
 
-        [data-theme="dark"] :is(.timeline, .timeline-card, .flight-details, .flight-link,
+        [data-theme="dark"] :is(.timeline, .timeline-card, .flight-details, .flight-link, .vjw-qr-trigger,
             .reservation-day-link, .day-header, .backup-plan, .clothing-list li) {
             border-color: var(--border-color);
         }
@@ -3325,8 +3325,8 @@
         .theme-animated :is(body, .sticky-control-panel, .day-chip, .tab-date, .tab-label,
             .itinerary-filter-btn, .timeline, .timeline-card, .place-desc, .place-name,
             .day-num, .day-date, .day-route-note, .tag, .time-slot, .charter-badge,
-            .currency-btn, .notes-btn, .dim-btn, .theme-toggle, .badge-count,
-            .flight-code, .flight-note, .flight-terminal, .flight-path, .flight-link,
+            .currency-btn, .notes-btn, .vjw-btn, .dim-btn, .theme-toggle, .badge-count,
+            .flight-code, .flight-note, .flight-terminal, .flight-path, .flight-link, .vjw-qr-trigger,
             .maps-btn, .reservation-map-link, .restaurant-map-link, .reservation-info-btn, .reservation-card,
             .reservation-summary, .reservation-day, .reservation-status, .reservation-card h3,
             .reservation-card-note, .reservation-details dt, .reservation-details dd,
@@ -3400,6 +3400,173 @@
             stroke-width: 1.8;
             stroke-linecap: round;
             stroke-linejoin: round;
+        }
+
+        .vjw-btn {
+            border: 1px solid rgba(255, 248, 236, 0.78);
+            border-radius: 6px;
+            background: rgba(255, 248, 236, 0.94);
+            color: var(--teal-primary);
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(12, 53, 73, 0.22);
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .vjw-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-main);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(12, 53, 73, 0.28);
+        }
+
+        .vjw-qr-strip {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .vjw-qr-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            min-height: 44px;
+            padding: 8px 12px;
+            border: 1px solid var(--teal-primary);
+            border-radius: 6px;
+            background: var(--bg-subtle);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: var(--fs-label);
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+        }
+
+        .vjw-qr-trigger svg {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 18px;
+            fill: none;
+            stroke: var(--teal-primary);
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .vjw-qr-trigger:hover {
+            background: var(--teal-primary);
+            color: var(--on-accent);
+        }
+
+        .vjw-qr-trigger:hover svg {
+            stroke: currentColor;
+        }
+
+        .vjw-modal-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .vjw-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .vjw-tab-btn {
+            min-height: 44px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-card);
+            color: var(--text-muted);
+            font-family: var(--font-sans);
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+        }
+
+        .vjw-tab-btn:hover {
+            color: var(--text-main);
+            background: var(--bg-card-hover);
+        }
+
+        .vjw-tab-btn.active {
+            border-color: var(--teal-primary);
+            background: var(--bg-subtle);
+            color: var(--teal-primary);
+        }
+
+        .vjw-qr-pane {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .vjw-qr-pane[hidden] {
+            display: none;
+        }
+
+        /* 強制純白掃碼底色與靜區邊距，避免深色模式影響海關機台判讀 */
+        .vjw-qr-frame {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: #ffffff;
+            color: #111827;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .vjw-qr-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: #edf7f7;
+            color: #0e606b;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .vjw-qr-img {
+            display: block;
+            width: 100%;
+            max-width: 340px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .vjw-qr-caption {
+            margin: 0;
+            font-size: 0.82rem;
+            color: #475569;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .vjw-qr-tip {
+            width: 100%;
+            max-width: 420px;
+            margin: 0;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            text-align: center;
         }
 
         .notes-btn .badge-count {
@@ -3520,6 +3687,10 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="6" width="14" height="15" rx="2"/><path d="M9 6V3h6v3M9 10v7m6-7v7"/></svg>
                     <span class="badge-count" id="checklistCounter">0/34</span>
                 </button>
+                <button class="vjw-btn icon-btn" type="button" aria-label="開啟 VJW 入境 QR code" title="VJW 入境 QR"
+                    onclick="openVjwQrModal()">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1M6.5 6.5h.01M17.5 6.5h.01M6.5 17.5h.01"/></svg>
+                </button>
                 <button class="dim-btn icon-btn" id="pastDimToggle" type="button" aria-pressed="true"
                     aria-label="已結束行程轉灰" title="已結束行程轉灰"
                     onclick="togglePastDimming()">
@@ -3588,6 +3759,16 @@
                                 </div>
                                 <div class="flight-airport"><span class="flight-code">OKA</span><strong class="flight-time">14:15 抵達那霸</strong>
                                 </div>
+                            </div>
+                            <div class="vjw-qr-strip" role="group" aria-label="快速顯示 Visit Japan Web 入境 QR code">
+                                <button class="vjw-qr-trigger" type="button" data-vjw-person="ayuan" onclick="openVjwQrModal('ayuan')">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1M6.5 6.5h.01M17.5 6.5h.01M6.5 17.5h.01"/></svg>
+                                    <span>阿猿 VJW QR</span>
+                                </button>
+                                <button class="vjw-qr-trigger" type="button" data-vjw-person="peizhi" onclick="openVjwQrModal('peizhi')">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1M6.5 6.5h.01M17.5 6.5h.01M6.5 17.5h.01"/></svg>
+                                    <span>培芝 VJW QR</span>
+                                </button>
                             </div>
                             <div class="flight-actions"><a class="flight-link primary" href="https://www.flightaware.com/live/flight/SJX870" target="_blank" rel="noopener noreferrer"> 即時動態</a><a class="flight-link" href="https://www.flightradar24.com/data/flights/jx870" target="_blank" rel="noopener noreferrer"> 飛機位置</a><a class="flight-link" href="https://www.taoyuan-airport.com/flight_depart" target="_blank" rel="noopener noreferrer">TPE 起飛資訊</a><a class="flight-link" href="https://www.naha-airport.co.jp/" target="_blank" rel="noopener noreferrer">OKA 機場資訊</a><a class="flight-link" href="https://services.digital.go.jp/en/visit-japan-web/" target="_blank" rel="noopener noreferrer">Visit Japan Web 入境登錄</a>
                             </div>
@@ -4650,6 +4831,58 @@
         </div>
     </dialog>
 
+    <!-- Visit Japan Web Entry QR Modal -->
+    <dialog class="modal-overlay vjw-modal" id="vjwModal" aria-hidden="true" aria-labelledby="vjwModalTitle"
+        onclick="handleVjwBackdropClick(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2 id="vjwModalTitle">Visit Japan Web 入境 QR</h2>
+                    <p>入境審查與海關申報專用・掃碼時請調高螢幕亮度</p>
+                </div>
+                <button class="modal-close-btn icon-btn" type="button" onclick="closeVjwQrModal()"
+                    aria-label="關閉 VJW QR code，返回行程" title="返回行程">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+                </button>
+            </div>
+
+            <div class="modal-body vjw-modal-body">
+                <div class="vjw-tabs" role="tablist" aria-label="選擇旅客 QR code">
+                    <button class="vjw-tab-btn active" id="vjwTabAyuan" data-vjw-person="ayuan" role="tab"
+                        aria-selected="true" aria-controls="vjwPaneAyuan" tabindex="0"
+                        onclick="switchVjwPerson('ayuan')">
+                        阿猿
+                    </button>
+                    <button class="vjw-tab-btn" id="vjwTabPeizhi" data-vjw-person="peizhi" role="tab"
+                        aria-selected="false" aria-controls="vjwPanePeizhi" tabindex="-1"
+                        onclick="switchVjwPerson('peizhi')">
+                        培芝
+                    </button>
+                </div>
+
+                <div class="vjw-qr-pane" id="vjwPaneAyuan" role="tabpanel" aria-labelledby="vjwTabAyuan">
+                    <div class="vjw-qr-frame">
+                        <span class="vjw-qr-badge">阿猿 ・ HUANG CHIEN HAO</span>
+                        <img class="vjw-qr-img" src="assets/images/vjw-ayuan.png"
+                            alt="阿猿（HUANG CHIEN HAO）Visit Japan Web 入境 QR code" width="658" height="459" decoding="async">
+                        <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
+                    </div>
+                </div>
+
+                <div class="vjw-qr-pane" id="vjwPanePeizhi" role="tabpanel" aria-labelledby="vjwTabPeizhi" hidden>
+                    <div class="vjw-qr-frame">
+                        <span class="vjw-qr-badge">培芝 ・ WENG PEI ZHI</span>
+                        <img class="vjw-qr-img" src="assets/images/vjw-peizhi.png"
+                            alt="培芝（WENG PEI ZHI）Visit Japan Web 入境 QR code" width="668" height="460" decoding="async">
+                        <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
+                    </div>
+                </div>
+
+                <p class="vjw-qr-tip">提示：點上方「阿猿 / 培芝」可立即切換另一位旅客的 QR code，點背景或右上角即可返回行程。</p>
+            </div>
+        </div>
+    </dialog>
+
     <!-- 刪除後的復原提示 -->
     <div class="expense-toast" id="expenseToast" role="status" aria-live="polite" hidden>
         <span class="expense-toast-text" id="expenseToastText"></span>
@@ -5518,17 +5751,95 @@
             }
         }
 
+        let vjwModalTrigger = null;
+
+        function switchVjwPerson(person = 'ayuan', { focusTab = false } = {}) {
+            const targetPerson = person === 'peizhi' ? 'peizhi' : 'ayuan';
+            const tabs = document.querySelectorAll('.vjw-tab-btn');
+            tabs.forEach(tab => {
+                const isActive = tab.dataset.vjwPerson === targetPerson;
+                tab.classList.toggle('active', isActive);
+                tab.setAttribute('aria-selected', String(isActive));
+                tab.tabIndex = isActive ? 0 : -1;
+                if (isActive && focusTab) tab.focus();
+            });
+
+            const panes = {
+                ayuan: document.getElementById('vjwPaneAyuan'),
+                peizhi: document.getElementById('vjwPanePeizhi')
+            };
+            Object.entries(panes).forEach(([key, pane]) => {
+                if (!pane) return;
+                pane.hidden = key !== targetPerson;
+            });
+        }
+
+        function openVjwQrModal(person = 'ayuan') {
+            const modal = document.getElementById('vjwModal');
+            if (!modal) return;
+            vjwModalTrigger = document.activeElement;
+            switchVjwPerson(person);
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            if (!modal.open) modal.showModal();
+            modal.querySelector('.modal-close-btn')?.focus({ preventScroll: true });
+        }
+
+        function closeVjwQrModal() {
+            const modal = document.getElementById('vjwModal');
+            if (!modal || !modal.classList.contains('active')) return;
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            if (modal.open) modal.close();
+            document.body.style.overflow = '';
+            vjwModalTrigger?.focus();
+        }
+
+        function handleVjwBackdropClick(e) {
+            if (e.target.id === 'vjwModal') {
+                closeVjwQrModal();
+            }
+        }
+
+        function initVjwModal() {
+            const modal = document.getElementById('vjwModal');
+            modal?.addEventListener('cancel', event => {
+                event.preventDefault();
+                closeVjwQrModal();
+            });
+
+            const tabs = Array.from(document.querySelectorAll('.vjw-tab-btn'));
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('keydown', event => {
+                    let nextIndex = index;
+                    if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+                    else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+                    else if (event.key === 'Home') nextIndex = 0;
+                    else if (event.key === 'End') nextIndex = tabs.length - 1;
+                    else return;
+                    event.preventDefault();
+                    switchVjwPerson(tabs[nextIndex].dataset.vjwPerson, { focusTab: true });
+                });
+            });
+        }
+
         document.addEventListener('keydown', (e) => {
-            const modal = document.getElementById('notesModal');
-            if (!modal?.classList.contains('active')) return;
+            const notesModal = document.getElementById('notesModal');
+            const vjwModal = document.getElementById('vjwModal');
+            const activeModal = vjwModal?.classList.contains('active')
+                ? vjwModal
+                : (notesModal?.classList.contains('active') ? notesModal : null);
+            if (!activeModal) return;
 
             if (e.key === 'Escape') {
-                toggleNotesModal(false);
+                if (activeModal === vjwModal) closeVjwQrModal();
+                else toggleNotesModal(false);
                 return;
             }
 
             if (e.key !== 'Tab') return;
-            const focusable = Array.from(modal.querySelectorAll(
+            const focusable = Array.from(activeModal.querySelectorAll(
                 'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
             )).filter(element => element.offsetParent !== null && element.tabIndex >= 0);
             if (!focusable.length) return;
@@ -6514,6 +6825,7 @@
             initTimelineProgress(shouldAutoLocateTimeline);
             initReservationActions();
             initModalTabs();
+            initVjwModal();
             loadChecklistState();
             initExpenses();
         });

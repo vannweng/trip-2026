@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 
@@ -312,7 +312,7 @@ test('main content has skip navigation, semantic headings and explicit transitio
 
 test('compact tool buttons use SVG icons with accessible names and tooltips, not emoji', () => {
     const controls = [...html.matchAll(/<(button|a)\b([^>]*class="[^"]*\bicon-btn\b[^"]*"[^>]*)>([\s\S]*?)<\/\1>/g)];
-    assert.equal(controls.length, 7);
+    assert.equal(controls.length, 9);
     for (const [, , attributes, content] of controls) {
         assert.match(attributes, /aria-label="[^"]+"/);
         assert.match(attributes, /title="[^"]+"/);
@@ -429,3 +429,73 @@ test('active day tab is centred by scrolling only the day strip', () => {
     app.centerTabInNav({ ...tab, closest: () => fittingNav });
     assert.equal(fittingNav.target, undefined);
 });
+
+test('VJW QR images, Day 1 shortcuts, header button and white-frame modal are wired cleanly', () => {
+    assert.ok(existsSync(new URL('../assets/images/vjw-ayuan.png', import.meta.url)));
+    assert.ok(existsSync(new URL('../assets/images/vjw-peizhi.png', import.meta.url)));
+
+    const day1 = html.match(/<section id="day1"[\s\S]*?(?=<section id="day2")/)[0];
+    assert.match(day1, /onclick="openVjwQrModal\('ayuan'\)"/);
+    assert.match(day1, /阿猿 VJW QR/);
+    assert.match(day1, /onclick="openVjwQrModal\('peizhi'\)"/);
+    assert.match(day1, /培芝 VJW QR/);
+    assert.match(html, /class="vjw-btn icon-btn"[\s\S]*?onclick="openVjwQrModal\(\)"/);
+
+    const modal = html.match(/<dialog class="modal-overlay vjw-modal" id="vjwModal"[\s\S]*?<\/dialog>/)[0];
+    assert.match(modal, /src="assets\/images\/vjw-ayuan\.png"[\s\S]*?HUANG CHIEN HAO/);
+    assert.match(modal, /src="assets\/images\/vjw-peizhi\.png"[\s\S]*?WENG PEI ZHI/);
+    assert.match(html, /\.vjw-qr-frame \{[\s\S]*?background: #ffffff;/);
+});
+
+test('VJW modal opens directly to the requested traveler and supports keyboard switching', () => {
+    const closeBtn = element();
+    const trigger = element();
+    const tabs = ['ayuan', 'peizhi'].map(person => element({
+        dataset: { vjwPerson: person },
+        listeners: {},
+        addEventListener(name, callback) { this.listeners[name] = callback; }
+    }));
+    const panes = { vjwPaneAyuan: element(), vjwPanePeizhi: element() };
+    const listeners = {};
+    const modal = element({
+        open: false,
+        listeners,
+        addEventListener(name, callback) { listeners[name] = callback; },
+        showModal() { this.open = true; },
+        close() { this.open = false; },
+        querySelector: selector => selector === '.modal-close-btn' ? closeBtn : null
+    });
+    const body = element();
+    const app = createApp({
+        body,
+        activeElement: trigger,
+        getElementById: id => ({ vjwModal: modal, ...panes })[id],
+        querySelectorAll: selector => selector === '.vjw-tab-btn' ? tabs : []
+    });
+
+    app.initVjwModal();
+    app.openVjwQrModal('peizhi');
+    assert.equal(modal.open, true);
+    assert.equal(modal.classList.contains('active'), true);
+    assert.equal(modal.attributes['aria-hidden'], 'false');
+    assert.equal(body.style.overflow, 'hidden');
+    assert.equal(closeBtn.focused, true);
+    assert.equal(panes.vjwPaneAyuan.hidden, true);
+    assert.equal(panes.vjwPanePeizhi.hidden, false);
+    assert.deepEqual(tabs.map(tab => tab.tabIndex), [-1, 0]);
+
+    let prevented = false;
+    tabs[1].listeners.keydown({ key: 'ArrowLeft', preventDefault() { prevented = true; } });
+    assert.equal(prevented, true);
+    assert.equal(tabs[0].focused, true);
+    assert.equal(panes.vjwPaneAyuan.hidden, false);
+    assert.equal(panes.vjwPanePeizhi.hidden, true);
+
+    app.closeVjwQrModal();
+    assert.equal(modal.open, false);
+    assert.equal(modal.classList.contains('active'), false);
+    assert.equal(modal.attributes['aria-hidden'], 'true');
+    assert.equal(body.style.overflow, '');
+    assert.equal(trigger.focused, true);
+});
+
