@@ -3428,22 +3428,23 @@
 
         .vjw-tabs {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 6px;
             width: 100%;
             max-width: 480px;
         }
 
         .vjw-tab-btn {
             min-height: 44px;
-            padding: 8px 12px;
+            padding: 8px 4px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             background: var(--bg-card);
             color: var(--text-muted);
             font-family: var(--font-sans);
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             font-weight: 700;
+            white-space: nowrap;
             cursor: pointer;
             transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
         }
@@ -4806,23 +4807,56 @@
 
             <div class="modal-body vjw-modal-body">
                 <div class="vjw-tabs" role="tablist" aria-label="選擇旅客 QR code">
-                    <button class="vjw-tab-btn active" id="vjwTabAyuan" data-vjw-person="ayuan" role="tab"
-                        aria-selected="true" aria-controls="vjwPaneAyuan" tabindex="0"
-                        onclick="switchVjwPerson('ayuan')">
-                        阿猿
+                    <button class="vjw-tab-btn active" id="vjwTabMimi" data-vjw-person="mimi" role="tab"
+                        aria-selected="true" aria-controls="vjwPaneMimi" tabindex="0"
+                        onclick="switchVjwPerson('mimi')">
+                        米米
+                    </button>
+                    <button class="vjw-tab-btn" id="vjwTabAjun" data-vjw-person="ajun" role="tab"
+                        aria-selected="false" aria-controls="vjwPaneAjun" tabindex="-1"
+                        onclick="switchVjwPerson('ajun')">
+                        阿均
+                    </button>
+                    <button class="vjw-tab-btn" id="vjwTabQianqian" data-vjw-person="qianqian" role="tab"
+                        aria-selected="false" aria-controls="vjwPaneQianqian" tabindex="-1"
+                        onclick="switchVjwPerson('qianqian')">
+                        錢錢
                     </button>
                     <button class="vjw-tab-btn" id="vjwTabPeizhi" data-vjw-person="peizhi" role="tab"
                         aria-selected="false" aria-controls="vjwPanePeizhi" tabindex="-1"
                         onclick="switchVjwPerson('peizhi')">
                         培芝
                     </button>
+                    <button class="vjw-tab-btn" id="vjwTabAyuan" data-vjw-person="ayuan" role="tab"
+                        aria-selected="false" aria-controls="vjwPaneAyuan" tabindex="-1"
+                        onclick="switchVjwPerson('ayuan')">
+                        阿猿
+                    </button>
                 </div>
 
-                <div class="vjw-qr-pane" id="vjwPaneAyuan" role="tabpanel" aria-labelledby="vjwTabAyuan">
+                <div class="vjw-qr-pane" id="vjwPaneMimi" role="tabpanel" aria-labelledby="vjwTabMimi">
                     <div class="vjw-qr-frame">
-                        <span class="vjw-qr-badge">阿猿 ・ HUANG CHIEN HAO</span>
-                        <img class="vjw-qr-img" src="assets/images/vjw-ayuan.png"
-                            alt="阿猿（HUANG CHIEN HAO）Visit Japan Web 入境 QR code" width="570" height="570" decoding="async">
+                        <span class="vjw-qr-badge">米米 ・ WU LI HUA</span>
+                        <img class="vjw-qr-img" src="assets/images/vjw-mimi.png"
+                            alt="米米（WU LI HUA）Visit Japan Web 入境 QR code" width="702" height="702" decoding="async">
+                        <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
+                    </div>
+                </div>
+
+                <div class="vjw-qr-pane" id="vjwPaneAjun" role="tabpanel" aria-labelledby="vjwTabAjun" hidden>
+                    <div class="vjw-qr-frame">
+                        <span class="vjw-qr-badge">阿均 ・ HUNG TZU CHUN</span>
+                        <img class="vjw-qr-img" src="assets/images/vjw-ajun.png"
+                            alt="阿均（HUNG TZU CHUN）Visit Japan Web 入境 QR code" width="686" height="686" decoding="async">
+                        <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
+                    </div>
+                </div>
+
+                <div class="vjw-qr-pane" id="vjwPaneQianqian" role="tabpanel" aria-labelledby="vjwTabQianqian" hidden>
+                    <div class="vjw-qr-frame">
+                        <span class="vjw-qr-badge">錢錢 ・ WENG CHING HAO</span>
+                        <img class="vjw-qr-img" src="assets/images/vjw-qianqian.png"
+                            alt="錢錢（WENG CHING HAO）Visit Japan Web 入境 QR code" width="702" height="702" decoding="async">
                         <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
                     </div>
                 </div>
@@ -4836,7 +4870,16 @@
                     </div>
                 </div>
 
-                <p class="vjw-qr-tip">提示：點上方「阿猿 / 培芝」可立即切換另一位旅客的 QR code，點背景或右上角即可返回行程。</p>
+                <div class="vjw-qr-pane" id="vjwPaneAyuan" role="tabpanel" aria-labelledby="vjwTabAyuan" hidden>
+                    <div class="vjw-qr-frame">
+                        <span class="vjw-qr-badge">阿猿 ・ HUANG CHIEN HAO</span>
+                        <img class="vjw-qr-img" src="assets/images/vjw-ayuan.png"
+                            alt="阿猿（HUANG CHIEN HAO）Visit Japan Web 入境 QR code" width="570" height="570" decoding="async">
+                        <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
+                    </div>
+                </div>
+
+                <p class="vjw-qr-tip">提示：點上方姓名標籤可立即切換旅客的 QR code，點背景或右上角即可返回行程。</p>
             </div>
         </div>
     </dialog>
@@ -5711,8 +5754,15 @@
 
         let vjwModalTrigger = null;
 
-        function switchVjwPerson(person = 'ayuan', { focusTab = false } = {}) {
-            const targetPerson = person === 'peizhi' ? 'peizhi' : 'ayuan';
+        function switchVjwPerson(person = 'mimi', { focusTab = false } = {}) {
+            const panes = {
+                mimi: document.getElementById('vjwPaneMimi'),
+                ajun: document.getElementById('vjwPaneAjun'),
+                qianqian: document.getElementById('vjwPaneQianqian'),
+                peizhi: document.getElementById('vjwPanePeizhi'),
+                ayuan: document.getElementById('vjwPaneAyuan')
+            };
+            const targetPerson = Object.hasOwn(panes, person) ? person : 'mimi';
             const tabs = document.querySelectorAll('.vjw-tab-btn');
             tabs.forEach(tab => {
                 const isActive = tab.dataset.vjwPerson === targetPerson;
@@ -5722,17 +5772,13 @@
                 if (isActive && focusTab) tab.focus();
             });
 
-            const panes = {
-                ayuan: document.getElementById('vjwPaneAyuan'),
-                peizhi: document.getElementById('vjwPanePeizhi')
-            };
             Object.entries(panes).forEach(([key, pane]) => {
                 if (!pane) return;
                 pane.hidden = key !== targetPerson;
             });
         }
 
-        function openVjwQrModal(person = 'ayuan') {
+        function openVjwQrModal(person = 'mimi') {
             const modal = document.getElementById('vjwModal');
             if (!modal) return;
             vjwModalTrigger = document.activeElement;
