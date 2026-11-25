@@ -3428,21 +3428,21 @@
 
         .vjw-tabs {
             display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 6px;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 5px;
             width: 100%;
             max-width: 480px;
         }
 
         .vjw-tab-btn {
             min-height: 44px;
-            padding: 8px 4px;
+            padding: 8px 2px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             background: var(--bg-card);
             color: var(--text-muted);
             font-family: var(--font-sans);
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             font-weight: 700;
             white-space: nowrap;
             cursor: pointer;
@@ -4812,6 +4812,11 @@
                         onclick="switchVjwPerson('mimi')">
                         米米
                     </button>
+                    <button class="vjw-tab-btn" id="vjwTabGuoheng" data-vjw-person="guoheng" role="tab"
+                        aria-selected="false" aria-controls="vjwPaneGuoheng" tabindex="-1"
+                        onclick="switchVjwPerson('guoheng')">
+                        國恒
+                    </button>
                     <button class="vjw-tab-btn" id="vjwTabAjun" data-vjw-person="ajun" role="tab"
                         aria-selected="false" aria-controls="vjwPaneAjun" tabindex="-1"
                         onclick="switchVjwPerson('ajun')">
@@ -4839,6 +4844,15 @@
                         <span class="vjw-qr-badge">米米 ・ WU LI HUA</span>
                         <img class="vjw-qr-img" src="assets/images/vjw-mimi.png"
                             alt="米米（WU LI HUA）Visit Japan Web 入境 QR code" width="702" height="702" decoding="async">
+                        <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
+                    </div>
+                </div>
+
+                <div class="vjw-qr-pane" id="vjwPaneGuoheng" role="tabpanel" aria-labelledby="vjwTabGuoheng" hidden>
+                    <div class="vjw-qr-frame">
+                        <span class="vjw-qr-badge">國恒 ・ WENG KUO HENG</span>
+                        <img class="vjw-qr-img" src="assets/images/vjw-guoheng.png"
+                            alt="國恒（WENG KUO HENG）Visit Japan Web 入境 QR code" width="702" height="702" decoding="async">
                         <p class="vjw-qr-caption">請於日本入境審查及海關申報機台掃描此 QR code</p>
                     </div>
                 </div>
@@ -5757,6 +5771,7 @@
         function switchVjwPerson(person = 'mimi', { focusTab = false } = {}) {
             const panes = {
                 mimi: document.getElementById('vjwPaneMimi'),
+                guoheng: document.getElementById('vjwPaneGuoheng'),
                 ajun: document.getElementById('vjwPaneAjun'),
                 qianqian: document.getElementById('vjwPaneQianqian'),
                 peizhi: document.getElementById('vjwPanePeizhi'),
@@ -5879,7 +5894,7 @@
         const EXPENSE_PAYER_KEY = 'okinawa_expense_last_payer';
         const EXPENSE_RATES_KEY = 'bali_expense_rates_2026';
         // 每筆未勾選分帳對象時，預設由這五位均分；付款人獨立計算代墊。
-        const EXPENSE_SHARERS = ['阿均', '國恒', '媽咪', '阿猿', '培芝'];
+        const EXPENSE_SHARERS = ['阿均', '國恒', '米米', '阿猿', '培芝'];
         const EXPENSE_CURRENCY_OPTIONS = [['JPY', '日圓'], ['TWD', '台幣'], ['USD', '美金']];
         const EXPENSE_CATEGORIES = ['餐飲', '交通', '住宿', '門票', '購物', '其他'];
         // 跟「匯率換算」那頁用同一支免費 API（ExchangeRate-API 的開放端點，不需金鑰）。
@@ -6115,9 +6130,14 @@
             return `${base}・目前 1 台幣 ≈ ¥${yenPerTwd.toLocaleString('en-US', { maximumFractionDigits: 2 })}（${when}）`;
         }
 
+        function normalizeExpensePerson(name) {
+            const text = String(name || '').trim();
+            return text === '\u5abd\u54aa' ? '米米' : text;
+        }
+
         function parseExpenseParticipants(value) {
             const names = Array.isArray(value) ? value : String(value || '').split(/[,，、;；\n]+/);
-            return [...new Set(names.map(name => String(name).trim()).filter(Boolean))];
+            return [...new Set(names.map(normalizeExpensePerson).filter(Boolean))];
         }
 
         function getExpenseParticipants(item) {
@@ -6282,7 +6302,7 @@
                 amount: Number.isFinite(amount) ? amount : 0,
                 currency: String(data.currency || ''),
                 rateToTwd: Number.isFinite(rate) && rate > 0 ? rate : null,
-                payer: String(data.payer || ''),
+                payer: normalizeExpensePerson(data.payer),
                 category: String(data.category || ''),
                 participants: parseExpenseParticipants(data.participants),
                 note: String(data.note || ''),
@@ -6307,7 +6327,7 @@
                 amount: Number(String(fields.amount ?? '').replace(/[,\s]/g, '')),
                 currency,
                 rateToTwd: keepRate ? previous.rateToTwd : currentRateToTwd(currency),
-                payer: String(fields.payer || '').trim(),
+                payer: normalizeExpensePerson(fields.payer),
                 category: String(fields.category || '').trim(),
                 participants: participantsForStorage(fields.participants),
                 note: String(fields.note || '').trim()
@@ -6556,7 +6576,7 @@
         }
 
         function fillExpenseForm(item) {
-            const storedPayer = readExpenseFlag(EXPENSE_PAYER_KEY);
+            const storedPayer = normalizeExpensePerson(readExpenseFlag(EXPENSE_PAYER_KEY));
             const payers = [...new Set([...EXPENSE_SHARERS, ...(item?.payer ? [item.payer] : [])])];
             const payer = item?.payer || (payers.includes(storedPayer) ? storedPayer : '');
             const currency = item ? expenseCurrencyCode(item) : 'JPY';

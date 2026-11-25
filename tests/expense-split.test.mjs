@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
-const members = ['阿均', '國恒', '媽咪', '阿猿', '培芝'];
+const members = ['阿均', '國恒', '米米', '阿猿', '培芝'];
 
 function app() {
     const context = vm.createContext({ document: { addEventListener() {} } });
@@ -71,7 +71,7 @@ for (const count of [1, 2, 3, 4]) {
 
 test('payer included in the selection only recovers the other members’ shares', () => {
     const context = app();
-    const result = split(context, [expense({ amount: 300, participants: ['阿均', '國恒', '媽咪'] })]);
+    const result = split(context, [expense({ amount: 300, participants: ['阿均', '國恒', '米米'] })]);
     assert.equal(result.balances[0].balance, 200);
     assertSettles(context, result);
 });
@@ -81,7 +81,7 @@ test('mixed all-member, couple and personal expenses accumulate individual oblig
     const result = split(context, [
         expense(),
         expense({ amount: 200, payer: '國恒', participants: ['阿猿', '培芝'] }),
-        expense({ amount: 50, payer: '培芝', participants: ['媽咪'] })
+        expense({ amount: 50, payer: '培芝', participants: ['米米'] })
     ]);
     assert.deepEqual(result.balances.map(person => person.owed), [100, 100, 150, 200, 200]);
     assert.deepEqual(result.balances.map(person => person.balance), [400, 100, -150, -200, -150]);
@@ -100,7 +100,7 @@ test('JPY converts before per-expense shares are accumulated with TWD expenses',
     const context = app();
     const result = split(context, [
         expense({ currency: '日圓', participants: ['阿均', '國恒'] }),
-        expense({ amount: 100, payer: '媽咪' })
+        expense({ amount: 100, payer: '米米' })
     ]);
     assert.equal(result.total, 200);
     assert.deepEqual(result.balances.map(person => person.owed), [70, 70, 20, 20, 20]);

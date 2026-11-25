@@ -6,7 +6,7 @@ import vm from 'node:vm';
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 const rules = readFileSync(new URL('../firestore.rules', import.meta.url), 'utf8');
-const members = ['阿均', '國恒', '媽咪', '阿猿', '培芝'];
+const members = ['阿均', '國恒', '米米', '阿猿', '培芝'];
 
 function app(rates = { TWD: 30, JPY: 150, USD: 1 }) {
     const context = vm.createContext({ document: { addEventListener() {} }, URLSearchParams });
@@ -89,12 +89,12 @@ test('client validation mirrors the Firestore rules', () => {
 test('Firestore documents become display items with safe defaults and pending flags', () => {
     const context = app();
     const item = plain(context.expenseFromDoc('doc1', {
-        date: '2026-11-28', name: '晚餐', amount: 9000, currency: 'JPY', rateToTwd: 0.2, payer: '媽咪',
-        participants: ['媽咪', '培芝'], createdAt: { toMillis: () => 1234 }
+        date: '2026-11-28', name: '晚餐', amount: 9000, currency: 'JPY', rateToTwd: 0.2, payer: '米米',
+        participants: ['米米', '培芝'], createdAt: { toMillis: () => 1234 }
     }, true));
     assert.deepEqual(item, {
-        id: 'doc1', date: '2026-11-28', name: '晚餐', amount: 9000, currency: 'JPY', rateToTwd: 0.2, payer: '媽咪',
-        category: '', participants: ['媽咪', '培芝'], note: '', createdAt: 1234, pending: true
+        id: 'doc1', date: '2026-11-28', name: '晚餐', amount: 9000, currency: 'JPY', rateToTwd: 0.2, payer: '米米',
+        category: '', participants: ['米米', '培芝'], note: '', createdAt: 1234, pending: true
     });
     const sparse = plain(context.expenseFromDoc('doc2', { amount: 'oops', rateToTwd: null, createdAt: null }));
     assert.equal(sparse.name, '(未命名)');
@@ -119,18 +119,18 @@ test('CSV export quotes text, guards spreadsheet formulas and includes the TWD a
     const context = app();
     const csv = context.expensesToCsv([
         { date: '2026-11-27', name: '=SUM(A1)', amount: 1000, currency: 'JPY', rateToTwd: 0.21, payer: '阿均', category: '', participants: [], createdAt: 2 },
-        { date: '2026-11-26', name: '早餐, "飯糰"', amount: 120, currency: 'TWD', rateToTwd: 1, payer: '媽咪', category: '餐飲', participants: ['媽咪', '培芝'], note: '含兒童餐\n刷媽咪的卡', createdAt: 1 }
+        { date: '2026-11-26', name: '早餐, "飯糰"', amount: 120, currency: 'TWD', rateToTwd: 1, payer: '米米', category: '餐飲', participants: ['米米', '培芝'], note: '含兒童餐\n刷米米的卡', createdAt: 1 }
     ]);
     const lines = csv.split('\r\n');
     assert.equal(lines[0], '日期,項目,金額,幣別,付款人,分類,分帳對象,匯率（1 單位兌台幣）,台幣金額,備註');
-    assert.equal(lines[1], '2026-11-26,"早餐, ""飯糰""",120,TWD,媽咪,餐飲,媽咪、培芝,1,120,"含兒童餐\n刷媽咪的卡"');
+    assert.equal(lines[1], '2026-11-26,"早餐, ""飯糰""",120,TWD,米米,餐飲,米米、培芝,1,120,"含兒童餐\n刷米米的卡"');
     assert.equal(lines[2], "2026-11-27,'=SUM(A1),1000,JPY,阿均,,全部 5 人,0.21,210,");
 });
 
 test('notes are optional, trimmed, limited to 200 characters and read back from Firestore', () => {
     const context = app();
     assert.equal(context.buildExpenseRecord(record()).note, '');
-    assert.equal(context.buildExpenseRecord(record({ note: '  含兒童餐\n刷媽咪的卡  ' })).note, '含兒童餐\n刷媽咪的卡');
+    assert.equal(context.buildExpenseRecord(record({ note: '  含兒童餐\n刷米米的卡  ' })).note, '含兒童餐\n刷米米的卡');
     assert.equal(context.validateExpenseRecord(context.buildExpenseRecord(record({ note: 'x'.repeat(200) }))), '');
     assert.match(context.validateExpenseRecord(context.buildExpenseRecord(record({ note: 'x'.repeat(201) }))), /備註/);
     assert.equal(context.expenseFromDoc('a', { note: '停車場在 B1' }).note, '停車場在 B1');

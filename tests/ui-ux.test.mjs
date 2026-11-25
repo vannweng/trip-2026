@@ -431,7 +431,7 @@ test('active day tab is centred by scrolling only the day strip', () => {
 });
 
 test('VJW QR images, header-only shortcut, handbook button and white-frame modal are wired cleanly', () => {
-    for (const file of ['vjw-mimi.png', 'vjw-ajun.png', 'vjw-qianqian.png', 'vjw-peizhi.png', 'vjw-ayuan.png']) {
+    for (const file of ['vjw-mimi.png', 'vjw-guoheng.png', 'vjw-ajun.png', 'vjw-qianqian.png', 'vjw-peizhi.png', 'vjw-ayuan.png']) {
         assert.ok(existsSync(new URL(`../assets/images/${file}`, import.meta.url)), file);
     }
 
@@ -443,8 +443,9 @@ test('VJW QR images, header-only shortcut, handbook button and white-frame modal
 
     const modal = html.match(/<dialog class="modal-overlay vjw-modal" id="vjwModal"[\s\S]*?<\/dialog>/)[0];
     const tabPersons = [...modal.matchAll(/data-vjw-person="([^"]+)"/g)].map(([, person]) => person);
-    assert.deepEqual(tabPersons, ['mimi', 'ajun', 'qianqian', 'peizhi', 'ayuan']);
+    assert.deepEqual(tabPersons, ['mimi', 'guoheng', 'ajun', 'qianqian', 'peizhi', 'ayuan']);
     assert.match(modal, /src="assets\/images\/vjw-mimi\.png"[\s\S]*?WU LI HUA/);
+    assert.match(modal, /src="assets\/images\/vjw-guoheng\.png"[\s\S]*?WENG KUO HENG/);
     assert.match(modal, /src="assets\/images\/vjw-ajun\.png"[\s\S]*?HUNG TZU CHUN/);
     assert.match(modal, /src="assets\/images\/vjw-qianqian\.png"[\s\S]*?WENG CHING HAO/);
     assert.match(modal, /src="assets\/images\/vjw-peizhi\.png"[\s\S]*?WENG PEI ZHI/);
@@ -456,7 +457,7 @@ test('VJW QR images, header-only shortcut, handbook button and white-frame modal
 test('VJW modal opens directly to the requested traveler and supports keyboard switching', () => {
     const closeBtn = element();
     const trigger = element();
-    const order = ['mimi', 'ajun', 'qianqian', 'peizhi', 'ayuan'];
+    const order = ['mimi', 'guoheng', 'ajun', 'qianqian', 'peizhi', 'ayuan'];
     const tabs = order.map(person => element({
         dataset: { vjwPerson: person },
         listeners: {},
@@ -464,6 +465,7 @@ test('VJW modal opens directly to the requested traveler and supports keyboard s
     }));
     const panes = {
         vjwPaneMimi: element(),
+        vjwPaneGuoheng: element(),
         vjwPaneAjun: element(),
         vjwPaneQianqian: element(),
         vjwPanePeizhi: element(),
@@ -494,21 +496,22 @@ test('VJW modal opens directly to the requested traveler and supports keyboard s
     assert.equal(body.style.overflow, 'hidden');
     assert.equal(closeBtn.focused, true);
     assert.equal(panes.vjwPaneMimi.hidden, false);
+    assert.equal(panes.vjwPaneGuoheng.hidden, true);
     assert.equal(panes.vjwPaneAjun.hidden, true);
     assert.equal(panes.vjwPaneQianqian.hidden, true);
     assert.equal(panes.vjwPanePeizhi.hidden, true);
     assert.equal(panes.vjwPaneAyuan.hidden, true);
-    assert.deepEqual(tabs.map(tab => tab.tabIndex), [0, -1, -1, -1, -1]);
+    assert.deepEqual(tabs.map(tab => tab.tabIndex), [0, -1, -1, -1, -1, -1]);
 
     let prevented = false;
     tabs[0].listeners.keydown({ key: 'ArrowRight', preventDefault() { prevented = true; } });
     assert.equal(prevented, true);
     assert.equal(tabs[1].focused, true);
     assert.equal(panes.vjwPaneMimi.hidden, true);
-    assert.equal(panes.vjwPaneAjun.hidden, false);
+    assert.equal(panes.vjwPaneGuoheng.hidden, false);
 
     tabs[1].listeners.keydown({ key: 'End', preventDefault() {} });
-    assert.equal(tabs[4].focused, true);
+    assert.equal(tabs[5].focused, true);
     assert.equal(panes.vjwPaneAyuan.hidden, false);
 
     app.closeVjwQrModal();
